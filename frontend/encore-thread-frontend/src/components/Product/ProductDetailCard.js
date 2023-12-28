@@ -1,22 +1,70 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function ProductDetailCard() {
   const location = useLocation();
   const product = location.state;
+  //TODO: change userId when user module is done
+  const userId = 1;
   const navigate = useNavigate();
-
   const [wishlistAdded, setWishlistAdded] = useState(false);
 
-  const addToWishlist = () => {
-    // TODO: Wishlist Logic
-    // addToUserWishlist(user.id, product.id);
-    setWishlistAdded(true);
+  const addToWishlist = async () => {
+    try {
+      const response = await fetch(`http://localhost:8080/api/wishlist/add`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: userId, productId: product.id }),
+      });
+
+      if (response.ok) {
+        setWishlistAdded(true);
+      } else {
+        console.error("Failed to add to wishlist");
+      }
+    } catch (error) {
+      console.error("Error adding to wishlist:", error);
+    }
   };
 
-  const removeFromWishlist = () => {
-    setWishlistAdded(false);
+  const removeFromWishlist = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/wishlist/remove/${userId}?productId=${product.id}`,
+        { method: "DELETE" }
+      );
+
+      if (response.ok) {
+        setWishlistAdded(false);
+      } else {
+        console.error("Failed to remove from wishlist");
+      }
+    } catch (error) {
+      console.error("Error removing from wishlist:", error);
+    }
   };
+
+  const checkWishlistStatus = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/wishlist/check/${userId}/${product.id}`
+      );
+      if (response.ok) {
+        const isInWishlist = await response.json();
+        setWishlistAdded(isInWishlist);
+      } else {
+        console.error("Failed to check wishlist status");
+      }
+    } catch (error) {
+      console.error("Error checking wishlist status:", error);
+    }
+  };
+
+  useEffect(() => {
+    checkWishlistStatus();
+  }, []); // Empty dependency array to run only on component mount
 
   const back = () => {
     navigate(-1);

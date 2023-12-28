@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProductDetailCard from "../Product/ProductDetailCard";
 import ProductComponent from "../Product/ProductComponent";
+import WishlistComponent from "../Wishlist/WishlistComponent";
 
 const Sidebar = () => {
   return (
@@ -32,6 +33,7 @@ const TopLevelPage = () => {
               <Route exact path="/" element={<HomeComponent />} />
               <Route path="/products" element={<ProductComponent />} />
               <Route path="/products/:productId" element={<ProductDetailCard />} />
+              <Route path="/:userId/wishlist" element={<WishlistComponent/>} />
             </Routes>
           </main>
         </div>

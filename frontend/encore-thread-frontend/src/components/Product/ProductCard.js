@@ -38,7 +38,7 @@ function ProductCard({ id, imageUrl, title, description, size, price }) {
       >
         <Link
           to={`/products/${id}`}
-          state={{ imageUrl, title, description, size, price }}
+          state={{ id, imageUrl, title, description, size, price }}
         >
           <button
             style={{
