@@ -22,6 +22,30 @@ const ProductsComponent = () => {
     setSelectedSize("");
   };
 
+  const handleMinPriceChange = (value) => {
+    const minValue = parseInt(value, 10);
+    const maxValue = parseInt(maxPrice, 10);
+
+    if (maxPrice !== "" && minValue > maxValue) {
+      setMinPrice(maxPrice);
+      setMaxPrice(value);
+    } else {
+      setMinPrice(value);
+    }
+  };
+
+  const handleMaxPriceChange = (value) => {
+    const minValue = parseInt(minPrice, 10);
+    const maxValue = parseInt(value, 10);
+
+    if (minPrice !== "" && maxValue < minValue) {
+      setMaxPrice(minPrice);
+      setMinPrice(value);
+    } else {
+      setMaxPrice(value);
+    }
+  };
+
   const filteredProducts = products.filter((product) => {
     const title = product.name.toLowerCase();
     const includesSearchTerm = title.includes(searchTerm.toLowerCase());
@@ -75,7 +99,7 @@ const ProductsComponent = () => {
   };
 
   return (
-    <div style={{ display: "flex"}}>
+    <div style={{ display: "flex" }}>
       <div style={contentStyle}>
         <div style={gridStyle}>
           {filteredProducts.map((product) => (
@@ -109,14 +133,14 @@ const ProductsComponent = () => {
             <input
               type="number"
               value={minPrice}
-              onChange={(e) => setMinPrice(e.target.value)}
+              onChange={(e) => handleMinPriceChange(e.target.value)}
               style={numberStyle}
             />
             <div style={{ margin: "0 5px" }}>to</div>
             <input
               type="number"
               value={maxPrice}
-              onChange={(e) => setMaxPrice(e.target.value)}
+              onChange={(e) => handleMaxPriceChange(e.target.value)}
               style={numberStyle}
             />
           </div>
