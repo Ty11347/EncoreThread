@@ -17,22 +17,25 @@ public class User {
     @Column(name="email", length = 255)
     private String email;
 
-    @Column(name="password", length = 255)
-    private String password;
-
-    @Column(name="roles", length = 255)
-    private String roles;
-
     @Column(name="age", length = 45)
     private int age;
+    
+    @Column(name="address", length = 255)
+    private String address;
 
     @Column(name="contact", length = 255)
     private String contact;
 
+    @Column(name="roles", length = 255)
+    private String roles;
+
+    @Column(name="password", length = 255)
+    private String password;
+
     public User() {
     }
 
-    public User(Long id, String username, String email, String password, String roles, int age, String contact){
+    public User(Long id, String username, String email, int age, String address, String contact, String roles, String password){
         this.id = id;
         this.username = username;
         this.email = email;
@@ -40,13 +43,14 @@ public class User {
         this.roles = roles;
         this.age = age;
         this.contact = contact;
+        this.address = address;
     }
 
     public String getUsername() {
         return this.username;
     }
 
-    public Long getId() {
+    public Long getUserId() {
         return this.id;
     }
 
@@ -68,5 +72,9 @@ public class User {
 
     public int getAge() {
         return this.age;
+    }
+
+    public String getAddress() {
+        return this.address;
     }
 }

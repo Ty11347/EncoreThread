@@ -1,0 +1,126 @@
+.review-image {
+  margin: 0 10px;
+  cursor: pointer;
+  width: 100px;
+  height: 100px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.review-image:hover {
+  cursor: zoom-in;
+  transform: scale(1.1);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.add-rating{
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  margin-bottom: 10px;
+}
+
+.image-list {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.body {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.profile-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.profile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.username {
+  margin-left: 10px;
+  font-weight: 650;
+}
+
+.review-card {
+  position: relative;
+  margin-bottom: 20px; /* Add some spacing between cards */
+  padding: 20px;
+}
+
+.review-card::before,
+.review-card::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: black; /* Divider line color */
+}
+
+.review-card::before {
+  top: 0;
+}
+
+.review-card::after {
+  bottom: 0;
+}
+
+.divider-line {
+  height: 1px;
+  background-color: black;
+  margin: 10px 0;
+}
+
+.date {
+  margin-left: 10px;
+  color: #c4c3c3;
+}
+
+.default-profile-container {
+  width: 50px;
+  height: 50px;
+  background-color: #ddd; /* Grey background color */
+  border-radius: 50%; /* Make it a circle */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-area {
+  height: 50px;
+  width: 500px;
+  resize: none;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.edit-delete-icons{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.icons{
+  margin-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+}

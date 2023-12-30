@@ -1,14 +1,15 @@
-import {useState} from "react";
-import {useNavigate} from 'react-router-dom';
+import { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useUserContext } from './UserContext';
 
 const Login = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  const { setUser } = useUserContext();
 
   async function login(event) {
     event.preventDefault();
@@ -22,8 +23,9 @@ const Login = () => {
         if (res.data.message === "Username not exits") {
           alert("Username not exits");
         } else if (res.data.message === "Login Success") {
-
-          navigate('/home');
+          console.log("User ID:", res.data.userId);
+          setUser({ id: res.data.userId });
+          navigate(`/user/${res.data.userId}`);
         } else {
           alert("Incorrect Username and Password not match");
         }

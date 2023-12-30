@@ -6,6 +6,9 @@ import WishlistComponent from "../Wishlist/WishlistComponent";
 import Register from "../../Register";
 import Login from "../../Login";
 import MainProfile from "../UserProfile/MainProfile";
+import ReviewCard from "../Review/ReviewCard";
+import AddReviewCard from "../Review/AddReviewCard";
+import EditReviewCard from "../Review/EditReviewCard";
 
 const Sidebar = () => {
   return (
@@ -16,6 +19,12 @@ const Sidebar = () => {
         </li>
         <li>
           <a href="/products">Products</a>
+        </li>
+        <li>
+          <a href="/reviews">Reviews</a>
+        </li>
+        <li>
+          <a href="/add/reviews">Add Reviews</a>
         </li>
         <li>
           <a href="/register">Register</a>
@@ -48,10 +57,13 @@ const TopLevelPage = () => {
               <Route exact path="/" element={<HomeComponent />} />
               <Route path="/products" element={<ProductComponent />} />
               <Route path="/products/:productId" element={<ProductDetailCard />} />
+              <Route path="/reviews" element={<ReviewCard />} />
+              <Route path="/edit/:reviewId" element={<EditReviewCard/>} />
+              <Route path="/add/reviews" element={<AddReviewCard />} />
               <Route path="/:userId/wishlist" element={<WishlistComponent/>} />
               <Route path="/register" element={<Register/>} />
               <Route path="/login" element={<Login/>} />
-              <Route path="/userProfile" element={<MainProfile/>} />
+              <Route  path="/user/:userId" element={<MainProfile/>} />
             </Routes>
           </main>
         </div>

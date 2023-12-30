@@ -3,13 +3,13 @@ import AccountSettings from './AccountSettings';
 import OrderHistory from './OrderHistory';
 import Actions from './Actions';
 
-const Content = () => {
+const Content = ({ userId }) => {
   const [selectedTab, setSelectedTab] = useState('Account Settings');
 
   const renderContent = () => {
     switch (selectedTab) {
       case 'Account Settings':
-        return <AccountSettings />;
+        return <AccountSettings userId={userId}/>;
       case 'Order History':
         return <OrderHistory />;
       default:
