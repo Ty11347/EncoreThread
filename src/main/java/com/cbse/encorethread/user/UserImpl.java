@@ -25,13 +25,13 @@ public class UserImpl implements UserService{
     @Override
     public String addUser(UserDTO userDTO) {
         User user = new User(
-            userDTO.getUserId(),
-            userDTO.getUsername(),
-            userDTO.getEmail(),
-            this.passwordEncoder.encode(userDTO.getPassword()),
-            userDTO.getRoles(),
-            userDTO.getAge(),
-            userDTO.getContact()
+                userDTO.getUserId(),
+                userDTO.getUsername(),
+                userDTO.getEmail(),
+                this.passwordEncoder.encode(userDTO.getPassword()),
+                userDTO.getRoles(),
+                userDTO.getAge(),
+                userDTO.getContact()
         );
         userRepository.save(user);
         return user.getUsername();
