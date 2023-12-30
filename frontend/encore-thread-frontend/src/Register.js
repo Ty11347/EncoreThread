@@ -16,12 +16,13 @@ const Register = () => {
         event.preventDefault();
         try {
           await axios.post("/api/user/save", {
-          username: username,
-          email: email,
-          password: password,
-          roles: roles,
-          age: age,
-          contact: contact,
+            username: username,
+            email: email,
+            age: age,
+            address: address,
+            contact: contact,
+            roles: roles,
+            password: password,
           });
           alert("User Registation Successfully");
 
@@ -62,32 +63,6 @@ const Register = () => {
         </div>
 
         <div class="form-group">
-            <label>Password</label>
-            <input type="password"  class="form-control" id="password" placeholder="Enter Password"
-            
-            value={password}
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
-            
-            />
-        </div>
-
-        <div class="form-group">
-            <label>Role</label>
-            <select type="roles"  
-            class="form-control" 
-            id="roles"
-            value={roles}
-            onChange={(event) => {
-              setRoles(event.target.value);
-            }}>
-                <option value="User">User</option>
-                <option value="Admin">Admin</option>
-            </select>
-        </div>
-
-        <div class="form-group">
             <label>Age</label>
             <input type="age"  class="form-control" id="age" placeholder="Enter Age"
             
@@ -97,6 +72,16 @@ const Register = () => {
             }}
             
             />
+        </div>
+
+        <div class="form-group">
+          <label>Address</label>
+          <input type="address"  class="form-control" id="address" placeholder="Enter Address"
+          
+          value={address}
+          onChange={(event) => {
+            setAddress(event.target.value);
+          }}/>
         </div>
 
         <div class="form-group">
@@ -111,14 +96,29 @@ const Register = () => {
         </div>
 
         <div class="form-group">
-          <label>Address</label>
-          <input type="address"  class="form-control" id="address" placeholder="Enter Address"
-          
-          value={address}
-          onChange={(event) => {
-            setAddress(event.target.value);
-          }}
-          />
+            <label>Roles</label>
+            <select type="roles"  
+            class="form-control" 
+            id="roles"
+            value={roles}
+            onChange={(event) => {
+              setRoles(event.target.value);
+            }}>
+                <option value="User">User</option>
+                <option value="Admin">Admin</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password"  class="form-control" id="password" placeholder="Enter Password"
+            
+            value={password}
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
+            
+            />
         </div>
 
         <button type="submit" class="btn btn-primary mt-4" onClick={save} >Save</button>

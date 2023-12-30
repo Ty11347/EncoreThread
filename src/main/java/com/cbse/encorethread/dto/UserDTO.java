@@ -8,14 +8,14 @@ public class UserDTO {
     private int age;
     private String contact;
     private String roles;
+    private String address;
 
-    public UserDTO(Long userId, String username, String email, String password, String roles, int age, String contact){
+    public UserDTO(Long userId, String username, String email, int age, String address, String contact, String roles){
         this.userId = userId;
         this.username = username;
         this.email = email;
-        this.password = password;
-        this.roles = roles;
         this.age = age;
+        this.address = address;
         this.contact = contact;
     }
 
@@ -23,12 +23,39 @@ public class UserDTO {
 
     }
 
-    public String getUsername() {
-        return this.username;
+    public void setUsername(String username) {
+       this.username = username;
     }
 
-    public Long getUserId() {
+    public Long getUserById(Long userId) {
         return this.userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setContact(String contact) {
+       this.contact = contact;
+    }
+
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+    public String getUsername() {
+        return this.username;
     }
 
     public String getEmail() {
@@ -39,15 +66,19 @@ public class UserDTO {
         return this.password;
     }
 
-    public int getAge() {
-        return this.age;
-    }
-
     public String getContact() {
         return this.contact;
     }
 
     public String getRoles() {
         return this.roles;
+    }
+
+    public int getAge() {
+        return this.age;
+    }
+
+    public String getAddress() {
+        return this.address;
     }
 }
