@@ -1,0 +1,102 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: auto;
+  margin-bottom: 2em;
+}
+
+.th {
+  border: 1px solid black;
+  border-top: none;
+}
+
+.table {
+  width: 100%;
+  border: 1px solid black;
+}
+
+.tr {
+  display: table-row;
+}
+
+.tr:nth-child(odd) {
+  background: #eee;
+}
+
+.tr:nth-child(even) {
+  background: white;
+}
+
+.tr-hover {
+  cursor: pointer;
+}
+
+.tr-hover:hover,
+.tr-hover td:hover {
+  background: #ccc;
+}
+
+.shipped {
+  background: #86efac;
+}
+
+.cancelled {
+  background: #ffa0a0;
+}
+
+.link {
+  text-decoration: none;
+}
+
+.new-order-container,
+.cancel-order-container {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin: 1em;
+  width: 80%;
+}
+
+.new-order-form-container,
+.cancel-order-form-container {
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 50%;
+}
+
+.new-order-button,
+.cancel-order-button {
+  margin: 1em 0;
+}
+
+.new-order-form,
+.cancel-order-form {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+}
+
+.new-order-form > input, 
+.new-order-form > select,
+.cancel-order-form > textarea,
+.cancel-order-form > select {
+  margin-bottom: 1em;
+  align-self: stretch;
+}
+
+.required {
+  color: red;
+}
+
+.success-message {
+  background: #2fe456;
+  padding: 1em;
+  margin: 1em auto;
+  border-radius: 5px;
+  user-select: none;
+}

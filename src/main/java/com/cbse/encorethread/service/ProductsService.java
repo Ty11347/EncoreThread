@@ -18,4 +18,8 @@ public class ProductsService {
     public List<Products> getAllProducts() {
         return productRepository.findAll();
     }
+
+    public Products getProductById(Integer id) {
+        return productRepository.getById(id);
+    }
 }
