@@ -35,7 +35,7 @@ public class OrderDetailsService {
   }
 
   public OrderDetails getOrderDetailById(Integer id) {
-    return orderDetailsRepository.findById(id).orElseThrow();
+    return orderDetailsRepository.findById(id).orElseThrow(() -> new RuntimeException("OrderDetails not found with id: " + id));
   }
 
   public List<OrderDetailsDTO> getOrderDetailsByOrderId(Integer orderId) {
