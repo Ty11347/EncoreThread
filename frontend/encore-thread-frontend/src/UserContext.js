@@ -12,8 +12,4 @@ export const UserProvider = ({ children }) => {
   );
 };
 
-<<<<<<< HEAD
 export const useUserContext = () => useContext(UserContext);
-=======
-export const useUserContext = () => useContext(UserContext);
->>>>>>> b79c09baacdc5ccb0decd225770a881b9dd3d6f3
