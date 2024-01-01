@@ -24,12 +24,6 @@ public class LoginMessage {
     }
     public Long getUserId() {
         return userId;
-<<<<<<< HEAD
-=======
-    }
-    public void setUserId(Long userId) {
-        this.userId = userId;
->>>>>>> b79c09baacdc5ccb0decd225770a881b9dd3d6f3
     }
     public void setUserId(Long userId) {
         this.userId = userId;

@@ -19,7 +19,7 @@ public class User {
 
     @Column(name="age", length = 45)
     private int age;
-    
+
     @Column(name="address", length = 255)
     private String address;
 
@@ -77,8 +77,4 @@ public class User {
     public String getAddress() {
         return this.address;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> b79c09baacdc5ccb0decd225770a881b9dd3d6f3

@@ -81,8 +81,4 @@ public class UserDTO {
     public String getAddress() {
         return this.address;
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> b79c09baacdc5ccb0decd225770a881b9dd3d6f3
