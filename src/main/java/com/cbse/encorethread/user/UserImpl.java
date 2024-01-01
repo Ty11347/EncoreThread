@@ -7,6 +7,7 @@ import com.cbse.encorethread.dto.UserDTO;
 import com.cbse.encorethread.model.User;
 import com.cbse.encorethread.repository.UserRepository;
 import com.cbse.encorethread.service.UserService;
+import com.cbse.encorethread.exception.UserNotFoundException;
 import com.cbse.encorethread.user.LoginMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -22,21 +23,34 @@ public class UserImpl implements UserService{
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    private UserDTO convertToUserDTO(User user){
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserId(user.getUserId());
+        userDTO.setUsername(user.getUsername());
+        userDTO.setEmail(user.getEmail());
+        userDTO.setAge(user.getAge());
+        userDTO.setAddress(user.getAddress());
+        userDTO.setContact(user.getContact());
+        userDTO.setRoles(user.getRoles());
+        return userDTO;
+    }
+
     @Override
-    public String addUser(UserDTO userDTO) {
-        User user = new User(
-                userDTO.getUserId(),
-                userDTO.getUsername(),
-                userDTO.getEmail(),
-                this.passwordEncoder.encode(userDTO.getPassword()),
-                userDTO.getRoles(),
-                userDTO.getAge(),
-                userDTO.getContact()
+    public String addUser(User user) {
+        User user_new = new User(
+            user.getUserId(),
+            user.getUsername(),
+            user.getEmail(),
+            user.getAge(),
+            user.getAddress(),
+            user.getContact(),
+            user.getRoles(),
+            this.passwordEncoder.encode(user.getPassword())
         );
-        userRepository.save(user);
+        userRepository.save(user_new);
         return user.getUsername();
     }
-    UserDTO userDTO;
+    User user;
 
     @Override
     public LoginMessage loginUser(LoginDTO loginDTO){
@@ -49,15 +63,22 @@ public class UserImpl implements UserService{
             if(isPwdRight){
                 Optional<User> user = userRepository.findOneByUsernameAndPassword(loginDTO.getUsername(), encodedPassword);
                 if(user.isPresent()){
-                    return new LoginMessage("Login Success", true);
+                    return new LoginMessage("Login Success", true, user.get().getUserId());
                 }else{
-                    return new LoginMessage("Login Failed", false);
+                    return new LoginMessage("Login Failed", false, null);
                 }
             }else{
-                return new LoginMessage("Password Not Match", false);
+                return new LoginMessage("Password Not Match", false, user.getUserId());
             }
         }else{
-            return new LoginMessage("Username not exists", false);
+            return new LoginMessage("Username not exists", false, null);
         }
     }
-}
+
+    @Override
+    public UserDTO getUserById(Long userId) {
+        return userRepository.findById(userId)
+            .map(this::convertToUserDTO)
+            .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
+        }
+    }
