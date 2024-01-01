@@ -63,7 +63,11 @@ const TopLevelPage = () => {
               <Route path="/:userId/wishlist" element={<WishlistComponent/>} />
               <Route path="/register" element={<Register/>} />
               <Route path="/login" element={<Login/>} />
+<<<<<<< HEAD
               <Route  path="/user/:userId" element={<MainProfile/>} />
+=======
+              <Route path="/user/:userId" element={<MainProfile/>} />
+>>>>>>> b79c09baacdc5ccb0decd225770a881b9dd3d6f3
             </Routes>
           </main>
         </div>

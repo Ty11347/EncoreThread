@@ -19,4 +19,8 @@ public class UserNotFoundException extends RuntimeException {
     protected UserNotFoundException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> b79c09baacdc5ccb0decd225770a881b9dd3d6f3

@@ -72,6 +72,7 @@ public class UserImpl implements UserService{
             }
         }else{
             return new LoginMessage("Username not exists", false, null);
+<<<<<<< HEAD
         }
     }
 
@@ -82,3 +83,15 @@ public class UserImpl implements UserService{
             .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
         }
     }
+=======
+        }
+    }
+
+    @Override
+    public UserDTO getUserById(Long userId) {
+        return userRepository.findById(userId)
+            .map(this::convertToUserDTO)
+            .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
+        }
+    }
+>>>>>>> b79c09baacdc5ccb0decd225770a881b9dd3d6f3
