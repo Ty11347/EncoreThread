@@ -1,0 +1,56 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+
+
+# dependencies
+frontend/encore-thread-frontend/node_modules
+frontend/encore-thread-frontend/.pnp
+frontend/encore-thread-frontend/.pnp.js
+
+# testing
+frontend/encore-thread-frontend/coverage
+
+# production
+frontend/encore-thread-frontend/build
+
+# misc
+frontend/encore-thread-frontend/.DS_Store
+frontend/encore-thread-frontend/.env.local
+frontend/encore-thread-frontend/.env.development.local
+frontend/encore-thread-frontend/.env.test.local
+frontend/encore-thread-frontend/.env.production.local
+
+frontend/encore-thread-frontend/npm-debug.log*
+frontend/encore-thread-frontend/yarn-debug.log*
+frontend/encore-thread-frontend/yarn-error.log*
