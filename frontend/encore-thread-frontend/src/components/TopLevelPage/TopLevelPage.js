@@ -30,12 +30,6 @@ const Sidebar = () => {
           <a href="/orders">Orders - User</a>
         </li>
         <li>
-          <a href="/reviews">Reviews</a>
-        </li>
-        <li>
-          <a href="/add/reviews">Add Reviews</a>
-        </li>
-        <li>
           <a href="/register">Register</a>
         </li>
         <li>
@@ -71,9 +65,13 @@ const TopLevelPage = () => {
               <Route path="/admin/orders" element={<OrderAdmin/>}/>
               <Route path="/orders" element={<OrderComponent/>}/>
               <Route path="/orders/:orderId" element={<OrderDetail/>} />
+              <Route path="/reviews" element={<ReviewCard />} />
+              <Route path="/edit/:reviewId" element={<EditReviewCard/>} />
+              <Route path="/add/reviews/:userId/:productId" element={<AddReviewCard />} />
+              <Route path="/:userId/wishlist" element={<WishlistComponent/>} />
               <Route path="/register" element={<Register/>} />
               <Route path="/login" element={<Login/>} />
-              <Route path="/user/:userId" element={<MainProfile/>} />
+              <Route  path="/user/:userId" element={<MainProfile/>} />
             </Routes>
           </main>
         </div>

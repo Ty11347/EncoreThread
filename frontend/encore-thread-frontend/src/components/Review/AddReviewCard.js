@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { FaUser, FaStar } from "react-icons/fa";
 import "./ReviewCard.css";
+import { useParams, useNavigate } from "react-router-dom";
 
-const AddReviewCard = () => {
+const AddReviewCard = ({ match }) => {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
   const [image, setImage] = useState(null);
+  const {userId, productId} = useParams();
+  const navigate = useNavigate();
 
   const handleRatingChange = (newRating) => {
     setRating(newRating);
@@ -31,11 +34,12 @@ const AddReviewCard = () => {
   const handleAddReview = async () => {
     // Convert the image to base64 code before sending
     const base64Image = image ? image.split(",")[1] : null;
-
+    console.log(productId);
+    console.log(userId);
     const newReview = {
       id: 0,
-      productId: 2, // hardcoded for now, replace with actual logic
-      userId: 2, // hardcoded for now, replace with actual logic
+      productId: productId,
+      userId: userId, 
       rating,
       comment,
       commentDate: new Date(),
@@ -55,6 +59,7 @@ const AddReviewCard = () => {
       if (response.ok) {
         // Handle success
         console.log("Review added successfully");
+        navigate(-1);
       } else {
         // Handle error
         console.error("Failed to add review");

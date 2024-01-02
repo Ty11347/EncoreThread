@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ReviewCard from "../Review/ReviewCard";
@@ -139,10 +140,6 @@ function ProductDetailCard() {
         Product Feedback
       </h3>
       <ReviewCard productId={product.id}/>
-      <h3 style={{ textAlign: "left", marginLeft: "20px" }}>
-        Review by Product ID and User ID
-      </h3>
-      <ReviewCardByUserIdAndProductId productId={product.id} userId={2}/>
     </div>
   );
 }
