@@ -3,15 +3,15 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProductDetailCard from "../Product/ProductDetailCard";
 import ProductComponent from "../Product/ProductComponent";
 import WishlistComponent from "../Wishlist/WishlistComponent";
-import OrderAdmin from "../Order/OrderAdmin";
-import OrderComponent from "../Order/OrderComponent";
-import OrderDetail from "../Order/OrderDetail";
 import Register from "../../Register";
 import Login from "../../Login";
 import MainProfile from "../UserProfile/MainProfile";
 import ReviewCard from "../Review/ReviewCard";
 import AddReviewCard from "../Review/AddReviewCard";
 import EditReviewCard from "../Review/EditReviewCard";
+import OrderAdmin from "../Order/OrderAdmin";
+import OrderComponent from "../Order/OrderComponent";
+import OrderDetail from "../Order/OrderDetail";
 
 const Sidebar = () => {
   return (
@@ -50,6 +50,7 @@ const TopLevelPage = () => {
         <div style={{ width: "20%", background: "#f0f0f0" }}>
           <Sidebar />
         </div>
+
         <div style={{ width: "80%" }}>
           <main>
             <Routes>
@@ -57,6 +58,9 @@ const TopLevelPage = () => {
               <Route exact path="/" element={<HomeComponent />} />
               <Route path="/products" element={<ProductComponent />} />
               <Route path="/products/:productId" element={<ProductDetailCard />} />
+              <Route path="/reviews" element={<ReviewCard />} />
+              <Route path="/edit/:reviewId" element={<EditReviewCard/>} />
+              <Route path="/add/reviews" element={<AddReviewCard />} />
               <Route path="/:userId/wishlist" element={<WishlistComponent/>} />
               <Route path="/admin/orders" element={<OrderAdmin/>}/>
               <Route path="/orders" element={<OrderComponent/>}/>
@@ -71,6 +75,7 @@ const TopLevelPage = () => {
             </Routes>
           </main>
         </div>
+
       </div>
     </Router>
   );

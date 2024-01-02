@@ -19,7 +19,7 @@ public class User {
 
     @Column(name="age", length = 45)
     private int age;
-    
+
     @Column(name="address", length = 255)
     private String address;
 
