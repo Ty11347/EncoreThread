@@ -38,9 +38,9 @@ const Content = ({ userId }) => {
         {renderContent()}
       </div>
 
-      <div>
+      {/* <div>
         <Actions />
-      </div>
+      </div> */}
     </div>
   );
 };

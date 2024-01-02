@@ -76,11 +76,11 @@ const Register = () => {
         });
         alert("User Registration Successfully");
 
-        } catch (err) {
-          alert(err);
-        }
+      } catch (err) {
+        alert(err);
       }
-  
+    }
+
     return (
       <div>
         <div class="container mt-4" >

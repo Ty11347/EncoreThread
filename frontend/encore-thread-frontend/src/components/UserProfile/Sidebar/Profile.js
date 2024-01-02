@@ -32,13 +32,13 @@ const Profile = ({ userId })=>{
     profileImage.current.click()
   }
 
-    const onOpen = () => {
-      setIsOpen(true); // Function to open the modal
-    };
+  const onOpen = () => {
+    setIsOpen(true); // Function to open the modal
+  };
 
-    const onClose = () => {
-      setIsOpen(false); // Function to close the modal
-    };
+  const onClose = () => {
+    setIsOpen(false); // Function to close the modal
+  };
 
 
   const changeProfileImage = event => {

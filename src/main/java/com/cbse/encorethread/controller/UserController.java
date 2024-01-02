@@ -2,10 +2,14 @@ package com.cbse.encorethread.controller;
 
 import com.cbse.encorethread.dto.LoginDTO;
 import com.cbse.encorethread.dto.UserDTO;
+import com.cbse.encorethread.dto.ProfilepicDTO;
+import com.cbse.encorethread.dto.PasswordResetDTO;
 import com.cbse.encorethread.model.User;
 import com.cbse.encorethread.service.UserService;
 import com.cbse.encorethread.user.LoginMessage;
+import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 @RestController

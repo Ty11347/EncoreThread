@@ -32,10 +32,13 @@ public class User {
     @Column(name="password", length = 255)
     private String password;
 
+    @Column(name = "profilepic")
+    private String profilepic;
+
     public User() {
     }
 
-    public User(Long id, String username, String email, int age, String address, String contact, String roles, String password){
+    public User(Long id, String username, String email, int age, String address, String contact, String roles, String password, String profilepic){
         this.id = id;
         this.username = username;
         this.email = email;
@@ -44,13 +47,14 @@ public class User {
         this.age = age;
         this.contact = contact;
         this.address = address;
+        this.profilepic = profilepic;
     }
 
     public String getUsername() {
         return this.username;
     }
 
-    public Long getUserId() {
+    public Long getId() {
         return this.id;
     }
 

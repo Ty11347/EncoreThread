@@ -1,8 +1,10 @@
 package com.cbse.encorethread.user;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cbse.encorethread.dto.LoginDTO;
+import com.cbse.encorethread.dto.ProfilepicDTO;
 import com.cbse.encorethread.dto.UserDTO;
 import com.cbse.encorethread.model.User;
 import com.cbse.encorethread.repository.UserRepository;
@@ -14,6 +16,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.Resource;
+
+import java.io.IOException;
+import java.util.Base64;
 import java.util.Optional;
 
 import com.cbse.encorethread.exception.ResourceNotFoundException;
@@ -28,7 +33,7 @@ public class UserImpl implements UserService {
 
     private UserDTO convertToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
-        userDTO.setUserId(user.getUserId());
+        userDTO.setUserId(user.getId());
         userDTO.setUsername(user.getUsername());
         userDTO.setEmail(user.getEmail());
         userDTO.setAge(user.getAge());
@@ -62,7 +67,7 @@ public class UserImpl implements UserService {
         }
 
         userRepository.save(user_new);
-        return user.getUsername();
+        return userDTO.getUsername();
     }
 
     User user;
