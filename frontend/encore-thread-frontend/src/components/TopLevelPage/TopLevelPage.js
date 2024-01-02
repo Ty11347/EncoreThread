@@ -3,40 +3,44 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import ProductDetailCard from "../Product/ProductDetailCard";
 import ProductComponent from "../Product/ProductComponent";
 import WishlistComponent from "../Wishlist/WishlistComponent";
+import OrderAdmin from "../Order/OrderAdmin";
+import OrderComponent from "../Order/OrderComponent";
+import OrderDetail from "../Order/OrderDetail";
 import Register from "../../Register";
 import Login from "../../Login";
 import MainProfile from "../UserProfile/MainProfile";
 import ReviewCard from "../Review/ReviewCard";
 import AddReviewCard from "../Review/AddReviewCard";
 import EditReviewCard from "../Review/EditReviewCard";
-import OrderAdmin from "../Order/OrderAdmin";
-import OrderComponent from "../Order/OrderComponent";
-import OrderDetail from "../Order/OrderDetail";
+import '../../App.css';
 
 const Sidebar = () => {
   return (
-    <nav>
-      <ul>
+    <nav style={{ display: "flex", justifyContent: "space-around", background: "#faf8f8", padding: "10px 0" }}>
+      <ul style={{ listStyle: "none", display: "flex", margin: 0, padding: 0 }}>
+        {/* <li>
+          <a href="/" className="buttonStyle">Home</a>
+        </li> */}
         <li>
-          <a href="/">Home</a>
+          <a href="/products" className="buttonStyle">Products</a>
         </li>
         <li>
-          <a href="/products">Products</a>
+          <a href="/admin/orders" className="buttonStyle">Orders-Admin</a>
         </li>
         <li>
-          <a href="/admin/orders">Orders - Admin</a>
+          <a href="/orders" className="buttonStyle">Orders-Users</a>
         </li>
         <li>
-          <a href="/orders">Orders - User</a>
+          <a href="/register" className="buttonStyle">Register</a>
+        </li>
+        {/* <li>
+          <a href="/userProfile" className="buttonStyle">Main Profile</a>
+        </li>         */}
+        <li>
+          <a href="/login" className="buttonStyle">Login</a>
         </li>
         <li>
-          <a href="/register">Register</a>
-        </li>
-        <li>
-          <a href="/login">Login</a>
-        </li>
-        <li>
-          <a href="/userProfile">MainProfile</a>
+          <a href="/login" className="buttonStyle">Logout</a>
         </li>
       </ul>
     </nav>
@@ -46,21 +50,15 @@ const Sidebar = () => {
 const TopLevelPage = () => {
   return (
     <Router>
-      <div style={{ display: "flex", minHeight: "100vh" }}>
-        <div style={{ width: "20%", background: "#f0f0f0" }}>
+      <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
           <Sidebar />
-        </div>
-
-        <div style={{ width: "80%" }}>
+        <div style={{ width: "100%" }}>
           <main>
             <Routes>
               {/*here to add page components*/}
               <Route exact path="/" element={<HomeComponent />} />
               <Route path="/products" element={<ProductComponent />} />
               <Route path="/products/:productId" element={<ProductDetailCard />} />
-              <Route path="/reviews" element={<ReviewCard />} />
-              <Route path="/edit/:reviewId" element={<EditReviewCard/>} />
-              <Route path="/add/reviews" element={<AddReviewCard />} />
               <Route path="/:userId/wishlist" element={<WishlistComponent/>} />
               <Route path="/admin/orders" element={<OrderAdmin/>}/>
               <Route path="/orders" element={<OrderComponent/>}/>
@@ -75,7 +73,6 @@ const TopLevelPage = () => {
             </Routes>
           </main>
         </div>
-
       </div>
     </Router>
   );

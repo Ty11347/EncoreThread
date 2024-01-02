@@ -9,4 +9,8 @@ public interface UserService {
     String addUser(User user);
     LoginMessage loginUser(LoginDTO loginDTO);
     UserDTO getUserById(Long userId);
+    User updateUserById(Long id, User user);
+    void deleteUserById(Long userId);
+    boolean changePassword(Long userId, String oldPassword, String newPassword);
+    void updateProfilePic(Long userId, String profilepic);
 }
