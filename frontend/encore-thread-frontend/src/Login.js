@@ -1,15 +1,15 @@
 import { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { setUser } from './redux/actions/userActions';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useUserContext } from './UserContext';
 
 const Login = () => {
-
+  const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { setUser } = useUserContext();
 
   async function login(event) {
     event.preventDefault();
@@ -24,13 +24,13 @@ const Login = () => {
           alert("Username not exits");
         } else if (res.data.message === "Login Success") {
           console.log("User ID:", res.data.userId);
-          setUser({ id: res.data.userId });
-          navigate(`/user/${res.data.userId}`);
+          dispatch(setUser({ id: res.data.userId }));
+          navigate(`/products`);
         } else {
           alert("Incorrect Username and Password not match");
         }
       }, fail => {
-        console.error(fail); // Error!
+        console.error(fail);
       });
     } catch (err) {
       alert(err);

@@ -14,4 +14,5 @@ public interface UserService {
     void deleteUserById(Long userId);
     boolean changePassword(Long userId, String oldPassword, String newPassword);
     void updateProfilePic(Long userId, String profilepic);
+    String getRoleById(Long userId);
 }

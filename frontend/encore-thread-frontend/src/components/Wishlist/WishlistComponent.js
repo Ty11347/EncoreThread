@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
 import WishlistCard from "./WishlistCard";
+import { useSelector } from 'react-redux';
 
-const WishlistComponent = ({ userId }) => {
+const WishlistComponent = () => {
+  const user = useSelector(state => state.user.user);
+  const userId = user?.id;
   const [wishlist, setWishlist] = useState([]);
 
   const fetchWishlist = async () => {

@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import './profile.css';
 
-const AccountSettings = ({ userId }) => {
+const AccountSettings = () => {
+  const user = useSelector(state => state.user.user);
+  const userId = user?.id;
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
@@ -13,17 +17,13 @@ const AccountSettings = ({ userId }) => {
     age: '',
     roles: '',
     address: '',
-    // profilePic: '', 
   });
 
   const [updatedUserData, setUpdatedUserData] = useState({
     username: '',
     email: '',
     contact: '',
-    age: '',
-    roles: '',
     address: '',
-    // profilePic: '', 
   });
 
   const [passwordData, setPasswordData] = useState({
@@ -76,6 +76,7 @@ const AccountSettings = ({ userId }) => {
         const data = await response.json();
         //setUserData(data);
         setUpdatedUserData(data);
+        setEditMode(false);
       } else {
         console.error("Failed to update user info", response.status);
       }
@@ -148,9 +149,6 @@ const AccountSettings = ({ userId }) => {
     }
   };
 
-  const handleUpdateImage = async()=>{
-    const base64Pic = profilepic?profilepic.split(",")[1] : null;
-  }
   useEffect(()=>{
     if (userId) {
       fetchUserInfo();
@@ -174,26 +172,11 @@ const AccountSettings = ({ userId }) => {
         <input name="contact" type="text" id="contact" value={editMode ? updatedUserData.contact : userData.contact} onChange={handleInputChange} readOnly={!editMode}/>
       </div>
       <div>
-        <label htmlFor="age">Age</label>
-        <input name="age" type="text" id="age" value={editMode ? updatedUserData.age : userData.age} onChange={handleInputChange} readOnly={!editMode}/>
-      </div>
-      <div>
         <label htmlFor="address">Address</label>
         <input name="address" type="text" id="address" value={editMode ? updatedUserData.address : userData.address} onChange={handleInputChange} readOnly={!editMode}/>
       </div>
       <div>
       <label htmlFor="roles">Role</label>
-        {editMode ? (
-          <select 
-            name="roles" 
-            id="roles" 
-            value={updatedUserData.roles} 
-            onChange={handleInputChange}
-          >
-            <option value="admin">Admin</option>
-            <option value="user">User</option>
-          </select>
-        ) : (
           <input 
             name="roles" 
             type="text" 
@@ -201,11 +184,14 @@ const AccountSettings = ({ userId }) => {
             value={userData.roles} 
             readOnly
           />
-        )}
       </div>
-      <button style={{ marginTop: '5px', paddingTop: '5px', padding: '8px' }} onClick={toggleEditMode}>{editMode ? 'Cancel' : 'Edit'}</button>
-      <button style={{ marginTop: '5px', paddingTop: '5px', padding: '8px' }} onClick={() => updateUserInfo(updatedUserData)}>Update</button>
-      <button style={{ marginTop: '5px', paddingTop: '5px', padding: '8px' }} onClick={deleteUser}>Delete</button>
+      <br/>
+      <div className="button_container">
+        <button className="button" onClick={toggleEditMode}>{editMode ? 'Cancel' : 'Edit'}</button>
+        <button className="button" onClick={() => updateUserInfo(updatedUserData)}>Update</button>
+        <button className="button" onClick={deleteUser}>Delete</button>
+      </div>
+
       {editMode&&(
         <div style={{ gridColumn: '1 / -1', marginTop: '10px' }}>
           <div style={{ marginBottom: '10px' }}>
