@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import AccountSettings from './AccountSettings';
 import OrderHistory from './OrderHistory';
 import Actions from './Actions';
+import OrderComponent from '../../Order/OrderComponent';
 
 const Content = ({ userId }) => {
   const [selectedTab, setSelectedTab] = useState('Account Settings');
@@ -11,7 +12,7 @@ const Content = ({ userId }) => {
       case 'Account Settings':
         return <AccountSettings userId={userId}/>;
       case 'Order History':
-        return <OrderHistory />;
+        return <OrderComponent userId={userId} />;
       default:
         return null;
     }
