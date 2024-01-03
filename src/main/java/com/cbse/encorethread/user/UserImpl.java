@@ -98,8 +98,8 @@ public class UserImpl implements UserService {
     @Override
     public UserDTO getUserById(Long userId) {
         return userRepository.findById(userId)
-                .map(this::convertToUserDTO)
-                .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
+            .map(this::convertToUserDTO)
+            .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
     }
 
     public User updateUserById(Long id, User user) {
@@ -120,15 +120,14 @@ public class UserImpl implements UserService {
     @Override
     public void deleteUserById(Long userId) {
         User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId)
-                );
+            .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
         userRepository.deleteById(userId);
     }
 
     @Override
     public boolean changePassword(Long userId, String oldPassword, String newPassword) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+            .orElseThrow(() -> new RuntimeException("User not found"));
 
         if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
             throw new RuntimeException("Old password is incorrect");
@@ -151,5 +150,12 @@ public class UserImpl implements UserService {
         } else {
             System.out.println("User with ID " + userId + " not found");
         }
+    }
+
+    @Override
+    public String getRoleById(Long userId) {
+        User user = userRepository.findById(userId)
+            .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
+        return user.getRoles();
     }
 }

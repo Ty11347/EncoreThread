@@ -1,10 +1,11 @@
 import React from 'react';
 import Profile from './Profile'
 
-const Sidebar=({ userId })=> {
+const Sidebar=()=> {
+  
   return (
     <aside className="sidebar">
-      <Profile userId = {userId}/>
+      <Profile/>
     </aside>
   );
 };

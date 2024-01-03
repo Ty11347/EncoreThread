@@ -7,7 +7,6 @@ import com.cbse.encorethread.dto.PasswordResetDTO;
 import com.cbse.encorethread.model.User;
 import com.cbse.encorethread.service.UserService;
 import com.cbse.encorethread.user.LoginMessage;
-import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -71,5 +70,11 @@ public class UserController {
     public ResponseEntity<Void> updateProfilepic(@PathVariable Long userId, @RequestBody ProfilepicDTO profilepicDTO) {
         userService.updateProfilePic(userId, profilepicDTO.getProfilepic());
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{userId}/role")
+    public ResponseEntity<String> getRoleById(@PathVariable Long userId){
+        userService.getRoleById(userId);
+        return new ResponseEntity<>("User role successfully retrieved!", HttpStatus.OK);
     }
 }

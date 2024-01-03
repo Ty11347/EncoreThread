@@ -1,11 +1,13 @@
 import { useState, useRef, useEffect  } from 'react'
+import { useSelector } from 'react-redux';
 
-const Profile = ({ userId })=>{
+const Profile = ()=>{
   const [userProfile, setUserProfile] = useState(null)
   const[isOpen, setIsOpen] = useState(false);
   const profileImage = useRef(null)
   const [selectedImage, setSelectedImage] = useState(null);
   const [previousProfilepic, setPreviousProfilepic] = useState(null);
+  const userId= useSelector(state => state.user.user.id);
 
   useEffect(() => {
     const fetchUserProfile = async () => {
@@ -28,18 +30,13 @@ const Profile = ({ userId })=>{
     fetchUserProfile();
   }, [userId]);
 
-  const openChooseImage = () => {
-    profileImage.current.click()
-  }
-
   const onOpen = () => {
-    setIsOpen(true); // Function to open the modal
+    setIsOpen(true); 
   };
 
   const onClose = () => {
-    setIsOpen(false); // Function to close the modal
+    setIsOpen(false);
   };
-
 
   const changeProfileImage = event => {
     const ALLOWED_TYPES = ['image/png', 'image/jpeg', 'image/jpg']
@@ -68,37 +65,10 @@ const Profile = ({ userId })=>{
     }
   };
 
-  {/*const uploadImage = async(base64Image) => {*/}
-  {/*  const imageData = {*/}
-  {/*      image: base64Image*/}
-  {/*  };*/}
-  //   // Replace with your API endpoint
-  //   try{
-  {/*    const response = await fetch(`http://localhost:8080/api/user/${userId}/update/profilepic`, {*/}
-  {/*      method: 'PUT',*/}
-  {/*      headers: {*/}
-  {/*        'Accept': 'application/json',*/}
-  {/*        'Content-Type': 'application/json',*/}
-  {/*      },*/}
-  //       body: JSON.stringify(imageData),
-  //     });
-  {/*    if(response.ok){*/}
-  //       const data = await response.json();
-  //       setUserProfile(data);
-  //     }else{
-  //       console.error("Failed to update image", response.status);
-  //     }
-  //   }catch(error){
-  //     console.error("Error updating image:", error);
-  //   }
-  // };
-
   const uploadImage = async (base64Image) => {
     const imageData = {
       profilepic: base64Image
     };
-
-    // previousProfilepic = getCurrentProfilepic();
 
     try {
       const response = await fetch(`http://localhost:8080/api/user/${userId}/update/profilepic`, {
