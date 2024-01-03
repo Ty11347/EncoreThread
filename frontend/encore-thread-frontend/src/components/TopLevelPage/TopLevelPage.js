@@ -27,9 +27,9 @@ const Sidebar = () => {
         <li>
           <a href="/admin/orders" className="buttonStyle">Orders-Admin</a>
         </li>
-        <li>
+        {/* <li>
           <a href="/orders" className="buttonStyle">Orders-Users</a>
-        </li>
+        </li> */}
         <li>
           <a href="/register" className="buttonStyle">Register</a>
         </li>
