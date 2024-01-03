@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import WishlistCard from "./WishlistCard";
 
-const WishlistComponent = () => {
+const WishlistComponent = ({ userId }) => {
   const [wishlist, setWishlist] = useState([]);
-  const { userId } = useParams();
 
   const fetchWishlist = async () => {
     try {
