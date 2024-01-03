@@ -12,6 +12,8 @@ import MainProfile from "../UserProfile/MainProfile";
 import ReviewCard from "../Review/ReviewCard";
 import AddReviewCard from "../Review/AddReviewCard";
 import EditReviewCard from "../Review/EditReviewCard";
+// import Admin from "../Admin/ManageProductCard";
+import AdminPage from "../Admin/ManageProductsComponent";
 import '../../App.css';
 
 const Sidebar = () => {
@@ -32,6 +34,9 @@ const Sidebar = () => {
         </li>
         <li>
           <a href="/register" className="buttonStyle">Register</a>
+        </li>
+        <li>
+          <a href="/admin" className="buttonStyle">Admin</a>
         </li>
         {/* <li>
           <a href="/userProfile" className="buttonStyle">Main Profile</a>
@@ -69,7 +74,8 @@ const TopLevelPage = () => {
               <Route path="/:userId/wishlist" element={<WishlistComponent/>} />
               <Route path="/register" element={<Register/>} />
               <Route path="/login" element={<Login/>} />
-              <Route  path="/user/:userId" element={<MainProfile/>} />
+              <Route path="/user/:userId" element={<MainProfile/>} />
+              <Route path="/admin" element={<AdminPage/>} />
             </Routes>
           </main>
         </div>
