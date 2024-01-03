@@ -3,6 +3,7 @@ import AccountSettings from './AccountSettings';
 import OrderHistory from './OrderHistory';
 import Actions from './Actions';
 import OrderComponent from '../../Order/OrderComponent';
+import WishlistComponent from '../../Wishlist/WishlistComponent';
 
 const Content = ({ userId }) => {
   const [selectedTab, setSelectedTab] = useState('Account Settings');
@@ -13,6 +14,8 @@ const Content = ({ userId }) => {
         return <AccountSettings userId={userId}/>;
       case 'Order History':
         return <OrderComponent userId={userId} />;
+      case 'Wishlist':
+        return <WishlistComponent userId={userId} />;
       default:
         return null;
     }
@@ -32,6 +35,12 @@ const Content = ({ userId }) => {
           style={{ cursor: 'pointer', fontWeight: selectedTab === 'Order History' ? 'semibold' : 'normal' }}
         >
           Order History
+        </div>
+        <div
+          onClick={() => setSelectedTab('Wishlist')}
+          style={{ cursor: 'pointer', fontWeight: selectedTab === 'Wishlist' ? 'semibold' : 'normal' }}
+        >
+          Wishlist
         </div>
       </div>
 
