@@ -16,6 +16,22 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: update_updated_at_column(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.update_updated_at_column() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+BEGIN
+  NEW.updated_at = CURRENT_TIMESTAMP;
+  RETURN NEW;
+END;
+$$;
+
+
+ALTER FUNCTION public.update_updated_at_column() OWNER TO postgres;
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -28,7 +44,9 @@ CREATE TABLE public.cartitems (
     cart_item_id integer NOT NULL,
     cart_id integer,
     product_id integer,
-    quantity integer NOT NULL
+    quantity integer NOT NULL,
+    added_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    price numeric(10,2)
 );
 
 
@@ -62,7 +80,10 @@ ALTER SEQUENCE public.cartitems_cart_item_id_seq OWNED BY public.cartitems.cart_
 
 CREATE TABLE public.carts (
     cart_id integer NOT NULL,
-    user_id integer
+    user_id integer,
+    created_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    status character varying(255) DEFAULT 'pending'::character varying
 );
 
 
@@ -378,9 +399,9 @@ ALTER TABLE ONLY public.wishlist ALTER COLUMN id SET DEFAULT nextval('public.wis
 -- Data for Name: cartitems; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.cartitems (cart_item_id, cart_id, product_id, quantity) FROM stdin;
-1	1	1	1
-2	2	2	2
+COPY public.cartitems (cart_item_id, cart_id, product_id, quantity, added_at, price) FROM stdin;
+1	1	1	1	2024-01-03 16:36:33.590656	\N
+2	2	2	2	2024-01-03 16:36:33.590656	\N
 \.
 
 
@@ -388,9 +409,10 @@ COPY public.cartitems (cart_item_id, cart_id, product_id, quantity) FROM stdin;
 -- Data for Name: carts; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.carts (cart_id, user_id) FROM stdin;
-1	1
-2	2
+COPY public.carts (cart_id, user_id, created_at, updated_at, status) FROM stdin;
+2	2	2024-01-03 16:31:13.388438	2024-01-03 16:31:13.388438	pending
+3	3	2024-01-03 16:33:43.38592	2024-01-03 16:33:43.38592	pending
+1	1	2024-01-03 16:31:13.388438	2024-01-03 16:34:20.494935	shipped
 \.
 
 
@@ -594,6 +616,13 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.wishlist
     ADD CONSTRAINT wishlist_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: carts update_carts_updated_at; Type: TRIGGER; Schema: public; Owner: postgres
+--
+
+CREATE TRIGGER update_carts_updated_at BEFORE UPDATE ON public.carts FOR EACH ROW EXECUTE FUNCTION public.update_updated_at_column();
 
 
 --

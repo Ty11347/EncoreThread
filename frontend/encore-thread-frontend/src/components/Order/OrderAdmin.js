@@ -20,7 +20,7 @@ function OrderAdmin() {
 
   return (
     <div>
-      <h1>Orders</h1>
+      <h1>Orders (Admin)</h1>
       <div className='container'>
         <div className="new-order-container">
           <div className="new-order-form-container">
@@ -90,6 +90,7 @@ function OrderAdmin() {
               <th className='th'>Order Date</th>
               <th className='th'>Order Total</th>
               <th className="th">Shipping Status</th>
+              <th className="th">Address</th>
             </tr>
           </thead>
           <tbody>
@@ -100,6 +101,7 @@ function OrderAdmin() {
                 <td>{order.orderDate}</td>
                 <td>{order.totalPrice}</td>
                 <td className={`${order.orderStatus.toLowerCase()}`}>{order.orderStatus}</td>
+                <td>{order.address}</td>
               </tr>
             ))}
           </tbody>

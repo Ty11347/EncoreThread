@@ -26,6 +26,9 @@ public class Orders {
   @Column(name = "order_date")
   private LocalDate order_date;
 
+  @Column(name = "address")
+  private String address;
+
   public Orders() {
   }
 
@@ -82,5 +85,13 @@ public class Orders {
 
   public void setOrderDate(LocalDate order_date) {
     this.order_date = order_date;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
   }
 }

@@ -22,6 +22,32 @@
   align-self: center;
 }
 
+.outer-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 2em;
+}
+
+.address-form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.address-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.disable-address {
+  width: 250px;
+  margin-right: -250px;
+  padding: 0 1em;
+}
+
 .details-outer-container {
   display: flex;
   flex-direction: column;

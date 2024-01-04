@@ -67,7 +67,7 @@ const Navbar = () => {
           {isAdmin&&(
             <li>
               <Link to={`/admin/orders`} className="buttonStyle">
-                Orders-Admin
+                Orders
               </Link>
             </li>
           )}

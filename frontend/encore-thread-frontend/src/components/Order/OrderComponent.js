@@ -34,6 +34,7 @@ function OrderComponent() {
               <th className='th'>Order Date</th>
               <th className='th'>Order Total</th>
               <th className="th">Shipping Status</th>
+              <th className="th">Address</th>
             </tr>
           </thead>
           <tbody>
@@ -43,6 +44,7 @@ function OrderComponent() {
                 <td>{order.orderDate}</td>
                 <td>{order.totalPrice}</td>
                 <td className={`${order.orderStatus.toLowerCase()}`}>{order.orderStatus}</td>
+                <td>{order.address}</td>
               </tr>
             ))}
           </tbody>
