@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import ProductDetailCard from "../Product/ProductDetailCard";
 import ProductComponent from "../Product/ProductComponent";
+import WishlistComponent from "../Wishlist/WishlistComponent";
 import OrderAdmin from "../Order/OrderAdmin";
 import OrderComponent from "../Order/OrderComponent";
 import OrderDetail from "../Order/OrderDetail";
@@ -11,6 +12,8 @@ import MainProfile from "../UserProfile/MainProfile";
 import ReviewCard from "../Review/ReviewCard";
 import AddReviewCard from "../Review/AddReviewCard";
 import EditReviewCard from "../Review/EditReviewCard";
+// import Admin from "../Admin/ManageProductCard";
+import AdminPage from "../Admin/ManageProductsComponent";
 import '../../App.css';
 import { useSelector } from 'react-redux';
 
@@ -114,9 +117,10 @@ const TopLevelPage = () => {
               <Route path="/reviews" element={<ReviewCard />} />
               <Route path="/edit/:reviewId" element={<EditReviewCard />} />
               <Route path="/add/reviews/:userId/:productId" element={<AddReviewCard />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/user/:userId" element={<MainProfile />} />
+              <Route path="/:userId/wishlist" element={<WishlistComponent/>} />
+              <Route path="/register" element={<Register/>} />
+              <Route path="/login" element={<Login/>} />
+              <Route  path="/user/:userId" element={<MainProfile/>} />
             </Routes>
           </main>
         </div>
