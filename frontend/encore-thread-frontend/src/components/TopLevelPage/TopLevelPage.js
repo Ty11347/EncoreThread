@@ -17,6 +17,7 @@ import PaymentPage from "../Transaction/PaymentPage";
 
 import '../../App.css';
 import { useSelector } from 'react-redux';
+import PaymentPage from "../Transaction/PaymentPage";
 
 const Navbar = () => {
   const user = useSelector(state => state.user.user);
