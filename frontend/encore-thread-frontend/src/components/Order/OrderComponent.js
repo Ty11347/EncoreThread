@@ -3,9 +3,11 @@ import './Order.css'
 import { ORDER_STATUS_PENDING, ORDER_STATUS_PROCESSING } from './OrderConstant'
 import { useNavigate } from 'react-router-dom'
 import SuccessMessage from './SuccessMessage'
+import { useSelector } from 'react-redux';
 
-function OrderComponent({ userId }) {
+function OrderComponent() {
   const navigate = useNavigate()
+  const userId = useSelector(state => state.user.user.id);
   const [orders, setOrders] = useState([])
   const [isCanceling, setIsCanceling] = useState(false)
   const [cancelId, setCancelId] = useState('')

@@ -1,0 +1,17 @@
+.button{
+    margin-top: 5px;
+    width: 100px; 
+    height: 40px; 
+    background-color: #9CEDFF; 
+    display: inline-block;
+    margin-right: 50px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-weight: bold;
+}
+
+.button_container {
+    display: flex;
+    justify-content: center;
+}

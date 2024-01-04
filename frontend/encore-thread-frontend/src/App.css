@@ -158,12 +158,16 @@ input {
 }
 
 .tab {
-  margin-left: 3px;
+  margin-right: 10px;
   padding-right: 10px;
   padding-top: 3px;
   font-weight: semibold;
-  color: #718096;
+  color: #000;
   border-bottom: 1px solid #cbd5e0;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: #edeff9;
+  font-weight: bold;
 }
 
 .content {
