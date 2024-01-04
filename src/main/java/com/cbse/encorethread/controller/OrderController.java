@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cbse.encorethread.dto.OrdersDTO;
 import com.cbse.encorethread.model.Orders;
 import com.cbse.encorethread.service.OrdersService;
 
@@ -43,6 +44,11 @@ public class OrderController {
   @PostMapping
   public Orders createOrder(@RequestBody Orders order) {
     return ordersService.createOrder(order);
+  }
+
+  @PostMapping("/dto")
+  public Orders createOrder(@RequestBody OrdersDTO orderdto) {
+    return ordersService.createOrderByDTO(orderdto);
   }
 
   @DeleteMapping("/{id}")

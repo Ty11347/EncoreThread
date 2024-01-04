@@ -10,20 +10,21 @@ import com.cbse.encorethread.dto.OrderDetailsDTO;
 import com.cbse.encorethread.model.OrderDetails;
 import com.cbse.encorethread.model.Products;
 import com.cbse.encorethread.repository.OrderDetailsRepository;
+import com.cbse.encorethread.repository.ProductsRepository;
 
 @Service
 public class OrderDetailsService {
   private OrderDetailsRepository orderDetailsRepository;
 
   @Autowired
-  private ProductsService productsService;
+  private ProductsRepository productsRepository;
 
   public OrderDetailsService(OrderDetailsRepository orderDetailsRepository) {
     this.orderDetailsRepository = orderDetailsRepository;
   }
 
   private OrderDetailsDTO orderDetailsDTOMapper(OrderDetails orderDetails) {
-    Products product = productsService.getProductById(orderDetails.getProductId());
+    Products product = productsRepository.getById(orderDetails.getProductId());
 
     return new OrderDetailsDTO(
       product.getId(),

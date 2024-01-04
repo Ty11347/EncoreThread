@@ -32,18 +32,20 @@ public class Orders {
   public Orders() {
   }
 
-  public Orders(Integer id, Long userId, String orderStatus, Double totalPrice, LocalDate orderDate) {
+  public Orders(Integer id, Long userId, String orderStatus, Double totalPrice, String address, LocalDate orderDate) {
     this.id = id;
     this.userId = userId;
     this.orderStatus = orderStatus;
     this.totalPrice = totalPrice;
+    this.address = address;
     this.orderDate = orderDate;
   }
 
-  public Orders(Long userId, String orderStatus, Double totalPrice, LocalDate orderDate) {
+  public Orders(Long userId, String orderStatus, Double totalPrice, String address, LocalDate orderDate) {
     this.userId = userId;
     this.orderStatus = orderStatus;
     this.totalPrice = totalPrice;
+    this.address = address;
     this.orderDate = orderDate;
   }
 
