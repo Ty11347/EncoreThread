@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import ProductDetailCard from "../Product/ProductDetailCard";
 import ProductComponent from "../Product/ProductComponent";
+import WishlistComponent from "../Wishlist/WishlistComponent";
 import OrderAdmin from "../Order/OrderAdmin";
 import OrderComponent from "../Order/OrderComponent";
 import OrderDetail from "../Order/OrderDetail";
@@ -11,8 +12,7 @@ import MainProfile from "../UserProfile/MainProfile";
 import ReviewCard from "../Review/ReviewCard";
 import AddReviewCard from "../Review/AddReviewCard";
 import EditReviewCard from "../Review/EditReviewCard";
-// import Admin from "../Admin/ManageProductCard";
-import AdminPage from "../Admin/ManageProductsComponent";
+import AdminManageProduct from "../Admin/ManageProductsComponent";
 import '../../App.css';
 import { useSelector } from 'react-redux';
 import Cart from "../Cart/Cart";
@@ -33,7 +33,7 @@ const Navbar = () => {
           }
         }
       );
-      if(response.ok){
+      if (response.ok){
         const role = await response.text();
         setIsAdmin(role === 'Admin');
       }else{
@@ -59,6 +59,13 @@ const Navbar = () => {
               Products
             </Link>
           </li>
+          {isAdmin&&(
+              <li>
+                <Link to={`/admin`} className="buttonStyle">
+                  Manage Product
+                </Link>
+              </li>
+          )}
           {isAdmin&&(
             <li>
               <Link to={`/admin/orders`} className="buttonStyle">
@@ -121,10 +128,11 @@ const TopLevelPage = () => {
               <Route path="/reviews" element={<ReviewCard />} />
               <Route path="/edit/:reviewId" element={<EditReviewCard />} />
               <Route path="/add/reviews/:userId/:productId" element={<AddReviewCard />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/user/:userId" element={<MainProfile />} />
-              <Route path="/admin" element={<AdminPage/>} />
+              <Route path="/:userId/wishlist" element={<WishlistComponent/>} />
+              <Route path="/register" element={<Register/>} />
+              <Route path="/login" element={<Login/>} />
+              <Route path="/user/:userId" element={<MainProfile/>} />
+              <Route path="/admin" element={<AdminManageProduct/>} />
               <Route path="/cart" element={<Cart/>} />
             </Routes>
           </main>

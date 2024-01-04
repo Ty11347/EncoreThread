@@ -74,7 +74,7 @@ public class UserController {
 
     @GetMapping("/{userId}/role")
     public ResponseEntity<String> getRoleById(@PathVariable Long userId){
-        userService.getRoleById(userId);
-        return new ResponseEntity<>("User role successfully retrieved!", HttpStatus.OK);
+        String userRole = userService.getRoleById(userId);
+        return new ResponseEntity<>(userRole, HttpStatus.OK);
     }
 }
