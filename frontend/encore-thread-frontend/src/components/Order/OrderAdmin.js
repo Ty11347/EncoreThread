@@ -41,6 +41,7 @@ function OrderAdmin() {
                       userId: e.target.userId.value,
                       orderDate: orderDate.toISOString(),
                       totalPrice: e.target.totalPrice.value,
+                      address: e.target.address.value,
                       orderStatus: orderStatus,
                     }
                     console.log(newOrder)
@@ -66,6 +67,8 @@ function OrderAdmin() {
                   <input type="date" id="orderDate" name="orderDate" defaultValue={new Date().toISOString().slice(0, 10)} required />
                   <label htmlFor="totalPrice">Total Price <span className="required">*</span></label>
                   <input type="text" id="totalPrice" name="totalPrice" required />
+                  <label htmlFor="address">Address <span className="required">*</span></label>
+                  <input type="text" id="address" name="address" required />
                   <label htmlFor="orderStatus">Order Status <span className="required">*</span></label>
                   <select name="orderStatus" id="orderStatus" value={orderStatus} onChange={(e) => setOrderStatus(e.target.value)} required>
                     {

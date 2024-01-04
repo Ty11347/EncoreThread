@@ -11,23 +11,23 @@ import javax.persistence.Table;
 @Table(name = "orders")
 public class Orders {
   @Id
-  @Column(name = "order_id")
+  @Column(name = "order_id", nullable = false)
   private Integer id;
 
-  @Column(name = "user_id")
+  @Column(name = "user_id", nullable = false)
   private Long user_id;
 
-  @Column(name = "order_status")
+  @Column(name = "order_status", nullable = false)
   private String order_status;
 
-  @Column(name = "total_price")
+  @Column(name = "total_price", nullable = false)
   private Double total_price;
 
-  @Column(name = "order_date")
-  private LocalDate order_date;
-
-  @Column(name = "address")
+  @Column(name = "address", nullable = false)
   private String address;
+
+  @Column(name = "order_date", nullable = false)
+  private LocalDate order_date;
 
   public Orders() {
   }
@@ -79,19 +79,19 @@ public class Orders {
     this.total_price = total_price;
   }
 
-  public LocalDate getOrderDate() {
-    return order_date;
-  }
-
-  public void setOrderDate(LocalDate order_date) {
-    this.order_date = order_date;
-  }
-
   public String getAddress() {
     return address;
   }
 
   public void setAddress(String address) {
     this.address = address;
+  }
+
+  public LocalDate getOrderDate() {
+    return order_date;
+  }
+
+  public void setOrderDate(LocalDate order_date) {
+    this.order_date = order_date;
   }
 }

@@ -7,20 +7,20 @@ import javax.persistence.Id;
 @Entity
 public class OrderDetails {
   @Id
-  @Column(name = "order_detail_id")
+  @Column(name = "order_detail_id", nullable = false)
   private Integer id;
 
-  @Column(name = "order_id")
+  @Column(name = "order_id", nullable = false)
   private Integer order_id;
 
-  @Column(name = "product_id")
+  @Column(name = "product_id", nullable = false)
   private Integer product_id;
 
-  @Column(name = "quantity")
+  @Column(name = "quantity", nullable = false)
   private Integer quantity;
 
   // single product price
-  @Column(name = "price")
+  @Column(name = "price", nullable = false)
   private Double price;
 
   // @Column(name = "size")
