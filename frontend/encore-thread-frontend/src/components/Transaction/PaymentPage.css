@@ -1,0 +1,105 @@
+.payment-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90vh;
+}
+
+.card-form {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    padding: 40px 60px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card-input {
+    margin-bottom: 15px;
+    font-family: 'Inter', sans-serif;
+}
+
+.card-input-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px; /* 调整上方间距 */
+}
+
+input, select {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.card-input input#cvv {
+    width: 4em; /* 设置宽度为三个字符宽 */
+}
+
+.card-input input#expiryYear {
+    width: 6em; /* 设置宽度为三个字符宽 */
+    margin-right: 20px;
+}
+
+#expiryMonth {
+    width: 6em; /* 设置宽度为三个字符宽 */
+}
+
+
+/* 新增样式，使 label 和 input 左对齐但保留一些间距 */
+.card-input label,
+.card-input input {
+    display: block;
+}
+
+.card-label {
+    text-align: left;
+    margin-left: 5px;
+    font-size: 13px;
+    color: #888;
+}
+
+.card-title{
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    margin: 0 0 25px 3px;
+    font-weight: 500;
+    font-size: 26px;
+}
+
+.card-sub-title{
+    text-align: left;
+    font-family: 'Inter', sans-serif;
+    margin: 0 0 20px 5px;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+#card-select-id{
+    margin-right: 20px;
+}
+
+.pay-btn {
+    font-family: 'Inter', sans-serif;
+    background-color: #0071e3;
+    color: white;
+    padding: 10px 30px; /* 调整按钮的宽度和高度 */
+    border: none;
+    border-radius: 8px; /* 使按钮有圆角 */
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+.pay-btn:hover {
+    background-color: #0077ed; /* 鼠标悬停时的背景色 */
+}
+
+.pay-btn:active{
+    background-color: #006edb;
+}

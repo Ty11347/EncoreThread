@@ -13,6 +13,9 @@ import ReviewCard from "../Review/ReviewCard";
 import AddReviewCard from "../Review/AddReviewCard";
 import EditReviewCard from "../Review/EditReviewCard";
 import AdminManageProduct from "../Admin/ManageProductsComponent";
+import PaymentPage from "../Transaction/PaymentPage";
+import PaymentSuccess from "../Transaction/PaymentSuccess";
+
 import '../../App.css';
 import { useSelector } from 'react-redux';
 
@@ -50,44 +53,53 @@ const Navbar = () => {
 
   if (user) {
     return (
-      <nav style={{ display: "flex", justifyContent: "space-around", background: "#faf8f8", padding: "10px 0" }}>
-        <ul style={{ listStyle: "none", display: "flex", margin: 0, padding: 0 }}>
-          <li>
-            <Link to={`/products`} className="buttonStyle">
-              Products
-            </Link>
-          </li>
-          {isAdmin&&(
-              <li>
-                <Link to={`/admin`} className="buttonStyle">
-                  Manage Product
-                </Link>
-              </li>
-          )}
-          {isAdmin&&(
+        <nav style={{display: "flex", justifyContent: "space-around", background: "#faf8f8", padding: "10px 0"}}>
+          <ul style={{listStyle: "none", display: "flex", margin: 0, padding: 0}}>
+            {isAdmin && (
+                <li>
+                  <Link to={`/products`} className="buttonStyle">
+                    Products
+                  </Link>
+                </li>
+            )}
+            {isAdmin && (
+                <li>
+                  <Link to={`/admin`} className="buttonStyle">
+                    Manage Products
+                  </Link>
+                </li>
+            )}
+            {isAdmin && (
+                <li>
+                  <Link to={`/admin/orders`} className="buttonStyle">
+                    Orders
+                  </Link>
+                </li>
+            )}
+            {!isAdmin && (
+                <li>
+                  <Link to={`/orders`} className="buttonStyle">
+                    Orders
+                  </Link>
+                </li>
+            )}
             <li>
-              <Link to={`/admin/orders`} className="buttonStyle">
-                Orders
+              <Link to={`/user/${userId}`} className="buttonStyle">
+                Main Profile
               </Link>
             </li>
-          )}
-          {!isAdmin&&(
+
             <li>
-              <Link to={`/orders`} className="buttonStyle">
-                Orders
+              <Link to={`/transaction`} className="buttonStyle">
+                Transaction
               </Link>
             </li>
-          )}
-          <li>
-            <Link to={`/user/${userId}`} className="buttonStyle">
-              Main Profile
-            </Link>
-          </li>
-          <li>
-            <a href="/login" className="buttonStyle">Logout</a>
-          </li>
-        </ul>
-      </nav>
+
+            <li>
+              <a href="/login" className="buttonStyle">Logout</a>
+            </li>
+          </ul>
+        </nav>
     );
   } else {
     return (
@@ -128,6 +140,8 @@ const TopLevelPage = () => {
               <Route path="/login" element={<Login/>} />
               <Route path="/user/:userId" element={<MainProfile/>} />
               <Route path="/admin" element={<AdminManageProduct/>} />
+              <Route path="/transaction" element={<PaymentPage/>} />
+              <Route path="/payment-success" element={<PaymentSuccess/>} />
             </Routes>
           </main>
         </div>
