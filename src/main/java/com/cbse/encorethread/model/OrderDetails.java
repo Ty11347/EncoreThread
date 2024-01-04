@@ -3,18 +3,20 @@ package com.cbse.encorethread.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "orderdetails")
 public class OrderDetails {
   @Id
   @Column(name = "order_detail_id", nullable = false)
   private Integer id;
 
   @Column(name = "order_id", nullable = false)
-  private Integer order_id;
+  private Integer orderId;
 
   @Column(name = "product_id", nullable = false)
-  private Integer product_id;
+  private Integer productId;
 
   @Column(name = "quantity", nullable = false)
   private Integer quantity;
@@ -23,23 +25,20 @@ public class OrderDetails {
   @Column(name = "price", nullable = false)
   private Double price;
 
-  // @Column(name = "size")
-  // private String size;
-
   public OrderDetails() {
   }
 
-  public OrderDetails(Integer id, Integer order_id, Integer product_id, Integer quantity, Double price) {
+  public OrderDetails(Integer id, Integer orderId, Integer productId, Integer quantity, Double price) {
     this.id = id;
-    this.order_id = order_id;
-    this.product_id = product_id;
+    this.orderId = orderId;
+    this.productId = productId;
     this.quantity = quantity;
     this.price = price;
   }
 
-  public OrderDetails(Integer order_id, Integer product_id, Integer quantity, Double price) {
-    this.order_id = order_id;
-    this.product_id = product_id;
+  public OrderDetails(Integer orderId, Integer productId, Integer quantity, Double price) {
+    this.orderId = orderId;
+    this.productId = productId;
     this.quantity = quantity;
     this.price = price;
   }
@@ -53,19 +52,19 @@ public class OrderDetails {
   }
 
   public Integer getOrderId() {
-    return order_id;
+    return orderId;
   }
 
-  public void setOrderId(Integer order_id) {
-    this.order_id = order_id;
+  public void setOrderId(Integer orderId) {
+    this.orderId = orderId;
   }
 
   public Integer getProductId() {
-    return product_id;
+    return productId;
   }
 
-  public void setProductId(Integer product_id) {
-    this.product_id = product_id;
+  public void setProductId(Integer productId) {
+    this.productId = productId;
   }
 
   public Integer getQuantity() {
