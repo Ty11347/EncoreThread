@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.cbse.encorethread.dto.OrdersDTO;
 import com.cbse.encorethread.model.OrderDetails;
 import com.cbse.encorethread.model.Orders;
+import com.cbse.encorethread.repository.OrderDetailsRepository;
 import com.cbse.encorethread.repository.OrdersRepository;
 
 @Service
@@ -15,7 +16,7 @@ public class OrdersService {
   private final OrdersRepository ordersRepository;
 
   @Autowired
-  private OrderDetailsService orderDetailsService;
+  private OrderDetailsRepository orderDetailsRepository;
 
   public OrdersService(OrdersRepository ordersRepository) {
     this.ordersRepository = ordersRepository;
@@ -60,7 +61,8 @@ public class OrdersService {
         orderdto.getQuantities()[i],
         orderdto.getPrices()[i]
       );
-      orderDetailsService.createOrderDetails(orderDetails[i]);
+      orderDetails[i].setId(orderDetailsRepository.findLatestId() + 1);
+      orderDetailsRepository.save(orderDetails[i]);
     }
     return order;
   }
