@@ -133,9 +133,9 @@ function ReviewCardByUserIdAndProductId({ userId, productId }) {
             </span>
             <div className="user-info">
               {user?.profilepic && user?.profilepic.length > 0 ? (
-                <div className="profile-image-container">
+                <div className="default-profile-container">
                   <img
-                    src={`data:image/png;base64,${user?.username}`}
+                    src={user?.profilepic}
                     alt={`Profile of ${user?.username}`}
                     className="profile-image"
                   />

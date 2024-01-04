@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { FaUser, FaEdit, FaTrash } from "react-icons/fa"; // Import the edit and delete icons
+import { FaUser } from "react-icons/fa";
 import Modal from "react-modal";
 import "./ReviewCard.css";
 
@@ -16,13 +16,16 @@ const renderStars = (rating) => {
   return stars;
 };
 
-Modal.setAppElement("#root"); // Set the root element for accessibility
+Modal.setAppElement("#root");
 
 function ReviewCard({ productId }) {
   const [reviews, setReviews] = useState([]);
-  const [user, setUser] = useState([]);
+  const [userReviews, setUserReviews] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedStar, setSelectedStar] = useState(null);
+  const [starCounts, setStarCounts] = useState({});
+  const [filteredReviews, setFilteredReviews] = useState([]);
 
   const fetchData = async (productId) => {
     try {
@@ -43,7 +46,10 @@ function ReviewCard({ productId }) {
 
             if (userResponse.ok) {
               const userData = await userResponse.json();
-              return userData;
+              return {
+                ...userData,
+                ...review,
+              };
             } else {
               console.error("Failed to fetch user");
               return null;
@@ -56,7 +62,15 @@ function ReviewCard({ productId }) {
 
         // Wait for all user data promises to resolve
         const usersData = await Promise.all(userPromises);
-        setUser(usersData);
+        setUserReviews(usersData);
+
+        // Calculate star counts
+        const counts = {};
+        reviewsData.forEach((review) => {
+          const rating = review.rating;
+          counts[rating] = (counts[rating] || 0) + 1;
+        });
+        setStarCounts(counts);
       } else {
         console.error("Failed to fetch reviews");
       }
@@ -68,6 +82,17 @@ function ReviewCard({ productId }) {
   useEffect(() => {
     fetchData(productId);
   }, [productId]);
+
+  useEffect(() => {
+    // Update filteredReviews when selectedStar changes
+    if (selectedStar !== null) {
+      const filtered = userReviews.filter((review) => review.rating === selectedStar);
+      setFilteredReviews(filtered);
+    } else {
+      // If selectedStar is null, show all reviews
+      setFilteredReviews(userReviews);
+    }
+  }, [selectedStar, userReviews]);
 
   const openModal = (image) => {
     setSelectedImage(image);
@@ -96,29 +121,36 @@ function ReviewCard({ productId }) {
 
   return (
     <div>
-      {reviews.map((review, index) => (
+      {/* Star buttons for filtering reviews */}
+      <button
+        onClick={() => setSelectedStar(null)} // Set selectedStar to null to show all comments
+        style={{
+          backgroundColor: selectedStar === null ? "yellow" : "transparent",
+        }}
+      >
+        All
+      </button>
+      {[5, 4, 3, 2, 1].map((star) => (
+        <button
+          key={star}
+          onClick={() => setSelectedStar(star)}
+          style={{
+            backgroundColor: selectedStar === star ? "yellow" : "transparent",
+          }}
+        >
+          {`${star} Star${star !== 1 ? "s" : ""} (${starCounts[star] || 0})`}
+        </button>
+      ))}
+
+      {filteredReviews.map((review, index) => (
         <div key={index} className="review-card">
           <div className="review-header">
-            {/* <span className="edit-delete-icons">
-              <FaEdit
-                className="icons"
-                color="green"
-                size={35}
-                onClick={() => handleEdit(review.id)}
-              />
-              <FaTrash
-                className="icons"
-                color="red"
-                size={35}
-                onClick={() => handleDelete(review.id)}
-              />
-            </span> */}
             <div className="user-info">
-              {user[index]?.profilepic && user[index]?.profilepic.length > 0 ? (
-                <div className="profile-image-container">
+              {review?.profilepic && review?.profilepic.length > 0 ? (
+                <div className="default-profile-container">
                   <img
-                    src={`data:image/png;base64,${user[index]?.username}`}
-                    alt={`Profile of ${user[index]?.username}`}
+                    src={review?.profilepic}
+                    alt={`Profile of ${review?.username}`}
                     className="profile-image"
                   />
                 </div>
@@ -128,7 +160,7 @@ function ReviewCard({ productId }) {
                 </div>
               )}
               <span className="username">
-                {user[index]?.username || "Anonymous User"}
+                {review?.username || "Anonymous User"}
               </span>
               <span className="date">{formatDate(review.commentDate)}</span>
             </div>

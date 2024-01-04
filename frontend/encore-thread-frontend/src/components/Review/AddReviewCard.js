@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUser, FaStar } from "react-icons/fa";
 import "./ReviewCard.css";
 import { useParams, useNavigate } from "react-router-dom";
@@ -7,9 +7,9 @@ const AddReviewCard = ({ match }) => {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
   const [image, setImage] = useState(null);
-  const {userId, productId} = useParams();
+  const { userId, productId } = useParams();
   const navigate = useNavigate();
-
+  const [user, setUser] = useState(null);
   const handleRatingChange = (newRating) => {
     setRating(newRating);
   };
@@ -25,6 +25,27 @@ const AddReviewCard = ({ match }) => {
     }
   };
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userResponse = await fetch(
+          `http://localhost:3000/api/user/${userId}`
+        );
+
+        if (userResponse.ok) {
+          const userData = await userResponse.json();
+          setUser(userData);
+        } else {
+          console.error("Failed to fetch user");
+        }
+      } catch (error) {
+        console.error("Error fetching user:", error);
+      }
+    };
+
+    fetchUserData();
+  }, [userId]);
+
   const formatDate = () => {
     const now = new Date();
     const isoString = now.toISOString();
@@ -39,7 +60,7 @@ const AddReviewCard = ({ match }) => {
     const newReview = {
       id: 0,
       productId: productId,
-      userId: userId, 
+      userId: userId,
       rating,
       comment,
       commentDate: new Date(),
@@ -77,12 +98,19 @@ const AddReviewCard = ({ match }) => {
   return (
     <div className="add-review-card">
       <div className="user-info">
-        <div
-          className="default-profile-container"
-          style={{ marginLeft: "10px", marginTop: "15px" }}
-        >
-          <FaUser size={24} />
-        </div>
+        {user?.profilepic && user?.profilepic.length > 0 ? (
+          <div className="default-profile-container">
+            <img
+              src={user?.profilepic}
+              alt={`Profile of ${user?.username}`}
+              className="profile-image"
+            />
+          </div>
+        ) : (
+          <div className="default-profile-container">
+            <FaUser size={24} />
+          </div>
+        )}
         <span className="username">You</span>
       </div>
       <div className="add-rating">
