@@ -23,7 +23,7 @@ public class OrderDetailsService {
   }
 
   private OrderDetailsDTO orderDetailsDTOMapper(OrderDetails orderDetails) {
-    Products product = productsService.getProductById(orderDetails.getId());
+    Products product = productsService.getProductById(orderDetails.getProductId());
 
     return new OrderDetailsDTO(
       product.getId(),
@@ -47,6 +47,7 @@ public class OrderDetailsService {
   }
 
   public OrderDetails createOrderDetails(OrderDetails orderDetails) {
+    orderDetails.setId(orderDetailsRepository.findLatestId() + 1);
     return orderDetailsRepository.save(orderDetails);
   }
 

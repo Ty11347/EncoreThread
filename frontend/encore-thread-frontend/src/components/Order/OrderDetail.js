@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import "./OrderDetail.css";
-import { ORDER_STATUS, ORDER_STATUS_SHIPPED } from "./OrderConstant";
+import { ORDER_STATUS, ORDER_STATUS_CANCELLED, ORDER_STATUS_PENDING, ORDER_STATUS_PROCESSING, ORDER_STATUS_SHIPPED, ORDER_STATUS_SHIPPING } from "./OrderConstant";
 import SuccessMessage from "./SuccessMessage";
 import ReviewCardByUserIdAndProductId from "../Review/ReviewCardByUserIdAndProductId";
 
@@ -13,7 +13,9 @@ function OrderDetail() {
   const [order, setOrder] = useState({});
   const [orderItems, setOrderItems] = useState([]);
   const [orderStatus, setOrderStatus] = useState(order.orderStatus);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [isStatusSuccess, setIsStatusSuccess] = useState(false);
+  const [address, setAddress] = useState(""); 
+  const [isAddressSuccess, setIsAddressSuccess] = useState(false);
   const [reviewExists, setReviewExists] = useState({});
 
   useEffect(() => {
@@ -32,6 +34,7 @@ function OrderDetail() {
 
   useEffect(() => {
     setOrderStatus(order.orderStatus);
+    setAddress(order.address);
   }, [order]);
 
   useEffect(() => {
@@ -61,7 +64,6 @@ function OrderDetail() {
         }
       }
       setReviewExists(updatedReviewStatus);
-      console.log(updatedReviewStatus);
     };
 
     fetchReviews();
@@ -87,8 +89,8 @@ function OrderDetail() {
                 .then((data) => {
                   setOrder(data);
                   setOrderId(data.id);
-                  setIsSuccess(true);
-                  setTimeout(() => setIsSuccess(false), 3000);
+                  setIsStatusSuccess(true);
+                  setTimeout(() => setIsStatusSuccess(false), 3000);
                 })
                 .catch((error) =>
                   console.error("Error updating order status: ", error)
@@ -111,20 +113,68 @@ function OrderDetail() {
             </select>
             <button type="submit">Submit</button>
           </form>
-          {isSuccess && (
+          {isStatusSuccess && (
             <SuccessMessage
               message={"Order status updated successfully"}
             ></SuccessMessage>
           )}
         </div>
       )}
-      <div className="details-outer-container">
-        <div className="details-container">
-          {isAdmin && <p>Customer ID: {userId}</p>}
-          <p>{order.orderStatus}</p>
-          <p>{order.orderDate}</p>
-          <p>Total Price: RM {order.totalPrice}</p>
+      <div className="outer-container">
+        <div className="details-outer-container">
+          <div className="details-container">
+            {isAdmin && <p>Customer ID: {userId}</p>}
+            <p>{order.orderStatus}</p>
+            <p>{order.orderDate}</p>
+            <p>Total Price: RM {order.totalPrice}</p>
+            <p style={{width: "fit-content"}}>Address: </p>
+            <p>{order.address}</p>
+          </div>
         </div>
+        {
+          order.orderStatus === ORDER_STATUS_PENDING || order.orderStatus === ORDER_STATUS_PROCESSING
+          ? <form 
+              className="address-form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                fetch(`http://localhost:8080/api/orders/update`, {
+                  method: "PUT",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ ...order, address: address }),
+                })
+                  .then((response) => response.json())
+                  .then((data) => {
+                    setOrder(data);
+                    setOrderId(data.id);
+                    setIsAddressSuccess(true);
+                    setTimeout(() => setIsAddressSuccess(false), 3000);
+                  })
+                  .catch((error) =>
+                    console.error("Error updating address: ", error)
+                  );
+              }}
+            >
+              <label htmlFor="address">Change Address</label>
+              <textarea name="address" id="address" cols="30" rows="10" value={address} onChange={(e) => setAddress(e.target.value)}></textarea>
+              <button type='submit'>Submit</button>
+            </form>
+          : order.orderStatus === ORDER_STATUS_SHIPPING
+          ? <p className="disable-address">Unable to change address as order has been shipped out.</p>
+          : order.orderStatus === ORDER_STATUS_SHIPPED
+          ? <p className="disable-address">Unable to change address as order has been delivered.</p>
+          : order.orderStatus === ORDER_STATUS_CANCELLED
+          ? <p className="disable-address">Unable to change address as order has been cancelled.</p>
+          : <p className="disable-address">Unable to change address.</p>
+        }
+      </div>
+      <div className="outer-container">
+        {isAddressSuccess && (
+          <SuccessMessage
+          message={"Address updated successfully"}
+          ></SuccessMessage>
+        )}
       </div>
       <div className="product-container">
         {orderItems.map((orderItem) => (

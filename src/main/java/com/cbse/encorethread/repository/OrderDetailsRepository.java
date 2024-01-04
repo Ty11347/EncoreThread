@@ -13,5 +13,8 @@ public interface OrderDetailsRepository extends JpaRepository<OrderDetails, Inte
 
   @Query(value = "SELECT * FROM orderdetails WHERE order_id = ?1", nativeQuery = true)
   List<OrderDetails> findAllByOrderId(Integer orderId);
+
+  @Query(value = "SELECT MAX(order_detail_id) FROM orderdetails", nativeQuery = true)
+  Integer findLatestId();
   
 }
