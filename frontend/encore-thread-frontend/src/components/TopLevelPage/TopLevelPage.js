@@ -14,6 +14,7 @@ import AddReviewCard from "../Review/AddReviewCard";
 import EditReviewCard from "../Review/EditReviewCard";
 import AdminManageProduct from "../Admin/ManageProductsComponent";
 import PaymentPage from "../Transaction/PaymentPage";
+import PaymentSuccess from "../Transaction/PaymentSuccess";
 
 import '../../App.css';
 import { useSelector } from 'react-redux';
@@ -140,6 +141,7 @@ const TopLevelPage = () => {
               <Route path="/user/:userId" element={<MainProfile/>} />
               <Route path="/admin" element={<AdminManageProduct/>} />
               <Route path="/transaction" element={<PaymentPage/>} />
+              <Route path="/payment-success" element={<PaymentSuccess/>} />
             </Routes>
           </main>
         </div>

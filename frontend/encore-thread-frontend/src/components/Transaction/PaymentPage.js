@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from "react";
-import "./PaymentPage.css"; // 引入样式表
+import "./PaymentPage.css";
 import {useSelector} from 'react-redux';
+import { useNavigate  } from 'react-router-dom';
 
 const PaymentPage = () => {
+  const navigate  = useNavigate();
   const [cardholderName, setCardholderName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [expiryMonth, setExpiryMonth] = useState("");
@@ -19,7 +21,7 @@ const PaymentPage = () => {
     ) {
       alert('Please fill in all required fields.');
     } else {
-      console.log("Payment details submitted:", {
+      console.log('Payment details submitted:', {
         cardholderName,
         cardNumber,
         expiryMonth,
@@ -27,15 +29,14 @@ const PaymentPage = () => {
         cvv,
       });
 
-      // TODO: logic to jump to payment success page
+      navigate('/payment-success');
     }
   };
 
   const formatCardNumber = (value) => {
-    // 移除非数字字符
     const numericValue = value.replace(/\D/g, '');
-    // 在每四个数字之后插入空格
-    const formattedValue = numericValue.replace(/(\d{4})/g, '$1 ').trim();
+    let formattedValue = numericValue.replace(/(\d{4})/g, '$1 ').trim();
+    formattedValue = formattedValue.slice(0, 19);
     setCardNumber(formattedValue);
   };
 
@@ -44,13 +45,11 @@ const PaymentPage = () => {
   };
 
   const handleExpiryYearChange = (e) => {
-    // 限制输入四位数字
     const numericValue = e.target.value.replace(/\D/g, '').slice(0, 4);
     setExpiryYear(numericValue);
   };
 
   const handleCvvChange = (e) => {
-    // 限制输入三位数字
     const numericValue = e.target.value.replace(/\D/g, '').slice(0, 3);
     setCvv(numericValue);
   };
