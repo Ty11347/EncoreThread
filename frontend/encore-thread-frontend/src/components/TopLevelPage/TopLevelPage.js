@@ -12,8 +12,7 @@ import MainProfile from "../UserProfile/MainProfile";
 import ReviewCard from "../Review/ReviewCard";
 import AddReviewCard from "../Review/AddReviewCard";
 import EditReviewCard from "../Review/EditReviewCard";
-// import Admin from "../Admin/ManageProductCard";
-import AdminPage from "../Admin/ManageProductsComponent";
+import AdminManageProduct from "../Admin/ManageProductsComponent";
 import '../../App.css';
 import { useSelector } from 'react-redux';
 
@@ -32,7 +31,7 @@ const Navbar = () => {
           }
         }
       );
-      if(response.ok){
+      if (response.ok){
         const role = await response.text();
         setIsAdmin(role === 'Admin');
       }else{
@@ -58,6 +57,13 @@ const Navbar = () => {
               Products
             </Link>
           </li>
+          {isAdmin&&(
+              <li>
+                <Link to={`/admin`} className="buttonStyle">
+                  Manage Product
+                </Link>
+              </li>
+          )}
           {isAdmin&&(
             <li>
               <Link to={`/admin/orders`} className="buttonStyle">
@@ -120,7 +126,8 @@ const TopLevelPage = () => {
               <Route path="/:userId/wishlist" element={<WishlistComponent/>} />
               <Route path="/register" element={<Register/>} />
               <Route path="/login" element={<Login/>} />
-              <Route  path="/user/:userId" element={<MainProfile/>} />
+              <Route path="/user/:userId" element={<MainProfile/>} />
+              <Route path="/admin" element={<AdminManageProduct/>} />
             </Routes>
           </main>
         </div>
