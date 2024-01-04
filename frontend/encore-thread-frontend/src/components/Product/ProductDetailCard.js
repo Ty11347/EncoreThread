@@ -1,14 +1,15 @@
+
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ReviewCard from "../Review/ReviewCard";
+import { useSelector } from 'react-redux';
 import ReviewCardByUserIdAndProductId from "../Review/ReviewCardByUserIdAndProductId";
 
 function ProductDetailCard() {
-  const location = useLocation();
-  const product = location.state;
-  //TODO: change userId when user module is done
-  const userId = 1;
   const navigate = useNavigate();
+  const location = useLocation();
+  const userId = useSelector(state => state.user.user.id);
+  const product = location.state;
   const [wishlistAdded, setWishlistAdded] = useState(false);
 
   const addToWishlist = async () => {
@@ -139,10 +140,6 @@ function ProductDetailCard() {
         Product Feedback
       </h3>
       <ReviewCard productId={product.id}/>
-      <h3 style={{ textAlign: "left", marginLeft: "20px" }}>
-        Review by Product ID and User ID
-      </h3>
-      <ReviewCardByUserIdAndProductId productId={product.id} userId={2}/>
     </div>
   );
 }

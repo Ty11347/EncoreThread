@@ -10,8 +10,8 @@ import java.sql.Timestamp;
 
 @Entity
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class CartItems {
     @Id

@@ -3,16 +3,18 @@ import './Order.css'
 import { ORDER_STATUS_PENDING, ORDER_STATUS_PROCESSING } from './OrderConstant'
 import { useNavigate } from 'react-router-dom'
 import SuccessMessage from './SuccessMessage'
+import { useSelector } from 'react-redux';
 
 function OrderComponent() {
   const navigate = useNavigate()
+  const userId = useSelector(state => state.user.user.id);
   const [orders, setOrders] = useState([])
   const [isCanceling, setIsCanceling] = useState(false)
   const [cancelId, setCancelId] = useState('')
   const [isSuccess, setIsSuccess] = useState(false)
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/orders/user/1')
+    fetch(`http://localhost:8080/api/orders/user/${userId}`)
       .then((response) => response.json())
       .then((data) => setOrders(data))
       .catch((error) => console.error('Error fetching orders: ', error))

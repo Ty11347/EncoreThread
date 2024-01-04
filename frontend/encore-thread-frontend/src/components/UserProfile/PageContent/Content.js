@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
 import AccountSettings from './AccountSettings';
-import OrderHistory from './OrderHistory';
-import Actions from './Actions';
+import OrderComponent from '../../Order/OrderComponent';
+import WishlistComponent from '../../Wishlist/WishlistComponent';
+import '../../../App.css';
 
-const Content = ({ userId }) => {
+const Content = () => {
   const [selectedTab, setSelectedTab] = useState('Account Settings');
 
   const renderContent = () => {
     switch (selectedTab) {
       case 'Account Settings':
-        return <AccountSettings userId={userId}/>;
+        return <AccountSettings />;
       case 'Order History':
-        return <OrderHistory />;
+        return <OrderComponent  />;
+      case 'Wishlist':
+        return <WishlistComponent  />;
       default:
         return null;
     }
@@ -22,24 +25,26 @@ const Content = ({ userId }) => {
       <div className="tabs-container">
         <div
           onClick={() => setSelectedTab('Account Settings')}
-          style={{ cursor: 'pointer', marginRight: '10px', fontWeight: selectedTab === 'Account Settings' ? 'semibold' : 'normal' }}
+          className="tab"
         >
           Account Settings
         </div>
         <div
           onClick={() => setSelectedTab('Order History')}
-          style={{ cursor: 'pointer', fontWeight: selectedTab === 'Order History' ? 'semibold' : 'normal' }}
+          className="tab"
         >
           Order History
+        </div>
+        <div
+          onClick={() => setSelectedTab('Wishlist')}
+          className="tab"
+        >
+          Wishlist
         </div>
       </div>
 
       <div className="content">
         {renderContent()}
-      </div>
-
-      <div>
-        <Actions />
       </div>
     </div>
   );

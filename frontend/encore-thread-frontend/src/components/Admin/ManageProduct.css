@@ -1,0 +1,16 @@
+.input-field {
+    width: 100%;
+}
+
+.manage-product-form {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    width: 100%;
+}
+
+.manage-product-form > input,
+.manage-product-form > select {
+    margin-bottom: 1em;
+    align-self: stretch;
+}

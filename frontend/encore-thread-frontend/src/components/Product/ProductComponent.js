@@ -147,7 +147,7 @@ const ProductsComponent = () => {
         </div>
         <div style={filterContentStyles}>
           <h3>Size</h3>
-          <div>
+          <div style={{display: "flex"}}>
             <input
               type="checkbox"
               checked={selectedSize === "Small"}
@@ -155,7 +155,7 @@ const ProductsComponent = () => {
             />
             <label>Small</label>
           </div>
-          <div>
+          <div style={{display: "flex"}}>
             <input
               type="checkbox"
               checked={selectedSize === "Medium"}
@@ -163,7 +163,7 @@ const ProductsComponent = () => {
             />
             <label>Medium</label>
           </div>
-          <div>
+          <div style={{display: "flex"}}>
             <input
               type="checkbox"
               checked={selectedSize === "Large"}

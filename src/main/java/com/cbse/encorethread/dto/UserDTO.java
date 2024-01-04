@@ -4,23 +4,26 @@ public class UserDTO {
     private Long userId;
     private String username;
     private String email;
-    private String password;
     private int age;
+    private String address;
     private String contact;
     private String roles;
-    private String address;
+    private String password;
+    private String profilepic;
 
-    public UserDTO(Long userId, String username, String email, int age, String address, String contact, String roles){
+    public UserDTO(Long userId, String username, String email, int age, String address, String contact, String roles, String password, String profilepic){
         this.userId = userId;
         this.username = username;
         this.email = email;
         this.age = age;
         this.address = address;
         this.contact = contact;
+        this.roles = roles;
+        this.password = password;
+        this.profilepic = profilepic;
     }
 
     public UserDTO(){
-
     }
 
     public void setUsername(String username) {
@@ -28,6 +31,10 @@ public class UserDTO {
     }
 
     public Long getUserById(Long userId) {
+        return this.userId;
+    }
+
+    public Long getUserId(){
         return this.userId;
     }
 
@@ -80,5 +87,13 @@ public class UserDTO {
 
     public String getAddress() {
         return this.address;
+    }
+
+    public String getProfilepic() {
+        return this.profilepic;
+    }
+
+    public void setProfilepic(String profilepic) {
+        this.profilepic = profilepic;
     }
 }

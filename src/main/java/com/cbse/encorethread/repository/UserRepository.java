@@ -9,6 +9,7 @@ import com.cbse.encorethread.model.User;
 
 import java.util.*;
 
+
 @EnableJpaRepositories
 @Repository
 public interface UserRepository extends JpaRepository<User, Long>{

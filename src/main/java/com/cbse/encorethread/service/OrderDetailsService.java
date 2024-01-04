@@ -26,6 +26,7 @@ public class OrderDetailsService {
     Products product = productsService.getProductById(orderDetails.getId());
 
     return new OrderDetailsDTO(
+      product.getId(),
       orderDetails.getQuantity(),
       orderDetails.getPrice(),
       product.getName(),
@@ -35,7 +36,7 @@ public class OrderDetailsService {
   }
 
   public OrderDetails getOrderDetailById(Integer id) {
-    return orderDetailsRepository.findById(id).orElseThrow();
+    return orderDetailsRepository.findById(id).orElseThrow(() -> new RuntimeException("OrderDetails not found with id: " + id));
   }
 
   public List<OrderDetailsDTO> getOrderDetailsByOrderId(Integer orderId) {

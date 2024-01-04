@@ -31,17 +31,6 @@ public class Carts {
     @Column(name = "status")
     private Character status;
 
-    @OneToMany(mappedBy = "cart")
-    private List<CartItems> cartItems;
-
-    public Carts(Integer cartId, Integer userId, Timestamp createdAt, Timestamp updatedAt, Character status) {
-        this.cartId = cartId;
-        this.userId = userId;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.status = status;
-    }
-
     public Carts(Integer userId, Timestamp createdAt, Timestamp updatedAt, Character status) {
         this.userId = userId;
         this.createdAt = createdAt;
