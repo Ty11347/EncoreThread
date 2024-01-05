@@ -55,7 +55,7 @@ const Navbar = () => {
     return (
         <nav style={{display: "flex", justifyContent: "space-around", background: "#faf8f8", padding: "10px 0"}}>
           <ul style={{listStyle: "none", display: "flex", margin: 0, padding: 0}}>
-            {isAdmin && (
+            {!isAdmin && (
                 <li>
                   <Link to={`/products`} className="buttonStyle">
                     Products
