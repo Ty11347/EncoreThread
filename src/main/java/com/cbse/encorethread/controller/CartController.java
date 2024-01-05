@@ -30,16 +30,6 @@ public class CartController {
     @Autowired
     CartItemsService cartItemsService;
 
-    @PostMapping("/add")
-    public ResponseEntity<?> createCart(@RequestBody Carts cart) {
-        try {
-            Carts createdCart = cartsService.createCart(cart);
-            return new ResponseEntity<>(createdCart, HttpStatus.CREATED);
-        } catch (IllegalArgumentException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
-        }
-    }
-
     @GetMapping("/user/{id}") // DONE CHECK
     public ResponseEntity<Carts> getCart(@PathVariable(value = "id") Integer userId) {
         try {

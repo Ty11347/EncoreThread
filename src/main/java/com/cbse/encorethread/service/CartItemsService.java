@@ -10,8 +10,6 @@ public interface CartItemsService {
 
     List<CartItems> getAllCartItemsByCartId(Integer cartId);
 
-    CartItems getCartItemsById(Integer cartId, Integer productId);
-
     CartItems createCartItems(CartItems cartItems);
 
     CartItems updateCartItems(CartItems updatedCartItems);

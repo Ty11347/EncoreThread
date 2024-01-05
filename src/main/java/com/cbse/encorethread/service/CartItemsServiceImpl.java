@@ -33,11 +33,6 @@ public class CartItemsServiceImpl implements CartItemsService {
     }
 
     @Override
-    public CartItems getCartItemsById(Integer cartId, Integer productId) {
-        return null;
-    }
-
-    @Override
     public CartItems createCartItems(CartItems cartItems) {
         CartItems oldCartItems = cartItemsRepository.findByCartIdAndProductId(cartItems.getCartId(),
                 cartItems.getProductId());
