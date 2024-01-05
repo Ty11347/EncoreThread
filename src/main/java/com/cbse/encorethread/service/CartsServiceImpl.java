@@ -1,7 +1,10 @@
 package com.cbse.encorethread.service;
 
+import com.cbse.encorethread.model.CartItems;
 import com.cbse.encorethread.model.Carts;
 import com.cbse.encorethread.repository.CartsRepository;
+import com.cbse.encorethread.repository.ProductsRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +14,13 @@ import java.util.Optional;
 @Service
 public class CartsServiceImpl implements CartsService {
 
-    private final CartsRepository cartsRepository;
+    @Autowired
+    CartsRepository cartsRepository;
+    @Autowired
+    ProductsRepository productsRepository;
 
     @Autowired
-    public CartsServiceImpl(CartsRepository cartsRepository) {
-        this.cartsRepository = cartsRepository;
-    }
+    CartItemsService cartItemsService;
 
     @Override
     public List<Carts> getAllCarts() {
@@ -31,6 +35,7 @@ public class CartsServiceImpl implements CartsService {
 
     @Override
     public Carts createCart(Carts cart) {
+        cart.setStatus("empty");
         return cartsRepository.save(cart);
     }
 
@@ -47,5 +52,37 @@ public class CartsServiceImpl implements CartsService {
     public void deleteCart(Integer cartId) {
         cartsRepository.deleteById(cartId);
     }
-}
 
+    @Override
+    public Carts getCartByUserId(Integer userId) {
+        Optional<Carts> findCart = cartsRepository.findByUserId(userId);
+
+        if (findCart.isPresent()) {
+            return findCart.get();
+        } else {
+            throw new IllegalArgumentException("Cart not found with userId: " + userId);
+        }
+    }
+
+    @Override
+    public void createCartItems(CartItems item) {
+        Optional<Carts> cart = cartsRepository.findByCartId(item.getCartId());
+        if (cart.isPresent()) {
+            cart.get().setStatus("pending");
+            cartsRepository.save(cart.get());
+        } else {
+            throw new IllegalArgumentException("Cart not found with cartId: " + item.getCartId());
+        }
+    }
+
+    @Override
+    public void emptyCart(Integer cartId) {
+        Optional<Carts> cart = cartsRepository.findByCartId(cartId);
+        if (cart.isPresent()) {
+            cart.get().setStatus("empty");
+            cartsRepository.save(cart.get());
+        } else {
+            throw new IllegalArgumentException("Cart not found with cartId: " + cartId);
+        }
+    }
+}

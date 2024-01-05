@@ -9,13 +9,17 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
+@Table(name = "cartitems")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class CartItems {
     @Id
+    @Column(name = "cart_item_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer cartItemId;
+
     @Column(name = "cart_id")
     private Integer cartId;
 
@@ -30,4 +34,12 @@ public class CartItems {
 
     @Column(name = "added_at", nullable = false)
     private Timestamp addedAt;
+
+    public CartItems(Integer cartId, Integer productId, Integer quantity, Double price, Timestamp addedAt) {
+        this.cartId = cartId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.price = price;
+        this.addedAt = addedAt;
+    }
 }

@@ -8,11 +8,15 @@ public interface CartItemsService {
 
     List<CartItems> getAllCartItems();
 
+    List<CartItems> getAllCartItemsByCartId(Integer cartId);
+
     CartItems getCartItemsById(Integer cartId, Integer productId);
 
     CartItems createCartItems(CartItems cartItems);
 
-    CartItems updateCartItems(Integer cartId, Integer productId, CartItems updatedCartItems);
+    CartItems updateCartItems(CartItems updatedCartItems);
 
     void deleteCartItems(Integer cartId, Integer productId);
+
+    void deleteCartItemsByCartId(Integer cartId);
 }
