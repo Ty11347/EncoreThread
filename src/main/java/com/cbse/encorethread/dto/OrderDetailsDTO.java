@@ -41,5 +41,3 @@ public class OrderDetailsDTO {
         return productDescription;
     }
 }
-
-

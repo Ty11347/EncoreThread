@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from 'react-redux';
-import { setUser } from './redux/actions/userActions';
+import { setUser, setCartId } from './redux/actions/userActions';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -25,6 +25,7 @@ const Login = () => {
         } else if (res.data.message === "Login Success") {
           console.log("User ID:", res.data.userId);
           dispatch(setUser({ id: res.data.userId }));
+          fetchCart(res.data.userId);
           navigate(`/products`);
         } else {
           alert("Incorrect Username and Password not match");
@@ -36,6 +37,26 @@ const Login = () => {
       alert(err);
     }
   }
+
+  const fetchCart = async (userId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/carts/user/${userId}`,
+        {
+          method: "GET",
+        }
+      );
+      if (response.ok) {
+        const cart = await response.json();
+        dispatch(setCartId(cart.cartId));
+        console.log("Cart ID:", cart.cartId);
+      } else {
+        console.error("Failed to fetch cart items", response.status);
+      }
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+    }
+  };
 
   return (
       <div>

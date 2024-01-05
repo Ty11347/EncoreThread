@@ -1,5 +1,6 @@
 const initialState = {
   user: null,
+  cartId: null,
 };
 
 function userReducer(state = initialState, action) {
@@ -13,6 +14,11 @@ function userReducer(state = initialState, action) {
       return {
         ...state,
         user: null,
+      };
+    case 'SET_CART_ID':
+      return {
+        ...state,
+        cartId: action.payload,
       };
     default:
       return state;
