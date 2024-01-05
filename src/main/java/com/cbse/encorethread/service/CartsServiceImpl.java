@@ -60,7 +60,9 @@ public class CartsServiceImpl implements CartsService {
         if (findCart.isPresent()) {
             return findCart.get();
         } else {
-            throw new IllegalArgumentException("Cart not found with userId: " + userId);
+            Carts cart = new Carts(userId);
+            cart.setStatus("empty");
+            return cartsRepository.save(cart);
         }
     }
 

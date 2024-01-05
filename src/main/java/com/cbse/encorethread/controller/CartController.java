@@ -41,10 +41,21 @@ public class CartController {
     }
 
     @GetMapping("/user/{id}") // DONE CHECK
+    public ResponseEntity<Carts> getCart(@PathVariable(value = "id") Integer userId) {
+        try {
+            Carts cart = cartsService.getCartByUserId(userId);
+            return new ResponseEntity<>(cart, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        }
+    }
+
+    @GetMapping("/items/{id}") // DONE CHECK
     public ResponseEntity<List<CartItems>> getCartByUserId(@PathVariable(value = "id") Integer userId) {
         try {
             Carts cart = cartsService.getCartByUserId(userId);
             List<CartItems> items = cartItemsService.getAllCartItemsByCartId(cart.getCartId());
+
             return new ResponseEntity<>(items, HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
