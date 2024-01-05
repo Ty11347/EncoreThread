@@ -1,10 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function ProductCard({ id, imageUrl, title, description, size, price }) {
+  const cartId = useSelector((state) => state.user.cartId);
+
   const addToCart = () => {
     console.log("Item added to cart");
     // TODO: add-to-cart logic
+    const cartItem = {
+      cartId: cartId,
+      productId: id,
+      quantity: 1,
+    }
+    fetch("http://localhost:8080/api/carts/item/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cartItem),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Item added to cart:", data);
+      })
+      .catch((error) => {
+        console.error("Error adding item to cart:", error);
+      });
   };
 
   return (
@@ -27,7 +49,9 @@ function ProductCard({ id, imageUrl, title, description, size, price }) {
       />
       <h3>{title}</h3>
       <div style={{ textAlign: "left" }}>
-        <p style={{ height: "100px" }}>{description?? "No description yet."}</p>
+        <p style={{ height: "100px" }}>
+          {description ?? "No description yet."}
+        </p>
         <p>Size : {size}</p>
         <p>Price : RM{price}</p>
       </div>

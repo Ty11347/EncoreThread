@@ -65,6 +65,22 @@
     background-color: #0056b3;
   }
   
+  .clear-button {
+    display: block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #f02f21;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .clear-button:hover {
+    background-color: #c22116;
+  }
+
   /* CartItem component styles */
   .cart-items tr td {
     border-bottom: 1px solid #ddd;

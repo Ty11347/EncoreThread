@@ -1,45 +1,21 @@
 import React, { useState, useEffect } from "react";
 import CartItem from "./CartItem";
+import { useSelector } from "react-redux";
 import "./Cart.css"; // Import CSS for styling
 
 const Cart = () => {
-  // Sample cart data (you can replace this with actual data)
-  const initialCart = {
-    cart_id: 1,
-    user_id: 123,
-    created_at: "2024-01-04 10:00:00",
-    updated_at: "2024-01-04 14:30:00",
-    status: "pending",
-  };
-
-  // Sample cart items data (you can replace this with actual data)
-  const initialCartItems = [
-    {
-      cart_item_id: 1,
-      cart_id: 1,
-      product_id: 101,
-      quantity: 2,
-      price: 20,
-      added_at: "2024-01-04 11:15:00",
-    },
-    {
-      cart_item_id: 2,
-      cart_id: 1,
-      product_id: 102,
-      quantity: 1,
-      price: 30,
-      added_at: "2024-01-04 12:45:00",
-    },
-  ];
-
-  const [cart, setCart] = useState(initialCart);
-  const [cartItems, setCartItems] = useState(initialCartItems);
+  const user = useSelector((state) => state.user.user);
+  const cartId = useSelector((state) => state.user.cartId);
+  const [cartItems, setCartItems] = useState([]);
+  const userId = user?.id;
 
   // Function to increase the quantity of a specific item
   const increaseQuantity = (cartItemId) => {
     const updatedCartItems = cartItems.map((item) => {
-      if (item.cart_item_id === cartItemId) {
-        return { ...item, quantity: item.quantity + 1 };
+      if (item.cartItemId === cartItemId) {
+        var updatedItem = { ...item, quantity: item.quantity + 1 };
+        updateCartItems(updatedItem);
+        return updatedItem;
       }
       return item;
     });
@@ -49,8 +25,10 @@ const Cart = () => {
   // Function to decrease the quantity of a specific item
   const decreaseQuantity = (cartItemId) => {
     const updatedCartItems = cartItems.map((item) => {
-      if (item.cart_item_id === cartItemId && item.quantity > 1) {
-        return { ...item, quantity: item.quantity - 1 };
+      if (item.cartItemId === cartItemId && item.quantity >= 1) {
+        var updatedItem = { ...item, quantity: item.quantity - 1 };
+        updateCartItems(updatedItem);
+        return updatedItem;
       }
       return item;
     });
@@ -59,24 +37,104 @@ const Cart = () => {
 
   // Calculate the overall total
   const calculateTotal = () => {
-    return cartItems.reduce((total, item) => total + item.quantity * item.price, 0);
+    return cartItems.reduce(
+      (total, item) => total + item.quantity * item.price,
+      0
+    );
   };
 
   const overallTotal = calculateTotal();
 
   useEffect(() => {
-    // You can fetch cart data and cart items from an API here
-    // and update the state using setCart and setCartItems
-  }, []);
+    if (user) {
+      fetchCartItems(userId);
+    }
+  }, [userId]);
 
+  const fetchCartItems = async (userId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/carts/items/${userId}`,
+        {
+          method: "GET",
+        }
+      );
+      if (response.ok) {
+        const cartItems = await response.json();
+        setCartItems(cartItems);
+      } else {
+        console.error("Failed to fetch cart items", response.status);
+      }
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+    }
+  };
+
+  const clearCart = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/carts/delete/${cartId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (response.ok) {
+        setCartItems([]);
+      } else {
+        console.error("Failed to clear cart", response.status);
+      }
+    } catch (error) {
+      console.error("Error clearing cart:", error);
+    }
+  };
+
+  const updateCartItems = async (cartItem) => {
+    console.log("cartItem updated: ", cartItem);
+    await fetch("http://localhost:8080/api/carts/item/update", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cartItem),
+    });
+  };
+
+  const checkoutOrder = async () => {
+    try {
+      const orderData = {
+        userId: userId,
+        orderStatus: "Processing",
+        address: user.address ?? "1234 Main St, San Francisco, CA 94123",
+        orderDate: new Date().toISOString(),
+        productIds: cartItems.map((item) => item.productId),
+        quantities: cartItems.map((item) => item.quantity),
+        prices: cartItems.map((item) => item.price),
+      };
+      const response = await fetch("http://localhost:8080/api/orders/dto", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      if (response.ok) {
+        console.log("Order placed successfully!");
+        clearCart();
+      } else {
+        console.error("Failed to create order", response.status);
+      }
+    } catch (error) {
+      console.error("Error creating order:", error);
+    }
+  };
+
+  if (cartItems == null || cartItems.length === 0) {
+    return <div className="cart">Your cart is empty.</div>;
+  }
   return (
     <div className="cart">
       <h2>Your Cart</h2>
-      <div className="cart-status">
-        <p>Status: {cart.status}</p>
-        <p>Created At: {cart.created_at}</p>
-        <p>Updated At: {cart.updated_at}</p>
-      </div>
       <table className="cart-items">
         <thead>
           <tr>
@@ -89,7 +147,7 @@ const Cart = () => {
         <tbody>
           {cartItems.map((item) => (
             <CartItem
-              key={item.cart_item_id}
+              key={item.cartItemId}
               item={item}
               onIncreaseQuantity={increaseQuantity}
               onDecreaseQuantity={decreaseQuantity}
@@ -100,7 +158,21 @@ const Cart = () => {
       <div className="cart-total">
         <strong>Overall Total:</strong> ${overallTotal}
       </div>
-      <button className="checkout-button">Checkout</button>
+      <div
+        class="row"
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-evenly",
+          height: "100%",
+        }}
+      >
+        <button className="clear-button" onClick={clearCart}>
+          Clear
+        </button>
+        <button className="checkout-button" onClick={checkoutOrder}>Checkout</button>
+      </div>
     </div>
   );
 };

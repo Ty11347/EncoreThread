@@ -5,19 +5,19 @@ const CartItem = ({ item, onIncreaseQuantity, onDecreaseQuantity }) => {
 
   const handleIncrease = () => {
     setQuantity(quantity + 1);
-    onIncreaseQuantity(item.cart_item_id); // Notify the parent component about the quantity change
+    onIncreaseQuantity(item.cartItemId); // Notify the parent component about the quantity change
   };
 
   const handleDecrease = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
-      onDecreaseQuantity(item.cart_item_id); // Notify the parent component about the quantity change
+      onDecreaseQuantity(item.cartItemId); // Notify the parent component about the quantity change
     }
   };
 
   return (
     <tr>
-      <td>{item.product_id}</td>
+      <td>{item.productId}</td>
       <td>${item.price}</td>
       <td>
       <button className="quantity-button" onClick={handleDecrease}>-</button>
