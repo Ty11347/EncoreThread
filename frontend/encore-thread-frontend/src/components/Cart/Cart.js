@@ -32,7 +32,10 @@ const Cart = () => {
       }
       return item;
     });
-    setCartItems(updatedCartItems);
+    const filteredCartItems = updatedCartItems.filter(
+      (item) => item.quantity !== 0
+    );
+    setCartItems(filteredCartItems);
   };
 
   // Calculate the overall total
@@ -171,7 +174,9 @@ const Cart = () => {
         <button className="clear-button" onClick={clearCart}>
           Clear
         </button>
-        <button className="checkout-button" onClick={checkoutOrder}>Checkout</button>
+        <button className="checkout-button" onClick={checkoutOrder}>
+          Checkout
+        </button>
       </div>
     </div>
   );
