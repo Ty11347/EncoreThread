@@ -9,11 +9,18 @@ const EditReviewCard = ({ match }) => {
   const [image, setImage] = useState(null);
   const [review, setReview] = useState(null);
   const { reviewId } = useParams();
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     fetchData(reviewId);
   }, [reviewId]);
+
+  useEffect(() => {
+    if (review) {
+      fetchUserData(review.userId);
+    }
+  }, [review]);
 
   const fetchData = async (reviewId) => {
     try {
@@ -33,6 +40,23 @@ const EditReviewCard = ({ match }) => {
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+    }
+  };
+
+  const fetchUserData = async (userId) => {
+    try {
+      const userResponse = await fetch(
+        `http://localhost:3000/api/user/${userId}`
+      );
+
+      if (userResponse.ok) {
+        const userData = await userResponse.json();
+        setUser(userData);
+      } else {
+        console.error("Failed to fetch user");
+      }
+    } catch (error) {
+      console.error("Error fetching user:", error);
     }
   };
 
@@ -65,13 +89,16 @@ const EditReviewCard = ({ match }) => {
     };
 
     try {
-      const response = await fetch(`http://localhost:3000/api/reviews/update?id=${reviewId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedReview),
-      });
+      const response = await fetch(
+        `http://localhost:3000/api/reviews/update?id=${reviewId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedReview),
+        }
+      );
 
       if (response.ok) {
         console.log("Review updated successfully");
@@ -91,12 +118,19 @@ const EditReviewCard = ({ match }) => {
   return (
     <div className="edit-review-card">
       <div className="user-info">
-        <div
-          className="default-profile-container"
-          style={{ marginLeft: "10px", marginTop: "15px" }}
-        >
-          <FaUser size={24} />
-        </div>
+        {user?.profilepic && user?.profilepic.length > 0 ? (
+          <div className="default-profile-container">
+            <img
+              src={user?.profilepic}
+              alt={`Profile of ${user?.username}`}
+              className="profile-image"
+            />
+          </div>
+        ) : (
+          <div className="default-profile-container">
+            <FaUser size={24} />
+          </div>
+        )}
         <span className="username">You</span>
       </div>
       <div className="add-rating">

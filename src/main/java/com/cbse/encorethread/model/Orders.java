@@ -11,37 +11,42 @@ import javax.persistence.Table;
 @Table(name = "orders")
 public class Orders {
   @Id
-  @Column(name = "order_id")
+  @Column(name = "order_id", nullable = false)
   private Integer id;
 
-  @Column(name = "user_id")
-  private Long user_id;
+  @Column(name = "user_id", nullable = false)
+  private Long userId;
 
-  @Column(name = "order_status")
-  private String order_status;
+  @Column(name = "order_status", nullable = false)
+  private String orderStatus;
 
-  @Column(name = "total_price")
-  private Double total_price;
+  @Column(name = "total_price", nullable = false)
+  private Double totalPrice;
 
-  @Column(name = "order_date")
-  private LocalDate order_date;
+  @Column(name = "address", nullable = false)
+  private String address;
+
+  @Column(name = "order_date", nullable = false)
+  private LocalDate orderDate;
 
   public Orders() {
   }
 
-  public Orders(Integer id, Long user_id, String order_status, Double total_price, LocalDate order_date) {
+  public Orders(Integer id, Long userId, String orderStatus, Double totalPrice, String address, LocalDate orderDate) {
     this.id = id;
-    this.user_id = user_id;
-    this.order_status = order_status;
-    this.total_price = total_price;
-    this.order_date = order_date;
+    this.userId = userId;
+    this.orderStatus = orderStatus;
+    this.totalPrice = totalPrice;
+    this.address = address;
+    this.orderDate = orderDate;
   }
 
-  public Orders(Long user_id, String order_status, Double total_price, LocalDate order_date) {
-    this.user_id = user_id;
-    this.order_status = order_status;
-    this.total_price = total_price;
-    this.order_date = order_date;
+  public Orders(Long userId, String orderStatus, Double totalPrice, String address, LocalDate orderDate) {
+    this.userId = userId;
+    this.orderStatus = orderStatus;
+    this.totalPrice = totalPrice;
+    this.address = address;
+    this.orderDate = orderDate;
   }
 
   public Integer getId() {
@@ -53,34 +58,42 @@ public class Orders {
   }
 
   public Long getUserId() {
-    return user_id;
+    return userId;
   }
 
-  public void setUserId(Long user_id) {
-    this.user_id = user_id;
+  public void setUserId(Long userId) {
+    this.userId = userId;
   }
 
   public String getOrderStatus() {
-    return order_status;
+    return orderStatus;
   }
 
-  public void setOrderStatus(String order_status) {
-    this.order_status = order_status;
+  public void setOrderStatus(String orderStatus) {
+    this.orderStatus = orderStatus;
   }
 
   public Double getTotalPrice() {
-    return total_price;
+    return totalPrice;
   }
 
-  public void setTotalPrice(Double total_price) {
-    this.total_price = total_price;
+  public void setTotalPrice(Double totalPrice) {
+    this.totalPrice = totalPrice;
+  }
+
+  public String getAddress() {
+    return address;
+  }
+
+  public void setAddress(String address) {
+    this.address = address;
   }
 
   public LocalDate getOrderDate() {
-    return order_date;
+    return orderDate;
   }
 
-  public void setOrderDate(LocalDate order_date) {
-    this.order_date = order_date;
+  public void setOrderDate(LocalDate orderDate) {
+    this.orderDate = orderDate;
   }
 }
