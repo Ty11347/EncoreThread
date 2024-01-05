@@ -1,15 +1,28 @@
-import React, {useState, useEffect} from "react";
+import React, {useState} from "react";
 import "./PaymentPage.css";
-import {useSelector} from 'react-redux';
-import { useNavigate  } from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 
 const PaymentPage = () => {
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
+  const {userId, user, cartItems, cartId} = useLocation().state;
   const [cardholderName, setCardholderName] = useState("");
   const [cardNumber, setCardNumber] = useState("");
   const [expiryMonth, setExpiryMonth] = useState("");
   const [expiryYear, setExpiryYear] = useState("");
   const [cvv, setCvv] = useState("");
+
+  const clearCart = async () => {
+    try {
+      const response = await fetch(
+          `http://localhost:8080/api/carts/delete/${cartId}`,
+          {
+            method: "DELETE",
+          }
+      );
+    } catch (error) {
+      console.error("Error clearing cart:", error);
+    }
+  };
 
   const handleProceed = () => {
     if (
@@ -29,9 +42,39 @@ const PaymentPage = () => {
         cvv,
       });
 
-      navigate('/payment-success');
+      handleUpdateOrder().then(r => navigate('/payment-success'));
     }
   };
+
+  const handleUpdateOrder = async () => {
+    try {
+      const orderData = {
+        userId: userId,
+        orderStatus: "Processing",
+        address: user.address ?? "1234 Main St, San Francisco, CA 94123",
+        orderDate: new Date().toISOString(),
+        productIds: cartItems.map((item) => item.productId),
+        quantities: cartItems.map((item) => item.quantity),
+        prices: cartItems.map((item) => item.price),
+      };
+      const response = await fetch("http://localhost:8080/api/orders/dto", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      if (response.ok) {
+        console.log("Order placed successfully!");
+        clearCart();
+      } else {
+        console.error("Failed to create order", response.status);
+      }
+    } catch (error) {
+      console.error("Error creating order:", error);
+    }
+  }
 
   const formatCardNumber = (value) => {
     const numericValue = value.replace(/\D/g, '');

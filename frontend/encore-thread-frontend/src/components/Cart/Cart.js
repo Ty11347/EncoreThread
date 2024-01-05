@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import CartItem from "./CartItem";
 import { useSelector } from "react-redux";
+import { useNavigate } from 'react-router-dom';
 import "./Cart.css"; // Import CSS for styling
+
 
 const Cart = () => {
   const user = useSelector((state) => state.user.user);
   const cartId = useSelector((state) => state.user.cartId);
   const [cartItems, setCartItems] = useState([]);
   const userId = user?.id;
+  const navigate  = useNavigate();
 
   // Function to increase the quantity of a specific item
   const increaseQuantity = (cartItemId) => {
@@ -73,24 +76,6 @@ const Cart = () => {
     }
   };
 
-  const clearCart = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:8080/api/carts/delete/${cartId}`,
-        {
-          method: "DELETE",
-        }
-      );
-      if (response.ok) {
-        setCartItems([]);
-      } else {
-        console.error("Failed to clear cart", response.status);
-      }
-    } catch (error) {
-      console.error("Error clearing cart:", error);
-    }
-  };
-
   const updateCartItems = async (cartItem) => {
     console.log("cartItem updated: ", cartItem);
     await fetch("http://localhost:8080/api/carts/item/update", {
@@ -102,34 +87,26 @@ const Cart = () => {
     });
   };
 
-  const checkoutOrder = async () => {
+  const clearCart = async () => {
     try {
-      const orderData = {
-        userId: userId,
-        orderStatus: "Processing",
-        address: user.address ?? "1234 Main St, San Francisco, CA 94123",
-        orderDate: new Date().toISOString(),
-        productIds: cartItems.map((item) => item.productId),
-        quantities: cartItems.map((item) => item.quantity),
-        prices: cartItems.map((item) => item.price),
-      };
-      const response = await fetch("http://localhost:8080/api/orders/dto", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(orderData),
-      });
-
+      const response = await fetch(
+          `http://localhost:8080/api/carts/delete/${cartId}`,
+          {
+            method: "DELETE",
+          }
+      );
       if (response.ok) {
-        console.log("Order placed successfully!");
-        clearCart();
+        setCartItems([]);
       } else {
-        console.error("Failed to create order", response.status);
+        console.error("Failed to clear cart", response.status);
       }
     } catch (error) {
-      console.error("Error creating order:", error);
+      console.error("Error clearing cart:", error);
     }
+  };
+
+  const checkoutOrder = async () => {
+    navigate('/transaction', { state: { userId, user, cartItems, cartId } });
   };
 
   if (cartItems == null || cartItems.length === 0) {
