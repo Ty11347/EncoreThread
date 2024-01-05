@@ -6,3 +6,8 @@ export const setUser = (user) => ({
 export const logout = () => ({
   type: 'LOGOUT',
 });
+
+export const setCartId = (cartId) => ({
+  type: 'SET_CART_ID',
+  payload: cartId,
+});

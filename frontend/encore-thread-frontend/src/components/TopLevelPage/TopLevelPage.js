@@ -18,6 +18,8 @@ import PaymentSuccess from "../Transaction/PaymentSuccess";
 
 import '../../App.css';
 import { useSelector } from 'react-redux';
+import Cart from "../Cart/Cart";
+
 
 const Navbar = () => {
   const user = useSelector(state => state.user.user);
@@ -83,6 +85,13 @@ const Navbar = () => {
                   </Link>
                 </li>
             )}
+
+            <li>
+              <Link to={`/cart`} className="buttonStyle">
+                Cart
+              </Link>
+            </li>
+
             <li>
               <Link to={`/user/${userId}`} className="buttonStyle">
                 Main Profile
@@ -140,6 +149,7 @@ const TopLevelPage = () => {
               <Route path="/login" element={<Login/>} />
               <Route path="/user/:userId" element={<MainProfile/>} />
               <Route path="/admin" element={<AdminManageProduct/>} />
+              <Route path="/cart" element={<Cart/>} />
               <Route path="/transaction" element={<PaymentPage/>} />
               <Route path="/payment-success" element={<PaymentSuccess/>} />
             </Routes>
