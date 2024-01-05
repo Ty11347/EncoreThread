@@ -25,4 +25,16 @@ public class AdminService {
     public void deleteProduct(Integer id) {
         productsRepository.deleteById(id);
     }
+
+    public int updateProductQuantity(Integer id, Integer quantityChange) throws Exception {
+        Products product = productsRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        int newQuantity = product.getQuantity() + quantityChange;
+        if (newQuantity < 0) {
+            throw new IllegalStateException("Insufficient stock");
+        }
+        product.setQuantity(newQuantity);
+        productsRepository.save(product);
+        return newQuantity;
+    }
 }

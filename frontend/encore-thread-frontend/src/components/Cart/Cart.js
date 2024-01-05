@@ -106,7 +106,40 @@ const Cart = () => {
   };
 
   const checkoutOrder = async () => {
-    navigate('/transaction', { state: { userId, user, cartItems, cartId } });
+    await handleProductQuantityChange()
+    // navigate('/transaction', { state: { userId, user, cartItems, cartId } });
+  };
+
+  const handleProductQuantityChange = async () => {
+    try {
+      for (const item of cartItems) {
+        const response = await fetch("http://localhost:8080/api/admin/products/quantity/" +
+            item.productId + "?quantityChange=-" + item.quantity,
+            {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+            });
+
+        // if stock insufficient
+        if (response.status === 409) {
+          const availableQuantity = await response.text();
+          console.error("Insufficient stock for product ID:", item.productId);
+          alert("Insufficient stock for product ID " + item.productId +
+              ": " + availableQuantity);
+          return;
+        } else if (!response.ok) {
+          console.error("Error updating product quantity for product ID:", item.productId);
+          return;
+        }
+      }
+
+      navigate('/transaction', { state: { userId, user, cartItems, cartId } });
+
+    } catch (e) {
+      console.error("Error updating product quantity:", e);
+    }
   };
 
   if (cartItems == null || cartItems.length === 0) {
