@@ -37,9 +37,11 @@ function OrderDetail() {
     setAddress(order.address);
   }, [order]);
 
-  useEffect(() => {
-    // console.log(orderItems);
-  });
+  const handleReviewDelete = (productId) => {
+    const updatedReviewExists = { ...reviewExists };
+    delete updatedReviewExists[productId];
+    setReviewExists(updatedReviewExists);
+  };
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -194,28 +196,25 @@ function OrderDetail() {
             </div>
 
             <h4>Total: RM {orderItem.price * orderItem.quantity}</h4>
-            {
-              !isAdmin &&
+            {!isAdmin &&
               orderStatus === ORDER_STATUS_SHIPPED &&
-              (
-                reviewExists[orderItem.productId] ? (
-                  <div>
-                    <h4>My Review</h4>
-                    <ReviewCardByUserIdAndProductId
-                      productId={orderItem.productId}
-                      userId={userId}
-                    />
-                  </div>
-                ) : (
-                  <Link
-                    to={`/add/reviews/${userId}/${orderItem.productId}`}
-                    params={{ userId: userId, productId: orderItem.productId }}
-                  >
-                    <button type="button">Add Review</button>
-                  </Link>
-                )
-              )
-            }
+              (reviewExists[orderItem.productId] ? (
+                <div>
+                  <h4>My Review</h4>
+                  <ReviewCardByUserIdAndProductId
+                    productId={orderItem.productId}
+                    userId={userId}
+                    onDelete={handleReviewDelete}
+                  />
+                </div>
+              ) : (
+                <Link
+                  to={`/add/reviews/${userId}/${orderItem.productId}`}
+                  params={{ userId: userId, productId: orderItem.productId }}
+                >
+                  <button type="button">Add Review</button>
+                </Link>
+              ))}
           </div>
         ))}
       </div>
