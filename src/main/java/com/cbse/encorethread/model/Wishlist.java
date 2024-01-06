@@ -10,7 +10,7 @@ public class Wishlist {
     private Integer id;
 
     @Column(name = "user_id", nullable = false)
-    private Long userId;
+    private Integer userId;
 
     @Column(name = "product_id", nullable = false)
     private Integer productId;
@@ -23,11 +23,11 @@ public class Wishlist {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
