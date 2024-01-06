@@ -10,7 +10,7 @@ public interface OrdersService {
 
   public Orders getOrderById(Integer id);
 
-  public List<Orders> getOrdersByUserId(Long userId);
+  public List<Orders> getOrdersByUserId(Integer userId);
 
   public Orders createOrder(Orders order);
 
@@ -18,7 +18,7 @@ public interface OrdersService {
 
   public void deleteOrderById(Integer id);
 
-  public void deleteOrderByUserId(Long userId);
+  public void deleteOrderByUserId(Integer userId);
 
   public Orders updateOrder(Orders order);
 }

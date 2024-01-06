@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface OrdersRepository extends JpaRepository<Orders, Integer> {
 
   @Query(value = "SELECT * FROM orders WHERE user_id = :userId", nativeQuery = true)
-  List<Orders> findByUserId(@Param("userId") Long userId);
+  List<Orders> findByUserId(@Param("userId") Integer userId);
   
   @Query(value = "SELECT MAX(order_id) FROM orders", nativeQuery = true)
   Optional<Integer> findLatestId();
@@ -24,5 +24,5 @@ public interface OrdersRepository extends JpaRepository<Orders, Integer> {
   @Transactional
   @Modifying
   @Query(value = "DELETE FROM orders o WHERE o.user_id = :userId", nativeQuery = true)
-  void deleteByUserId(@Param("userId") Long userId);
+  void deleteByUserId(@Param("userId") Integer userId);
 }

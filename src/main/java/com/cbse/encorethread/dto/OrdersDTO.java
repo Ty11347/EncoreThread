@@ -3,7 +3,7 @@ package com.cbse.encorethread.dto;
 import java.time.LocalDate;
 
 public class OrdersDTO {
-  private Long userId;
+  private Integer userId;
   private String orderStatus;
   private Double totalPrice;
   private String address;
@@ -12,7 +12,7 @@ public class OrdersDTO {
   private Integer[] quantities;
   private Double[] prices;
 
-  public OrdersDTO(Long userId, String orderStatus, String address, LocalDate orderDate, Integer[] productIds, Integer[] quantities, Double[] prices) {
+  public OrdersDTO(Integer userId, String orderStatus, String address, LocalDate orderDate, Integer[] productIds, Integer[] quantities, Double[] prices) {
     this.userId = userId;
     this.orderStatus = orderStatus;
     this.totalPrice = 0.0;
@@ -27,11 +27,11 @@ public class OrdersDTO {
     }
   }
 
-  public Long getUserId() {
+  public Integer getUserId() {
     return userId;
   }
 
-  public void setUserId(Long userId) {
+  public void setUserId(Integer userId) {
     this.userId = userId;
   }
 
