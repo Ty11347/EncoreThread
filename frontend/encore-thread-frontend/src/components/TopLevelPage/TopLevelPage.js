@@ -139,7 +139,7 @@ const TopLevelPage = () => {
               <Route path="/products" element={<ProductComponent />} />
               <Route path="/products/:productId" element={<ProductDetailCard />} />s
               <Route path="/admin/orders" element={<OrderAdmin />} />
-              <Route path="/orders" element={<OrderComponent />} />
+              <Route path="/orders" element={<OrderComponent showingHistory={false} />} />
               <Route path="/orders/:orderId" element={<OrderDetail />} />
               <Route path="/reviews" element={<ReviewCard />} />
               <Route path="/edit/:reviewId" element={<EditReviewCard />} />

@@ -15,7 +15,7 @@ public class Orders {
   private Integer id;
 
   @Column(name = "user_id", nullable = false)
-  private Long userId;
+  private Integer userId;
 
   @Column(name = "order_status", nullable = false)
   private String orderStatus;
@@ -32,7 +32,7 @@ public class Orders {
   public Orders() {
   }
 
-  public Orders(Integer id, Long userId, String orderStatus, Double totalPrice, String address, LocalDate orderDate) {
+  public Orders(Integer id, Integer userId, String orderStatus, Double totalPrice, String address, LocalDate orderDate) {
     this.id = id;
     this.userId = userId;
     this.orderStatus = orderStatus;
@@ -41,7 +41,7 @@ public class Orders {
     this.orderDate = orderDate;
   }
 
-  public Orders(Long userId, String orderStatus, Double totalPrice, String address, LocalDate orderDate) {
+  public Orders(Integer userId, String orderStatus, Double totalPrice, String address, LocalDate orderDate) {
     this.userId = userId;
     this.orderStatus = orderStatus;
     this.totalPrice = totalPrice;
@@ -57,11 +57,11 @@ public class Orders {
     this.id = id;
   }
 
-  public Long getUserId() {
+  public Integer getUserId() {
     return userId;
   }
 
-  public void setUserId(Long userId) {
+  public void setUserId(Integer userId) {
     this.userId = userId;
   }
 

@@ -12,7 +12,7 @@ const Content = () => {
       case 'Account Settings':
         return <AccountSettings />;
       case 'Order History':
-        return <OrderComponent  />;
+        return <OrderComponent showingHistory={true} />;
       case 'Wishlist':
         return <WishlistComponent  />;
       default:

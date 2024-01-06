@@ -2,18 +2,15 @@ package com.cbse.encorethread.service;
 
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-
 import com.cbse.encorethread.dto.OrdersDTO;
 import com.cbse.encorethread.model.Orders;
 
-@Service
 public interface OrdersService {
   public List<Orders> getAllOrders();
 
   public Orders getOrderById(Integer id);
 
-  public List<Orders> getOrdersByUserId(Long userId);
+  public List<Orders> getOrdersByUserId(Integer userId);
 
   public Orders createOrder(Orders order);
 
@@ -21,7 +18,7 @@ public interface OrdersService {
 
   public void deleteOrderById(Integer id);
 
-  public void deleteOrderByUserId(Long userId);
+  public void deleteOrderByUserId(Integer userId);
 
   public Orders updateOrder(Orders order);
 }

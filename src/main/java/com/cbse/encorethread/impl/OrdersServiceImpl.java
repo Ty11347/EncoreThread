@@ -31,7 +31,7 @@ public class OrdersServiceImpl implements OrdersService {
     return ordersRepository.findById(id).get();
   }
 
-  public List<Orders> getOrdersByUserId(Long userId) {
+  public List<Orders> getOrdersByUserId(Integer userId) {
     List<Orders> orders = ordersRepository.findByUserId(userId);
     orders.sort((o1, o2) -> o1.getId() - o2.getId());
     return orders;
@@ -95,7 +95,7 @@ public class OrdersServiceImpl implements OrdersService {
     ordersRepository.deleteById(id);
   }
 
-  public void deleteOrderByUserId(Long userId) {
+  public void deleteOrderByUserId(Integer userId) {
     for (Orders order : ordersRepository.findByUserId(userId)) {
       orderDetailsRepository.deleteByOrderId(order.getId());
     }
