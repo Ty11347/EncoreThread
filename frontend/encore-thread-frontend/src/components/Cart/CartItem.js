@@ -39,7 +39,7 @@ const CartItem = ({
       </td>
       <td>{item.name}</td>
       <td>${item.price}</td>
-      <td>
+      <td style={{ minWidth: "300px" }}>
         <button className="quantity-button" onClick={handleDecrease}>
           -
         </button>
