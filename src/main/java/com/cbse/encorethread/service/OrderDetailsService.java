@@ -1,6 +1,7 @@
 package com.cbse.encorethread.service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,14 @@ public class OrderDetailsService {
   }
 
   public OrderDetails createOrderDetails(OrderDetails orderDetails) {
-    orderDetails.setId(orderDetailsRepository.findLatestId() + 1);
+    Optional<Integer> temp = orderDetailsRepository.findLatestId();
+    Integer orderDetailId;
+    if (temp.isEmpty()) {
+      orderDetailId = 0;
+    } else {
+      orderDetailId = temp.get();
+    }
+    orderDetails.setId(++orderDetailId);
     return orderDetailsRepository.save(orderDetails);
   }
 
