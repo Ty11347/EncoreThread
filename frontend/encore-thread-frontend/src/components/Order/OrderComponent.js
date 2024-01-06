@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import './Order.css'
-import { ORDER_STATUS_PENDING, ORDER_STATUS_PROCESSING } from './OrderConstant'
+import { ORDER_STATUS_CANCELLED, ORDER_STATUS_PENDING, ORDER_STATUS_PROCESSING, ORDER_STATUS_SHIPPED } from './OrderConstant'
 import { useNavigate } from 'react-router-dom'
 import SuccessMessage from './SuccessMessage'
 import { useSelector } from 'react-redux';
 
-function OrderComponent() {
+function OrderComponent({ showingHistory }) {
   const navigate = useNavigate()
   const userId = useSelector(state => state.user.user.id);
   const [orders, setOrders] = useState([])
@@ -16,7 +16,12 @@ function OrderComponent() {
   useEffect(() => {
     fetch(`http://localhost:8080/api/orders/user/${userId}`)
       .then((response) => response.json())
-      .then((data) => setOrders(data))
+      .then((data) => {
+        if (showingHistory) {
+          data = data.filter((order) => order.orderStatus == ORDER_STATUS_SHIPPED || order.orderStatus == ORDER_STATUS_CANCELLED)
+        }
+        setOrders(data)
+      })
       .catch((error) => console.error('Error fetching orders: ', error))
     !!orders[0] && setCancelId(orders[0].id)
   }, [])
@@ -70,7 +75,7 @@ function OrderComponent() {
                       },
                       body: JSON.stringify({
                         ...order,
-                        orderStatus: 'Pending'
+                        orderStatus: ORDER_STATUS_CANCELLED
                       })
                     })
                       .then((response) => response.json())

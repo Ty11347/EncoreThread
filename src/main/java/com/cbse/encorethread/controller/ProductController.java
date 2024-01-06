@@ -1,7 +1,7 @@
 package com.cbse.encorethread.controller;
 
+import com.cbse.encorethread.impl.ProductsServiceImpl;
 import com.cbse.encorethread.model.Products;
-import com.cbse.encorethread.service.ProductsService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +13,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
-    private final ProductsService productsService;
+    private final ProductsServiceImpl productsService;
 
-    public ProductController(ProductsService productsService) {
+    public ProductController(ProductsServiceImpl productsService) {
         this.productsService = productsService;
     }
 

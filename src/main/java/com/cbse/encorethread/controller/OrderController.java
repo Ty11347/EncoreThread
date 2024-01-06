@@ -2,6 +2,7 @@ package com.cbse.encorethread.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,11 +21,8 @@ import com.cbse.encorethread.service.OrdersService;
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
-  private final OrdersService ordersService;
-
-  public OrderController(OrdersService ordersService) {
-    this.ordersService = ordersService;
-  }
+  @Autowired
+  private OrdersService ordersService;
 
   @GetMapping
   public List<Orders> getAllOrders() {
@@ -37,7 +35,7 @@ public class OrderController {
   }
 
   @GetMapping("/user/{userId}")
-  public List<Orders> getOrdersByUserId(@PathVariable Long userId) {
+  public List<Orders> getOrdersByUserId(@PathVariable Integer userId) {
     return ordersService.getOrdersByUserId(userId);
   }
 
@@ -51,9 +49,14 @@ public class OrderController {
     return ordersService.createOrderByDTO(orderdto);
   }
 
-  @DeleteMapping("/{id}")
-  public void deleteOrder(@PathVariable Integer id) {
-    ordersService.deleteOrder(id);
+  @DeleteMapping("order/{id}")
+  public void deleteOrderById(@PathVariable Integer id) {
+    ordersService.deleteOrderById(id);
+  }
+
+  @DeleteMapping("user/{userId}")
+  public void deleteOrderByUserId(@PathVariable Integer userId) {
+    ordersService.deleteOrderByUserId(userId);
   }
 
   @PutMapping("/update")

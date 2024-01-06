@@ -97,7 +97,7 @@ const ProductsComponent = () => {
     display: "flex",
   };
 
-  const numberStyle = { padding: "8px", width: "60px" };
+  const numberStyle = { padding: "8px", width: "80px" };
   const buttonStyle = {
     padding: "8px 10px",
     border: "1px solid gray",
@@ -142,12 +142,14 @@ const ProductsComponent = () => {
             <input
               type="number"
               value={minPrice}
+              placeholder="Min "
               onChange={(e) => handleMinPriceChange(e.target.value)}
               style={numberStyle}
             />
             <div style={{ margin: "0 5px" }}>to</div>
             <input
               type="number"
+              placeholder="Max"
               value={maxPrice}
               onChange={(e) => handleMaxPriceChange(e.target.value)}
               style={numberStyle}
