@@ -1,13 +1,12 @@
 package com.cbse.encorethread.user;
 
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.cbse.encorethread.dto.LoginDTO;
 import com.cbse.encorethread.dto.ProfilepicDTO;
 import com.cbse.encorethread.dto.UserDTO;
 import com.cbse.encorethread.model.User;
 import com.cbse.encorethread.repository.UserRepository;
+import com.cbse.encorethread.repository.CartsRepository;
 import com.cbse.encorethread.service.UserService;
 import com.cbse.encorethread.exception.UserNotFoundException;
 import com.cbse.encorethread.user.LoginMessage;
@@ -30,6 +29,8 @@ public class UserImpl implements UserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private CartsRepository cartsRepository;
 
     private UserDTO convertToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
@@ -96,13 +97,13 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserById(Long userId) {
+    public UserDTO getUserById(Integer userId) {
         return userRepository.findById(userId)
             .map(this::convertToUserDTO)
             .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
     }
 
-    public User updateUserById(Long id, User user) {
+    public User updateUserById(Integer id, User user) {
         User user1 = userRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("User not found with id " + id));
 
@@ -117,14 +118,16 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public void deleteUserById(Long userId) {
+    public void deleteUserById(Integer userId) {
         User existingUser = userRepository.findById(userId)
             .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
+        userRepository.deleteCartByUserId(userId);
+        userRepository.deleteCartItemsByUserId(userId);
         userRepository.deleteById(userId);
     }
 
     @Override
-    public boolean changePassword(Long userId, String oldPassword, String newPassword) {
+    public boolean changePassword(Integer userId, String oldPassword, String newPassword) {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new RuntimeException("User not found"));
 
@@ -137,9 +140,8 @@ public class UserImpl implements UserService {
         return true;
     }
 
-
     @Override
-    public void updateProfilePic(Long userId, String profilepic) {
+    public void updateProfilePic(Integer userId, String profilepic) {
         User existingUser = userRepository.findById(userId).orElse(null);
 
         if (existingUser != null) {
@@ -152,7 +154,7 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public String getRoleById(Long userId) {
+    public String getRoleById(Integer userId) {
         User user = userRepository.findById(userId)
             .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
         return user.getRoles();

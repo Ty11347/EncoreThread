@@ -9,10 +9,10 @@ import com.cbse.encorethread.user.LoginMessage;
 public interface UserService {
     String addUser(UserDTO userDTO);
     LoginMessage loginUser(LoginDTO loginDTO);
-    UserDTO getUserById(Long userId);
-    User updateUserById(Long id, User user);
-    void deleteUserById(Long userId);
-    boolean changePassword(Long userId, String oldPassword, String newPassword);
-    void updateProfilePic(Long userId, String profilepic);
-    String getRoleById(Long userId);
+    UserDTO getUserById(Integer userId);
+    User updateUserById(Integer id, User user);
+    void deleteUserById(Integer userId);
+    boolean changePassword(Integer userId, String oldPassword, String newPassword);
+    void updateProfilePic(Integer userId, String profilepic);
+    String getRoleById(Integer userId);
 }

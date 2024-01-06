@@ -1,7 +1,7 @@
 package com.cbse.encorethread.dto;
 
 public class UserDTO {
-    private Long userId;
+    private Integer userId;
     private String username;
     private String email;
     private int age;
@@ -11,7 +11,7 @@ public class UserDTO {
     private String password;
     private String profilepic;
 
-    public UserDTO(Long userId, String username, String email, int age, String address, String contact, String roles, String password, String profilepic){
+    public UserDTO(Integer userId, String username, String email, int age, String address, String contact, String roles, String password, String profilepic){
         this.userId = userId;
         this.username = username;
         this.email = email;
@@ -30,15 +30,15 @@ public class UserDTO {
        this.username = username;
     }
 
-    public Long getUserById(Long userId) {
+    public Integer getUserById(Integer userId) {
         return this.userId;
     }
 
-    public Long getUserId(){
+    public Integer getUserId(){
         return this.userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
