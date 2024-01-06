@@ -1,6 +1,7 @@
 package com.cbse.encorethread.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,7 +40,17 @@ public class OrdersService {
   }
 
   public Orders createOrder(Orders order) {
-    order.setId(ordersRepository.findLatestId() + 1);
+    Optional<Integer> temp = ordersRepository.findLatestId();
+    Integer orderId;
+    if (temp.isEmpty()) {
+      orderId = 0;
+    } else {
+      orderId = temp.get();
+    }
+    order.setId(++orderId);
+    if (order.getId() == null) {
+      order.setId(1);
+    }
     return ordersRepository.save(order);
   }
 
@@ -51,7 +62,14 @@ public class OrdersService {
       orderdto.getAddress(),
       orderdto.getOrderDate()
     );
-    order.setId(ordersRepository.findLatestId() + 1);
+    Optional<Integer> temp = ordersRepository.findLatestId();
+    Integer orderId;
+    if (temp.isEmpty()) {
+      orderId = 0;
+    } else {
+      orderId = temp.get();
+    }
+    order.setId(++orderId);
     order = ordersRepository.save(order);
     OrderDetails[] orderDetails = new OrderDetails[orderdto.getProductIds().length];
     for (int i = 0; i < orderdto.getProductIds().length; i++) {
@@ -61,14 +79,29 @@ public class OrdersService {
         orderdto.getQuantities()[i],
         orderdto.getPrices()[i]
       );
-      orderDetails[i].setId(orderDetailsRepository.findLatestId() + 1);
+      temp = orderDetailsRepository.findLatestId();
+      Integer orderDetailsId;
+      if (temp.isEmpty()) {
+        orderDetailsId = 0;
+      } else {
+        orderDetailsId = temp.get();
+      }
+      orderDetails[i].setId(++orderDetailsId);
       orderDetailsRepository.save(orderDetails[i]);
     }
     return order;
   }
 
-  public void deleteOrder(Integer id) {
+  public void deleteOrderById(Integer id) {
+    orderDetailsRepository.deleteByOrderId(id);
     ordersRepository.deleteById(id);
+  }
+
+  public void deleteOrderByUserId(Long userId) {
+    for (Orders order : ordersRepository.findByUserId(userId)) {
+      orderDetailsRepository.deleteByOrderId(order.getId());
+    }
+    ordersRepository.deleteByUserId(userId);
   }
 
   public Orders updateOrder(Orders order) {
