@@ -3,11 +3,10 @@ import { FaUser, FaEdit, FaTrash } from "react-icons/fa";
 import Modal from "react-modal";
 import { Link, useNavigate } from "react-router-dom";
 import "./ReviewCard.css";
-import EditReviewCard from "./EditReviewCard";
 
 Modal.setAppElement("#root");
 
-function ReviewCardByUserIdAndProductId({ userId, productId }) {
+function ReviewCardByUserIdAndProductId({ userId, productId, onDelete }) {
   const [review, setReview] = useState(null);
   const [user, setUser] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -74,6 +73,11 @@ function ReviewCardByUserIdAndProductId({ userId, productId }) {
     setModalIsOpen(false);
   };
 
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   const handleDelete = async () => {
     // Ask for confirmation before proceeding
     const confirmDelete = window.confirm(
@@ -96,18 +100,14 @@ function ReviewCardByUserIdAndProductId({ userId, productId }) {
       if (response.ok) {
         console.log("Review deleted successfully");
         alert("Your review has been deleted successfully");
-        window.location.reload();
+        setReview(null);
+        onDelete(productId);
       } else {
         console.error("Failed to delete review");
       }
     } catch (error) {
       console.error("Error deleting review:", error);
     }
-  };
-
-  const formatDate = (dateString) => {
-    const options = { year: "numeric", month: "2-digit", day: "2-digit" };
-    return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
   return (
