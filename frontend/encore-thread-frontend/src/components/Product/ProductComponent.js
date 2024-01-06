@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { setProductsAction } from "../../redux/actions/productActions";
+import { useDispatch, useSelector } from "react-redux";
+
 import ProductCard from "./ProductCard";
 
 const ProductsComponent = () => {
+  const dispatch = useDispatch();
+  const fetchProducts = useSelector((state) => state.product.products);
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
@@ -11,7 +16,10 @@ const ProductsComponent = () => {
   useEffect(() => {
     fetch("http://localhost:8080/api/products")
       .then((response) => response.json())
-      .then((data) => setProducts(data))
+      .then((data) => {
+        setProducts(data);
+        dispatch(setProductsAction(data));
+      })
       .catch((error) => console.error("Error fetching data: ", error));
   }, []);
 
@@ -147,7 +155,7 @@ const ProductsComponent = () => {
         </div>
         <div style={filterContentStyles}>
           <h3>Size</h3>
-          <div style={{display: "flex"}}>
+          <div style={{ display: "flex" }}>
             <input
               type="checkbox"
               checked={selectedSize === "Small"}
@@ -155,7 +163,7 @@ const ProductsComponent = () => {
             />
             <label>Small</label>
           </div>
-          <div style={{display: "flex"}}>
+          <div style={{ display: "flex" }}>
             <input
               type="checkbox"
               checked={selectedSize === "Medium"}
@@ -163,7 +171,7 @@ const ProductsComponent = () => {
             />
             <label>Medium</label>
           </div>
-          <div style={{display: "flex"}}>
+          <div style={{ display: "flex" }}>
             <input
               type="checkbox"
               checked={selectedSize === "Large"}

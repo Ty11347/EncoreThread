@@ -42,4 +42,9 @@ public class CartItems {
         this.price = price;
         this.addedAt = addedAt;
     }
+
+    public CartItems(Integer cartItemId, Integer productId) {
+        this.cartItemId = cartItemId;
+        this.productId = productId;
+    }
 }

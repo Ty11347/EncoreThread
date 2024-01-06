@@ -67,7 +67,7 @@ public class CartController {
     public ResponseEntity<?> deleteCartItems(
             @RequestBody CartItems item) {
         try {
-            cartItemsService.deleteCartItems(item.getCartId(), item.getProductId());
+            cartItemsService.deleteCartItems(item.getCartItemId());
             return new ResponseEntity<>("Cart item successfully deleted!", HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);

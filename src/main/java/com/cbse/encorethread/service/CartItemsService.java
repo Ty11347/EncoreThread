@@ -14,7 +14,7 @@ public interface CartItemsService {
 
     CartItems updateCartItems(CartItems updatedCartItems);
 
-    void deleteCartItems(Integer cartId, Integer productId);
+    void deleteCartItems(Integer cartItemId);
 
     void deleteCartItemsByCartId(Integer cartId);
 }

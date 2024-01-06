@@ -36,7 +36,7 @@ public class CartItemsServiceImpl implements CartItemsService {
     public CartItems createCartItems(CartItems cartItems) {
         CartItems oldCartItems = cartItemsRepository.findByCartIdAndProductId(cartItems.getCartId(),
                 cartItems.getProductId());
-
+        System.out.println(oldCartItems);
         if (oldCartItems != null) {
             oldCartItems.setQuantity(oldCartItems.getQuantity() + cartItems.getQuantity());
             return cartItemsRepository.save(oldCartItems);
@@ -80,8 +80,8 @@ public class CartItemsServiceImpl implements CartItemsService {
 
     @Override
     @Transactional
-    public void deleteCartItems(Integer cartId, Integer productId) {
-        cartItemsRepository.deleteByCartIdAndProductId(cartId, productId);
+    public void deleteCartItems(Integer cartItemId) {
+        cartItemsRepository.deleteByCartItemId(cartItemId);
     }
 
     @Override
