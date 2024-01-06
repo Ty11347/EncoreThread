@@ -39,25 +39,25 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDTO> getUserById(@PathVariable("userId") Long userId) {
+    public ResponseEntity<UserDTO> getUserById(@PathVariable("userId") Integer userId) {
         UserDTO userDTO = userService.getUserById(userId);
         return ResponseEntity.ok(userDTO);
     }
 
     @PutMapping("/{userId}/update")
-    public ResponseEntity<User> updateUserById(@PathVariable Long userId, @RequestBody User user) {
+    public ResponseEntity<User> updateUserById(@PathVariable Integer userId, @RequestBody User user) {
         User updatedUser = userService.updateUserById(userId, user);
         return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{userId}/delete")
-    public ResponseEntity<String> deleteUserById(@PathVariable("userId") Long userId){
+    public ResponseEntity<String> deleteUserById(@PathVariable("userId") Integer userId){
         userService.deleteUserById(userId);
         return new ResponseEntity<>("User successfully deleted!", HttpStatus.OK);
     }
 
     @PutMapping("/{userId}/changePw")
-    public ResponseEntity<?> changPassword(@PathVariable Long userId, @RequestBody PasswordResetDTO passwordResetDTO){
+    public ResponseEntity<?> changPassword(@PathVariable Integer userId, @RequestBody PasswordResetDTO passwordResetDTO){
         try {
             userService.changePassword(userId, passwordResetDTO.getOldPassword(), passwordResetDTO.getNewPassword());
             return ResponseEntity.ok().build();
@@ -67,13 +67,13 @@ public class UserController {
     }
 
     @PutMapping("/{userId}/update/profilepic")
-    public ResponseEntity<Void> updateProfilepic(@PathVariable Long userId, @RequestBody ProfilepicDTO profilepicDTO) {
+    public ResponseEntity<Void> updateProfilepic(@PathVariable Integer userId, @RequestBody ProfilepicDTO profilepicDTO) {
         userService.updateProfilePic(userId, profilepicDTO.getProfilepic());
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{userId}/role")
-    public ResponseEntity<String> getRoleById(@PathVariable Long userId){
+    public ResponseEntity<String> getRoleById(@PathVariable Integer userId){
         String userRole = userService.getRoleById(userId);
         return new ResponseEntity<>(userRole, HttpStatus.OK);
     }

@@ -3,9 +3,9 @@ package com.cbse.encorethread.user;
 public class LoginMessage {
     private String message;
     private Boolean status;
-    private Long userId;
+    private Integer userId;
 
-    public LoginMessage(String message, Boolean status, Long userId) {
+    public LoginMessage(String message, Boolean status, Integer userId) {
         this.message = message;
         this.status = status;
         this.userId = userId;
@@ -22,10 +22,10 @@ public class LoginMessage {
     public void setStatus(Boolean status) {
         this.status = status;
     }
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
-    public void setUserId(Long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 }
