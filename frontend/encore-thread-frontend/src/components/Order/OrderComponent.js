@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './Order.css'
-import { ORDER_STATUS_PENDING, ORDER_STATUS_PROCESSING } from './OrderConstant'
+import { ORDER_STATUS_CANCELLED, ORDER_STATUS_PENDING, ORDER_STATUS_PROCESSING } from './OrderConstant'
 import { useNavigate } from 'react-router-dom'
 import SuccessMessage from './SuccessMessage'
 import { useSelector } from 'react-redux';
@@ -70,7 +70,7 @@ function OrderComponent() {
                       },
                       body: JSON.stringify({
                         ...order,
-                        orderStatus: 'Pending'
+                        orderStatus: ORDER_STATUS_CANCELLED
                       })
                     })
                       .then((response) => response.json())
