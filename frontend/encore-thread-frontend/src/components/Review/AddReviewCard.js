@@ -25,6 +25,12 @@ const AddReviewCard = ({ match }) => {
     }
   };
 
+  const handleRemoveImage = () => {
+    if (image) {
+      setImage(null);
+    }
+  };
+
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -53,10 +59,15 @@ const AddReviewCard = ({ match }) => {
   };
 
   const handleAddReview = async () => {
+    // Check if the review textarea is empty
+    if (!comment.trim()) {
+      alert("Please enter your review before submitting.");
+      return;
+    }
+  
     // Convert the image to base64 code before sending
     const base64Image = image ? image.split(",")[1] : null;
-    console.log(productId);
-    console.log(userId);
+  
     const newReview = {
       id: 0,
       productId: productId,
@@ -66,8 +77,8 @@ const AddReviewCard = ({ match }) => {
       commentDate: new Date(),
       imageData: base64Image,
     };
-
-    // Perform the action with the new review (e.g., submit to server or update state)
+  
+    // Perform the action with the new review (e.g., submit to the server or update state)
     try {
       const response = await fetch("http://localhost:3000/api/reviews/add", {
         method: "POST",
@@ -76,7 +87,7 @@ const AddReviewCard = ({ match }) => {
         },
         body: JSON.stringify(newReview),
       });
-
+  
       if (response.ok) {
         // Handle success
         console.log("Review added successfully");
@@ -88,7 +99,7 @@ const AddReviewCard = ({ match }) => {
     } catch (error) {
       console.error("Error submitting review:", error);
     }
-
+  
     // Clear the form after submitting
     setComment("");
     setRating(0);
@@ -131,8 +142,14 @@ const AddReviewCard = ({ match }) => {
         style={{ height: "50px", width: "500px", resize: "none" }} // Set the desired height here
       ></textarea>
       <input type="file" onChange={handleImageChange} accept="image/*" />
-      {image && <img src={image} alt="Preview" className="image-preview" />}
-      <button
+      {image && (
+        <div className="image-container">
+          <img src={image} alt="Preview" className="image-preview" />
+          <button className="remove-image" onClick={handleRemoveImage}>
+            X
+          </button>
+        </div>
+      )}      <button
         onClick={handleAddReview}
         style={{
           width: "auto",

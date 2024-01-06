@@ -108,6 +108,17 @@ public class ReviewsController {
         } else {
             return ResponseEntity.notFound().build();
         }
-    }       
+    }
+    
+    @DeleteMapping("/delete/all")
+    public ResponseEntity<String> deleteReviewsByUserId(@RequestParam(name="userId") int userId){
+        boolean status = reviewsService.deleteAllReviewsByUserId(userId);
+
+        if(status){
+           return ResponseEntity.ok("All reviews delete successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Review not be removed");
+        }
+    }
 
 }
