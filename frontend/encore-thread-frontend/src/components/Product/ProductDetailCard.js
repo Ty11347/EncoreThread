@@ -1,14 +1,13 @@
-
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import ReviewCard from "../Review/ReviewCard";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import ReviewCardByUserIdAndProductId from "../Review/ReviewCardByUserIdAndProductId";
 
 function ProductDetailCard() {
   const navigate = useNavigate();
   const location = useLocation();
-  const userId = useSelector(state => state.user.user.id);
+  const userId = useSelector((state) => state.user.user.id);
   const product = location.state;
   const [wishlistAdded, setWishlistAdded] = useState(false);
 
@@ -127,19 +126,39 @@ function ProductDetailCard() {
         </div>
         <div style={{ flex: "2" }}>
           <h3>{product.title}</h3>
-          <p>{product.description}</p>
-          <p>
-            <strong>Size:</strong> {product.size}
-          </p>
-          <p>
-            <strong>Price:</strong> {product.price}
-          </p>
+          <p style={{ textAlign: "left" }}>{product.description}</p>
+          <table
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <tr>
+              <td>
+                <strong>Size:</strong>
+              </td>
+              <td>{product.size}</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Price:</strong>
+              </td>
+              <td>{product.price}</td>
+            </tr>
+            <tr>
+              <td>
+                <strong>Quantity:</strong>
+              </td>
+              <td>{product.quantity}</td>
+            </tr>
+          </table>
         </div>
       </div>
       <h3 style={{ textAlign: "left", marginLeft: "20px" }}>
         Product Feedback
       </h3>
-      <ReviewCard productId={product.id}/>
+      <ReviewCard productId={product.id} />
     </div>
   );
 }

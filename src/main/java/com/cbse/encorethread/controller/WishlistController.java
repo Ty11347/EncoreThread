@@ -5,6 +5,7 @@ import com.cbse.encorethread.model.Products;
 import com.cbse.encorethread.model.Wishlist;
 import com.cbse.encorethread.service.WishlistService;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,26 +22,46 @@ public class WishlistController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<List<Products>> getProductsByUserId(@PathVariable Long userId) {
-        List<Products> products = wishlistService.getProductsByUserId(userId);
-        return ResponseEntity.ok(products);
+    public ResponseEntity<?> getProductsByUserId(@PathVariable Long userId) {
+        try {
+            List<Products> products = wishlistService.getProductsByUserId(userId);
+            return ResponseEntity.ok(products);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error retrieving wishlist products for user ID: " + userId);
+        }
     }
 
     @GetMapping("/check/{userId}/{productId}")
-    public ResponseEntity<Boolean> isProductInWishlist(@PathVariable Long userId, @PathVariable Integer productId) {
-        boolean isInWishlist = wishlistService.isProductInWishlist(userId, productId);
-        return ResponseEntity.ok(isInWishlist);
+    public ResponseEntity<?> isProductInWishlist(@PathVariable Long userId, @PathVariable Integer productId) {
+        try {
+            boolean isInWishlist = wishlistService.isProductInWishlist(userId, productId);
+            return ResponseEntity.ok(isInWishlist);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error checking if product is in wishlist for user ID: " + userId);
+        }
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Wishlist> addProductToWishlist(@RequestBody WishlistAddDTO wishlistAddDTO) {
-        Wishlist wishlist = wishlistService.addToWishlist(wishlistAddDTO);
-        return ResponseEntity.ok(wishlist);
+    public ResponseEntity<?> addProductToWishlist(@RequestBody WishlistAddDTO wishlistAddDTO) {
+        try {
+            Wishlist wishlist = wishlistService.addToWishlist(wishlistAddDTO);
+            return ResponseEntity.ok(wishlist);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error adding product to wishlist");
+        }
     }
 
     @DeleteMapping("/remove/{userId}")
-    public ResponseEntity<Void> removeFromWishlist(@PathVariable Long userId, @RequestParam Integer productId) {
-        wishlistService.removeFromWishlist(userId, productId);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<?> removeFromWishlist(@PathVariable Long userId, @RequestParam Integer productId) {
+        try {
+            wishlistService.removeFromWishlist(userId, productId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error removing product from wishlist for user ID: " + userId);
+        }
     }
 }
