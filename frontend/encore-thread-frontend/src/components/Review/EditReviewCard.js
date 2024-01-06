@@ -3,7 +3,7 @@ import { FaUser, FaStar } from "react-icons/fa";
 import { useParams, useNavigate } from "react-router-dom";
 import "./ReviewCard.css";
 
-const EditReviewCard = ({ match }) => {
+const EditReviewCard = () => {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
   const [image, setImage] = useState(null);
@@ -66,6 +66,12 @@ const EditReviewCard = ({ match }) => {
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
+
+    if (event.target.value === "") {
+      setImage(null);
+      return;
+    }
+
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -76,7 +82,13 @@ const EditReviewCard = ({ match }) => {
   };
 
   const handleUpdateReview = async () => {
-    const base64Image = image ? image.split(",")[1] : null;
+    let updatedImageData = null;
+
+    if (image) {
+      updatedImageData = image.split(",")[1];
+    } else if (review?.imageData) {
+      updatedImageData = review.imageData;
+    }
 
     const updatedReview = {
       id: reviewId,
@@ -85,7 +97,7 @@ const EditReviewCard = ({ match }) => {
       rating: rating,
       comment: comment,
       commentDate: new Date(),
-      imageData: base64Image,
+      imageData: updatedImageData, 
     };
 
     try {
@@ -113,6 +125,18 @@ const EditReviewCard = ({ match }) => {
     setComment("");
     setRating(0);
     setImage(null);
+  };
+
+  const handleRemoveImage = () => {
+    if (!image && review?.imageData) {
+      setImage(null);
+      setReview((prevReview) => ({
+        ...prevReview,
+        imageData: null,
+      }));
+    } else {
+      setImage(null);
+    }
   };
 
   return (
@@ -150,8 +174,32 @@ const EditReviewCard = ({ match }) => {
         className="text-area"
         style={{ height: "50px", width: "500px", resize: "none" }}
       ></textarea>
-      <input type="file" onChange={handleImageChange} accept="image/*" />
-      {image && <img src={image} alt="Preview" className="image-preview" />}
+      <input
+        type="file"
+        onChange={handleImageChange}
+        onClick={() => setImage(null)} 
+        accept="image/*"
+      />
+      {review?.imageData && !image && (
+        <div className="image-container">
+          <img
+            src={`data:image/jpeg;base64,${review.imageData}`}
+            alt="Review"
+            className="image-preview"
+          />
+          <button className="remove-image" onClick={handleRemoveImage}>
+            X
+          </button>
+        </div>
+      )}
+      {image && (
+        <div className="image-container">
+          <img src={image} alt="Preview" className="image-preview" />
+          <button className="remove-image" onClick={handleRemoveImage}>
+            X
+          </button>
+        </div>
+      )}
       <button
         onClick={handleUpdateReview}
         style={{

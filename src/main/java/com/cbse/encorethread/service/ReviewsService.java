@@ -36,7 +36,7 @@ public class ReviewsService {
             return false;
         }
     }
-    
+
     public boolean updateReview(Reviews review) {
         try {
             reviewsRepository.save(review);
@@ -60,6 +60,18 @@ public class ReviewsService {
 
     public Reviews fetchReviewByUserIdAndProductId(int userId, int productId) {
         return reviewsRepository.findByUserIdAndProductId(userId, productId);
+    }
+
+    public boolean deleteAllReviewsByUserId(int userId) {
+        try {
+            List<Reviews> reviewsList = reviewsRepository.findByUserId(userId);
+            for (Reviews review : reviewsList) {
+                reviewsRepository.deleteById(review.getId());
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
 }
