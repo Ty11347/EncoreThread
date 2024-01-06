@@ -1,14 +1,14 @@
 package com.cbse.encorethread.dto;
 
 public class WishlistAddDTO {
-    private Long userId;
+    private Integer userId;
     private Integer productId;
 
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 
