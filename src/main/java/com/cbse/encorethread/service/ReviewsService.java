@@ -1,77 +1,27 @@
 package com.cbse.encorethread.service;
 
+import com.cbse.encorethread.model.Reviews;
+
 import java.util.List;
 
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
 
-import com.cbse.encorethread.model.Reviews;
-import com.cbse.encorethread.repository.ReviewsRepository;
 
-@Service
-public class ReviewsService {
+public interface ReviewsService {
 
-    private final ReviewsRepository reviewsRepository;
+    boolean addReview(Reviews review);
 
-    public ReviewsService(ReviewsRepository reviewsRepository) {
-        this.reviewsRepository = reviewsRepository;
-    }
+    boolean deleteReview(Long id); 
 
-    public boolean addReview(Reviews review) {
-        try {
-            Long latestId = reviewsRepository.findLatestId();
-            review.setId(latestId + 1);
-            reviewsRepository.save(review);
-            return true;
-        } catch (EmptyResultDataAccessException e) {
-            return false;
-        }
-    }
+    boolean updateReview(Reviews review);
 
-    public boolean deleteReview(Long id) {
-        try {
-            reviewsRepository.deleteById(id);
-            return true;
-        } catch (EmptyResultDataAccessException e) {
-            return false;
-        }
-    }
+    Reviews findReviewById(Long id); 
 
-    public boolean updateReview(Reviews review) {
-        try {
-            reviewsRepository.save(review);
-            return true;
-        } catch (EmptyResultDataAccessException e) {
-            return false;
-        }
-    }
+    List<Reviews> fetchReviewsByProductId(int productId);
 
-    public Reviews findReviewById(Long id) {
-        return reviewsRepository.findById(id).orElse(null);
-    }
+    List<Reviews> fetchReviewsByUserId(int userId) ;
 
-    public List<Reviews> fetchReviewsByProductId(int productId) {
-        return reviewsRepository.findByProductId(productId);
-    }
+    Reviews fetchReviewByUserIdAndProductId(int userId, int productId) ;
 
-    public List<Reviews> fetchReviewsByUserId(int userId) {
-        return reviewsRepository.findByUserId(userId);
-    }
-
-    public Reviews fetchReviewByUserIdAndProductId(int userId, int productId) {
-        return reviewsRepository.findByUserIdAndProductId(userId, productId);
-    }
-
-    public boolean deleteAllReviewsByUserId(int userId) {
-        try {
-            List<Reviews> reviewsList = reviewsRepository.findByUserId(userId);
-            for (Reviews review : reviewsList) {
-                reviewsRepository.deleteById(review.getId());
-            }
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
+    boolean deleteAllReviewsByUserId(int userId);
 
 }
