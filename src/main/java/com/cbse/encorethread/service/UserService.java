@@ -11,7 +11,7 @@ public interface UserService {
     LoginMessage loginUser(LoginDTO loginDTO);
     UserDTO getUserById(Integer userId);
     User updateUserById(Integer id, User user);
-    void deleteUserById(Integer userId);
+    void deleteUserById(Integer userId, Integer cartId);
     boolean changePassword(Integer userId, String oldPassword, String newPassword);
     void updateProfilePic(Integer userId, String profilepic);
     String getRoleById(Integer userId);
