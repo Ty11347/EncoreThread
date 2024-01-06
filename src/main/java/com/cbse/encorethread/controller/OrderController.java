@@ -51,9 +51,14 @@ public class OrderController {
     return ordersService.createOrderByDTO(orderdto);
   }
 
-  @DeleteMapping("/{id}")
-  public void deleteOrder(@PathVariable Integer id) {
-    ordersService.deleteOrder(id);
+  @DeleteMapping("order/{id}")
+  public void deleteOrderById(@PathVariable Integer id) {
+    ordersService.deleteOrderById(id);
+  }
+
+  @DeleteMapping("user/{userId}")
+  public void deleteOrderByUserId(@PathVariable Long userId) {
+    ordersService.deleteOrderByUserId(userId);
   }
 
   @PutMapping("/update")
