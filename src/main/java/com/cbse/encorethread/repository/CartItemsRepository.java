@@ -5,6 +5,8 @@ import com.cbse.encorethread.model.CartItems;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -25,6 +27,7 @@ public interface CartItemsRepository extends JpaRepository<CartItems, Integer> {
     void deleteByCartItemId(Integer cartItemId);
 
     @Modifying
+    @Transactional
     @Query("DELETE FROM CartItems c WHERE c.cartId = :cartId")
     void deleteByCartId(Integer cartId);
 }
