@@ -31,6 +31,7 @@ public class AdminController {
         adminService.deleteProduct(id);
     }
 
+
     @PutMapping("/products/quantity/{id}")
     public ResponseEntity<?> updateProductQuantity(@PathVariable Integer id, @RequestParam Integer quantityChange) {
         try {

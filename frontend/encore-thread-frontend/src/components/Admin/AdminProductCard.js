@@ -1,7 +1,7 @@
 import React from "react";
 import {Link} from "react-router-dom";
 
-function AdminProductCard({id, imageUrl, title, description, size, price, name, quantity, onEdit}) {
+function AdminProductCard({id, imageUrl, title, description, size, price, name, quantity, onEdit, refreshProducts}) {
 
   const handleEditProduct = () => {
     onEdit({
@@ -14,6 +14,27 @@ function AdminProductCard({id, imageUrl, title, description, size, price, name, 
       name,
       quantity
     });
+  };
+
+  const handleDeleteProduct = async () => {
+    const userConfirmed = window.confirm("Are you sure you want to delete this product? Id: " + id);
+
+    if (userConfirmed) {
+      try {
+        const response = await fetch("http://localhost:8080/api/admin/products/" + id, {
+          method: "DELETE"
+        });
+
+        if (response.ok) {
+          console.log("Product deleted successfully.");
+          refreshProducts();
+        } else {
+          console.error("Error deleting product:", response.status);
+        }
+      } catch (error) {
+        console.error("Error deleting product:", error);
+      }
+    }
   };
 
   return (
@@ -57,6 +78,23 @@ function AdminProductCard({id, imageUrl, title, description, size, price, name, 
               }}
           >
             Edit this Product
+          </button>
+
+          <br/>
+
+          <button
+              onClick={handleDeleteProduct}
+              style={{
+                backgroundColor: "blue",
+                color: "white",
+                padding: "10px 18px",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+                marginTop: "15px",
+              }}
+          >
+            Delete this Product
           </button>
         </div>
       </div>

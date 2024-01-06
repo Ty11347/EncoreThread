@@ -7,15 +7,17 @@ const ManageProductsComponent = () => {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [editedProduct, setEditedProduct] = useState(null);
-
-  useEffect(() => {
+  const fetchProducts = () => {
     fetch("http://localhost:8080/api/products")
         .then((response) => response.json())
         .then((data) => {
           setProducts(data);
-          console.log(data);
         })
         .catch((error) => console.error("Error fetching data: ", error));
+  };
+
+  useEffect(() => {
+    fetchProducts();
   }, []);
 
   const handleEditProduct = (product) => {
@@ -75,6 +77,7 @@ const ManageProductsComponent = () => {
                     name={product.name}
                     quantity={product.quantity}
                     onEdit={handleEditProduct}
+                    refreshProducts={fetchProducts}
                 />
             ))}
           </div>
