@@ -7,40 +7,12 @@ const Register = () => {
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [roles, setRoles] = useState("");
+    const [roles, setRoles] = useState("User");
     const [age, setAge] = useState("");
     const [contact, setContact] = useState("");
     const [address, setAddress] = useState("");
     const [profilepic, setProfilepic] = useState("");
     const [previewImage, setPreviewImage] = useState(null);
-
-    // async function save(event) {
-    //   event.preventDefault();
-    //   const formData = new FormData();
-    //   formData.append('username', username);
-    //   formData.append('email', email);
-    //   formData.append('age', age);
-    //   formData.append('address', address);
-    //   formData.append('contact', contact);
-    //   formData.append('roles', roles);
-    //   formData.append('password', password);
-    //   console.log(password);
-    //   if (profilepic) {
-    //     formData.append('profilepic', profilepic);
-    //   }
-    //   console.log(formData);
-    //   try {
-    //     await axios.post("/api/user/save", formData, {
-    //       headers: {
-    //         'Content-Type': 'multipart/form-data'
-    //       }
-    //     });
-    //     alert("User Registation Successfully");
-
-    //   } catch (err) {
-    //     alert(err);
-    //   }
-    // }
 
     const handleProfilePicChange = (event) => {
       setProfilepic(event.target.files[0]);
@@ -142,17 +114,18 @@ const Register = () => {
                 </div>
 
                 <div class="form-group">
-                    <label>Roles</label>
-                    <select type="roles"
+                  <label htmlFor="roles">Roles</label>
+                  <select 
+                    type="roles"
                     class="form-control"
                     id="roles"
                     value={roles}
                     onChange={(event) => {
                       setRoles(event.target.value);
-                    }}>
-                        <option value="User">User</option>
-                        <option value="Admin">Admin</option>
-                    </select>
+                  }}>
+                    <option value="User">User</option>
+                    <option value="Admin">Admin</option>
+                  </select>
                 </div>
 
                 <div class="form-group">

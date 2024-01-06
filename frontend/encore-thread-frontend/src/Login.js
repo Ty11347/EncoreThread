@@ -4,6 +4,7 @@ import { setUser, setCartId } from './redux/actions/userActions';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import { Link } from "react-router-dom";
+import loginImage from './images/encore-thread-bg.jpg';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -59,49 +60,52 @@ const Login = () => {
   };
 
   return (
-      <div>
-        <div class="container">
-          <div class="row" style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '100%'
-          }}>
-            <div class="col-sm-6">
-              <h2>Login</h2>
-              <form>
-                <div class="form-group">
-                  <label>Username</label>
-                  <input type="username" class="form-control" id="username" placeholder="Enter Name"
-
-                         value={username}
-                         onChange={(event) => {
-                           setUsername(event.target.value);
-                         }}
-
-                  />
-
-                </div>
-
-                <div class="form-group">
-                  <label>Password</label>
-                  <input type="password" class="form-control" id="password" placeholder="Enter Password"
-
-                         value={password}
-                         onChange={(event) => {
-                           setPassword(event.target.value);
-                         }}
-
-                  />
-                </div>
-                <button type="submit" class="btn btn-primary" onClick={login}>Login</button>
-              </form>
-              <Link to="/register">Do not have an account? Sign up now!</Link>
+    <div className="container">
+      <div className="row">
+        {/* Image on the left */}
+        <div className="col-sm-6" style={{ paddingRight: '0', marginRight: 'auto', marginLeft: '0' }}>
+          <img src={loginImage} alt="Login" style={{ width: '50%', height: 'auto' }} />
+        </div>
+  
+        {/* Login container on the right */}
+        <div className="col-sm-6" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+          <h2>Login</h2>
+          <form style={{ width: '30%' }}>
+            <div className="form-group">
+              <label>Username</label>
+              <input
+                type="username"
+                className="form-control"
+                id="username"
+                placeholder="Enter Name"
+                value={username}
+                onChange={(event) => {
+                  setUsername(event.target.value);
+                }}
+              />
             </div>
-          </div>
+  
+            <div className="form-group">
+              <label>Password</label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                placeholder="Enter Password"
+                value={password}
+                onChange={(event) => {
+                  setPassword(event.target.value);
+                }}
+              />
+            </div>
+            <button type="submit" className="btn btn-primary" onClick={login}>
+              Login
+            </button>
+          </form>
+          <Link to="/register">Do not have an account? Sign up now!</Link>
         </div>
       </div>
+    </div>
   );
 }
 

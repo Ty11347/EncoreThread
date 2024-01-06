@@ -104,7 +104,7 @@ public class UserImpl implements UserService {
 
     public User updateUserById(Long id, User user) {
         User user1 = userRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("User not found with id " + id));
+            .orElseThrow(() -> new RuntimeException("User not found with id " + id));
 
         // Update user details
         user1.setUsername(user.getUsername());
@@ -112,8 +112,7 @@ public class UserImpl implements UserService {
         user1.setContact(user.getContact());
         user1.setAge(user.getAge());
         user1.setAddress(user.getAddress());
-        user1.setRoles(user.getRoles());
-        //user1.setProfilepic(user.getProfilepic());
+        //user1.setRoles(user.getRoles());
         return userRepository.save(user1);
     }
 

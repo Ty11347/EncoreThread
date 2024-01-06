@@ -9,7 +9,6 @@ const AccountSettings = () => {
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
   const [deleteMode, setDeleteMode] = useState(false);
-  const [profilepic, setProfilepic] = useState(null);
   const [userData, setUserData] = useState({
     username: '',
     email: '',
@@ -23,6 +22,7 @@ const AccountSettings = () => {
     username: '',
     email: '',
     contact: '',
+    roles: '',
     address: '',
   });
 
@@ -96,6 +96,7 @@ const AccountSettings = () => {
       );
       if (response.ok) {
         const data = await response.json();
+        console.log('User Info:', data);
         setUserData(data);
         setUpdatedUserData(data);
       } else {
