@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-function ProductCard({ id, imageUrl, title, description, size, price }) {
+function ProductCard({ id, imageUrl, title, description, size, price, quantity }) {
   const cartId = useSelector((state) => state.user.cartId);
 
   const addToCart = () => {
@@ -47,11 +47,12 @@ function ProductCard({ id, imageUrl, title, description, size, price }) {
           maxWidth: "250px",
         }}
       />
-      <h3>{title}</h3>
+      <h3 style={{height: "150px"}}>{title}</h3>
       <div style={{ textAlign: "left" }}>
-        <p style={{ height: "100px" }}>
+        <p style={{ height: "200px" }}>
           {description ?? "No description yet."}
         </p>
+        <p>Quantity: {quantity ===0 ? "Unavailable": quantity}</p>
         <p>Size : {size}</p>
         <p>Price : RM{price}</p>
       </div>
@@ -62,7 +63,7 @@ function ProductCard({ id, imageUrl, title, description, size, price }) {
       >
         <Link
           to={`/products/${id}`}
-          state={{ id, imageUrl, title, description, size, price }}
+          state={{ id, imageUrl, title, description, size, price, quantity }}
         >
           <button
             style={{
