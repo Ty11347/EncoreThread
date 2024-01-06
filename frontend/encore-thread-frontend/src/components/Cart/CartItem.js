@@ -39,7 +39,7 @@ const CartItem = ({
       </td>
       <td>{item.name}</td>
       <td>${item.price}</td>
-      <td>
+      <td style={{ minWidth: "300px" }}>
         <button className="quantity-button" onClick={handleDecrease}>
           -
         </button>
@@ -48,7 +48,7 @@ const CartItem = ({
           +
         </button>
       </td>
-      <td>${quantity * item.price}</td>
+      <td>${(quantity * item.price).toFixed(2)}</td>
       <td>
         <button className="delete-button" onClick={handleDelete}>
           <FaTrash className="delete-icon" />

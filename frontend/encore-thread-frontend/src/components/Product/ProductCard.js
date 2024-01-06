@@ -23,6 +23,7 @@ function ProductCard({ id, imageUrl, title, description, size, price, quantity }
       .then((response) => response.json())
       .then((data) => {
         console.log("Item added to cart:", data);
+        alert("Item added to cart!");
       })
       .catch((error) => {
         console.error("Error adding item to cart:", error);
