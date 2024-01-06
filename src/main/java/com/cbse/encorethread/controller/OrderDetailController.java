@@ -2,6 +2,7 @@ package com.cbse.encorethread.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +20,8 @@ import com.cbse.encorethread.service.OrderDetailsService;
 @RestController
 @RequestMapping("/api/orderdetails")
 public class OrderDetailController {
+  @Autowired
   private OrderDetailsService orderDetailsService;
-
-  public OrderDetailController(OrderDetailsService orderDetailsService) {
-    this.orderDetailsService = orderDetailsService;
-  }
 
   @GetMapping("/{id}")
   public OrderDetails getOrderDetailById(@PathVariable Integer id) {
