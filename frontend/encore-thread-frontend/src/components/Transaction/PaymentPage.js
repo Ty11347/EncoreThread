@@ -13,12 +13,18 @@ const PaymentPage = () => {
 
   const clearCart = async () => {
     try {
-      const response = await fetch(
-          `http://localhost:8080/api/carts/delete/${cartId}`,
+      for(const item of cartItems) {
+        const response = await fetch(
+          "http://localhost:8080/api/carts/item/delete",
           {
             method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(item),
           }
-      );
+        );
+      }
     } catch (error) {
       console.error("Error clearing cart:", error);
     }

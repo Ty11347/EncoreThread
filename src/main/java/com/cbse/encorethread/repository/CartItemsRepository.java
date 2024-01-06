@@ -22,6 +22,8 @@ public interface CartItemsRepository extends JpaRepository<CartItems, Integer> {
     @Query("DELETE FROM CartItems c WHERE c.cartId = :cartId AND c.productId = :productId")
     void deleteByCartIdAndProductId(Integer cartId, Integer productId);
 
+    void deleteByCartItemId(Integer cartItemId);
+
     @Modifying
     @Query("DELETE FROM CartItems c WHERE c.cartId = :cartId")
     void deleteByCartId(Integer cartId);

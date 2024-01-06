@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import CartItem from "./CartItem";
 import { useSelector } from "react-redux";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import "./Cart.css"; // Import CSS for styling
-
 
 const Cart = () => {
   const user = useSelector((state) => state.user.user);
   const cartId = useSelector((state) => state.user.cartId);
+  const products = useSelector((state) => state.product.products);
   const [cartItems, setCartItems] = useState([]);
   const userId = user?.id;
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
 
   // Function to increase the quantity of a specific item
   const increaseQuantity = (cartItemId) => {
@@ -90,10 +90,10 @@ const Cart = () => {
   const clearCart = async () => {
     try {
       const response = await fetch(
-          `http://localhost:8080/api/carts/delete/${cartId}`,
-          {
-            method: "DELETE",
-          }
+        `http://localhost:8080/api/carts/delete/${cartId}`,
+        {
+          method: "DELETE",
+        }
       );
       if (response.ok) {
         setCartItems([]);
@@ -105,38 +105,124 @@ const Cart = () => {
     }
   };
 
+  const deleteCartItem = async (cartItemId, productId) => {
+    try {
+      const item = {
+        cartItemId: cartItemId,
+        productId: productId,
+      };
+      const response = await fetch(
+        "http://localhost:8080/api/carts/item/delete",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(item),
+        }
+      );
+      if (response.ok) {
+        const updatedCartItems = cartItems.filter(
+          (item) => item.cartItemId !== cartItemId
+        );
+        setCartItems(updatedCartItems);
+      } else {
+        console.error("Failed to delete cart item", response.status);
+      }
+    } catch (error) {
+      console.error("Error deleting cart item:", error);
+    }
+  };
+
   const checkoutOrder = async () => {
-    await handleProductQuantityChange()
+    await handleProductQuantityChange();
     // navigate('/transaction', { state: { userId, user, cartItems, cartId } });
+  };
+
+  const checkoutItem = async (cartItemId, productId, quantity, price) => {
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/admin/products/quantity/" +
+          productId +
+          "?quantityChange=-" +
+          quantity,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      // if stock insufficient
+      if (response.status === 409) {
+        const availableQuantity = await response.text();
+        console.error("Insufficient stock for product ID:", productId);
+        alert(
+          "Insufficient stock for product ID " +
+            productId +
+            ": " +
+            availableQuantity
+        );
+        return;
+      } else if (!response.ok) {
+        console.error(
+          "Error updating product quantity for product ID:",
+          productId
+        );
+        return;
+      }
+
+      const cartItem = {
+        cartItemId: cartItemId,
+        productId: productId,
+        quantity: quantity,
+        price: price,
+      };
+      const cartItems = [cartItem];
+      navigate("/transaction", { state: { userId, user, cartItems, cartId } });
+    } catch (e) {
+      console.error("Error updating product quantity:", e);
+    }
   };
 
   const handleProductQuantityChange = async () => {
     try {
       for (const item of cartItems) {
-        const response = await fetch("http://localhost:8080/api/admin/products/quantity/" +
-            item.productId + "?quantityChange=-" + item.quantity,
-            {
-              method: "PUT",
-              headers: {
-                "Content-Type": "application/json",
-              },
-            });
+        const response = await fetch(
+          "http://localhost:8080/api/admin/products/quantity/" +
+            item.productId +
+            "?quantityChange=-" +
+            item.quantity,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         // if stock insufficient
         if (response.status === 409) {
           const availableQuantity = await response.text();
           console.error("Insufficient stock for product ID:", item.productId);
-          alert("Insufficient stock for product ID " + item.productId +
-              ": " + availableQuantity);
+          alert(
+            "Insufficient stock for product ID " +
+              item.productId +
+              ": " +
+              availableQuantity
+          );
           return;
         } else if (!response.ok) {
-          console.error("Error updating product quantity for product ID:", item.productId);
+          console.error(
+            "Error updating product quantity for product ID:",
+            item.productId
+          );
           return;
         }
       }
 
-      navigate('/transaction', { state: { userId, user, cartItems, cartId } });
-
+      navigate("/transaction", { state: { userId, user, cartItems, cartId } });
     } catch (e) {
       console.error("Error updating product quantity:", e);
     }
@@ -151,21 +237,33 @@ const Cart = () => {
       <table className="cart-items">
         <thead>
           <tr>
+            <th>Image</th>
             <th>Product</th>
             <th>Price per item</th>
             <th>Quantity</th>
             <th>Total for item</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
-          {cartItems.map((item) => (
-            <CartItem
-              key={item.cartItemId}
-              item={item}
-              onIncreaseQuantity={increaseQuantity}
-              onDecreaseQuantity={decreaseQuantity}
-            />
-          ))}
+          {cartItems.map((item) => {
+            const product = products.find(
+              (product) => product.id === item.productId
+            );
+            return (
+              <CartItem
+                key={item.cartItemId}
+                item={product}
+                itemQuantity={item.quantity}
+                cartItemId={item.cartItemId}
+                onIncreaseQuantity={increaseQuantity}
+                onDecreaseQuantity={decreaseQuantity}
+                onDeleteCartItem={deleteCartItem}
+                onOrderItem={checkoutItem}
+              />
+            );
+          })}
         </tbody>
       </table>
       <div className="cart-total">
