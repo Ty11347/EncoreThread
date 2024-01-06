@@ -119,6 +119,7 @@ const ProductsComponent = () => {
               description={product.description}
               size={product.size}
               price={product.price}
+              quantity={product.quantity}
               onAddToCart={() => console.log("Add to Cart clicked", product.id)}
             />
           ))}

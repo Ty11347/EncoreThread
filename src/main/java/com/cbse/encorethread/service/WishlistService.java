@@ -17,6 +17,10 @@ public class WishlistService {
     private WishlistRepository wishlistRepository;
 
     public List<Products> getProductsByUserId(Long userId) {
+        if (userId == null) {
+            throw new IllegalArgumentException("User ID must not be null");
+        }
+
         return wishlistRepository.findProductsByUserId(userId);
     }
 
@@ -24,27 +28,35 @@ public class WishlistService {
         if (wishlistDTO.getUserId() == null || wishlistDTO.getProductId() == null) {
             throw new IllegalArgumentException("User ID and Product ID must not be null");
         }
-    
-        Optional<Wishlist> existingWishlist = wishlistRepository.findByUserIdAndProductId(wishlistDTO.getUserId(), wishlistDTO.getProductId());
+
+        Optional<Wishlist> existingWishlist = wishlistRepository.findByUserIdAndProductId(wishlistDTO.getUserId(),
+                wishlistDTO.getProductId());
 
         if (existingWishlist.isPresent()) {
             throw new IllegalStateException("Wishlist entry already exists");
         }
-        
+
         Wishlist wishlist = new Wishlist();
         wishlist.setUserId(wishlistDTO.getUserId());
         wishlist.setProductId(wishlistDTO.getProductId());
         return wishlistRepository.save(wishlist);
     }
-    
 
     public void removeFromWishlist(Long userId, Integer productId) {
+        if (userId == null || productId == null) {
+            throw new IllegalArgumentException("User ID and Product ID must not be null");
+        }
+
         Wishlist wishlist = wishlistRepository.findByUserIdAndProductId(userId, productId)
-            .orElseThrow(() -> new RuntimeException("Wishlist item not found"));
+                .orElseThrow(() -> new RuntimeException("Wishlist item not found"));
         wishlistRepository.delete(wishlist);
     }
-    
+
     public boolean isProductInWishlist(Long userId, Integer productId) {
+        if (userId == null || productId == null) {
+            throw new IllegalArgumentException("User ID and Product ID must not be null");
+        }
+        
         return wishlistRepository.existsByUserIdAndProductId(userId, productId);
     }
 }
