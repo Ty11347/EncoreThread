@@ -267,7 +267,7 @@ const Cart = () => {
         </tbody>
       </table>
       <div className="cart-total">
-        <strong>Overall Total:</strong> ${overallTotal}
+        <strong>Overall Total:</strong> ${overallTotal.toFixed(2)}
       </div>
       <div
         class="row"
