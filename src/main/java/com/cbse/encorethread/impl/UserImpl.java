@@ -140,8 +140,8 @@ public class UserImpl implements UserService {
         cartsRepository.deleteCartByUserId(userId);
         wishlistRepository.deleteByUserId(userId);
         ordersService.deleteOrderByUserId(userId);
-        userRepository.deleteById(userId);
         reviewsService.deleteAllReviewsByUserId(userId);
+        userRepository.deleteById(userId);
     }
 
     @Override
