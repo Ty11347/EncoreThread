@@ -1,9 +1,11 @@
-package com.cbse.encorethread.service;
+package com.cbse.encorethread.impl;
 
 import com.cbse.encorethread.model.CartItems;
 import com.cbse.encorethread.model.Carts;
 import com.cbse.encorethread.repository.CartsRepository;
 import com.cbse.encorethread.repository.ProductsRepository;
+import com.cbse.encorethread.service.CartItemsService;
+import com.cbse.encorethread.service.CartsService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
