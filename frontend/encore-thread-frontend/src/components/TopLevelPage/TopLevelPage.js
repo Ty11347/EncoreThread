@@ -99,12 +99,6 @@ const Navbar = () => {
             </li>
 
             <li>
-              <Link to={`/transaction`} className="buttonStyle">
-                Transaction
-              </Link>
-            </li>
-
-            <li>
               <a href="/login" className="buttonStyle">Logout</a>
             </li>
           </ul>
