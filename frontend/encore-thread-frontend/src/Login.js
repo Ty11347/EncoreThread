@@ -35,7 +35,7 @@ const Login = () => {
         console.error(fail);
       });
     } catch (err) {
-      alert(err);
+      alert("An error occurred while trying to log in. Please try again.");
     }
   }
 

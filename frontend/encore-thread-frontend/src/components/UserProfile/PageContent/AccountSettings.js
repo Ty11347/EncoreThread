@@ -75,7 +75,7 @@ const AccountSettings = () => {
       );
       if (response.ok) {
         const data = await response.json();
-        //setUserData(data);
+        setUserData(data);
         setUpdatedUserData(data);
         setEditMode(false);
       } else {
