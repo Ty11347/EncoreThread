@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import com.cbse.encorethread.model.Products;
 import com.cbse.encorethread.repository.ProductsRepository;
 import com.cbse.encorethread.service.AdminService;
+import org.springframework.transaction.annotation.Transactional;
+
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -32,15 +34,22 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    @Transactional
     public int updateProductQuantity(Integer id, Integer quantityChange) throws Exception {
-        Products product = productsRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
-        int newQuantity = product.getQuantity() + quantityChange;
-        if (newQuantity < 0) {
-            throw new IllegalStateException("Insufficient stock");
+        System.out.println(productsRepository.existsById(id));
+        // Check if product exists
+        if (!productsRepository.existsById(id)) {
+            throw new RuntimeException("Product not found");
         }
-        product.setQuantity(newQuantity);
-        productsRepository.save(product);
-        return newQuantity;
+
+        int rowsAffected = productsRepository.updateProductQuantityWithSql(id, quantityChange);
+        System.out.println(rowsAffected);
+        if (rowsAffected == 0) {
+            throw new IllegalStateException("Update failed, product not found or other issue");
+        }
+
+        Products product = productsRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Error retrieving updated product"));
+        return product.getQuantity();
     }
 }
