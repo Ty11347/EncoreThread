@@ -22,6 +22,6 @@ public interface ReviewsService {
 
     Reviews fetchReviewByUserIdAndProductId(int userId, int productId) ;
 
-    boolean deleteAllReviewsByUserId(int userId);
+    void deleteAllReviewsByUserId(int userId);
 
 }

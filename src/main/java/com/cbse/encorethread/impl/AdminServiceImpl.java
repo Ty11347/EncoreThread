@@ -1,8 +1,10 @@
-package com.cbse.encorethread.service;
+package com.cbse.encorethread.impl;
+
+import org.springframework.stereotype.Service;
 
 import com.cbse.encorethread.model.Products;
 import com.cbse.encorethread.repository.ProductsRepository;
-import org.springframework.stereotype.Service;
+import com.cbse.encorethread.service.AdminService;
 
 @Service
 public class AdminServiceImpl implements AdminService {
