@@ -21,13 +21,13 @@ public interface UserRepository extends JpaRepository<User, Integer>{
     User findByUsername(String username);
     Optional<User> findById(@Param("userId")Integer userId);
 
-    @Modifying
-    @Transactional
-    @Query(value = "DELETE FROM carts WHERE user_id = ?1", nativeQuery = true)
-    void deleteCartByUserId(Integer userId);
+    // @Modifying
+    // @Transactional
+    // @Query(value = "DELETE FROM carts WHERE user_id = ?1", nativeQuery = true)
+    // void deleteCartByUserId(Integer userId);
 
-    @Modifying
-    @Transactional
-    @Query(value = "DELETE FROM cartitems WHERE cart_id = ?1", nativeQuery = true)
-    void deleteCartItemsByUserId(Integer cartId);
+    // @Modifying
+    // @Transactional
+    // @Query(value = "DELETE FROM cartitems WHERE cart_id = ?1", nativeQuery = true)
+    // void deleteCartItemsByUserId(Integer cartId);
 }

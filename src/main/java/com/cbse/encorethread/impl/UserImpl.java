@@ -1,4 +1,4 @@
-package com.cbse.encorethread.user;
+package com.cbse.encorethread.impl;
 
 import org.springframework.stereotype.Service;
 import com.cbse.encorethread.dto.LoginDTO;
@@ -7,6 +7,11 @@ import com.cbse.encorethread.dto.UserDTO;
 import com.cbse.encorethread.model.User;
 import com.cbse.encorethread.repository.UserRepository;
 import com.cbse.encorethread.repository.CartsRepository;
+import com.cbse.encorethread.repository.ReviewsRepository;
+import com.cbse.encorethread.repository.CartItemsRepository;
+import com.cbse.encorethread.service.OrdersService;
+import com.cbse.encorethread.service.ReviewsService;
+import com.cbse.encorethread.repository.WishlistRepository;
 import com.cbse.encorethread.service.UserService;
 import com.cbse.encorethread.exception.UserNotFoundException;
 import com.cbse.encorethread.user.LoginMessage;
@@ -15,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.annotation.Resource;
+import javax.transaction.Transactional;
 
 import java.io.IOException;
 import java.util.Base64;
@@ -31,6 +37,14 @@ public class UserImpl implements UserService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private CartsRepository cartsRepository;
+    @Autowired
+    private CartItemsRepository cartItemsRepository;
+    @Autowired
+    private OrdersService ordersService;
+    @Autowired
+    private WishlistRepository wishlistRepository;
+    @Autowired
+    private ReviewsService reviewsService;
 
     private UserDTO convertToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
@@ -118,11 +132,15 @@ public class UserImpl implements UserService {
     }
 
     @Override
-    public void deleteUserById(Integer userId) {
+    @Transactional
+    public void deleteUserById(Integer userId, Integer cartId) {
         User existingUser = userRepository.findById(userId)
             .orElseThrow(() -> new ResourceNotFoundException("User", "id", userId));
-        userRepository.deleteCartByUserId(userId);
-        userRepository.deleteCartItemsByUserId(userId);
+        cartItemsRepository.deleteByCartId(cartId);
+        cartsRepository.deleteCartByUserId(userId);
+        wishlistRepository.deleteByUserId(userId);
+        ordersService.deleteOrderByUserId(userId);
+        reviewsService.deleteAllReviewsByUserId(userId);
         userRepository.deleteById(userId);
     }
 

@@ -2,9 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import './profile.css';
+import { setCartId } from '../../../redux/actions/userActions';
 
 const AccountSettings = () => {
-  const user = useSelector(state => state.user.user);
+  const user = useSelector(state => state.user.user); // Assuming the user info is stored under 'user.user'
+  const cartId = useSelector(state => state.user.cartId);
   const userId = user?.id;
   const navigate = useNavigate();
   const [editMode, setEditMode] = useState(false);
@@ -44,10 +46,9 @@ const AccountSettings = () => {
     const confirmDelete = window.confirm("Are you sure you want to delete this account?");
     if(confirmDelete){
       try {
-        const response = await fetch(`http://localhost:8080/api/user/${userId}/delete`, {
+        const response = await fetch(`http://localhost:8080/api/user/${userId}/delete?cartId=${cartId}`, {
           method: 'DELETE'
         });
-  
         if (response.ok) {
           // Redirect to register page
           navigate("/register");
@@ -74,7 +75,7 @@ const AccountSettings = () => {
       );
       if (response.ok) {
         const data = await response.json();
-        //setUserData(data);
+        setUserData(data);
         setUpdatedUserData(data);
         setEditMode(false);
       } else {
