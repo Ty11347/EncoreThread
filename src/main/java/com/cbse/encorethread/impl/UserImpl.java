@@ -7,8 +7,10 @@ import com.cbse.encorethread.dto.UserDTO;
 import com.cbse.encorethread.model.User;
 import com.cbse.encorethread.repository.UserRepository;
 import com.cbse.encorethread.repository.CartsRepository;
+import com.cbse.encorethread.repository.ReviewsRepository;
 import com.cbse.encorethread.repository.CartItemsRepository;
 import com.cbse.encorethread.service.OrdersService;
+import com.cbse.encorethread.service.ReviewsService;
 import com.cbse.encorethread.repository.WishlistRepository;
 import com.cbse.encorethread.service.UserService;
 import com.cbse.encorethread.exception.UserNotFoundException;
@@ -41,6 +43,8 @@ public class UserImpl implements UserService {
     private OrdersService ordersService;
     @Autowired
     private WishlistRepository wishlistRepository;
+    @Autowired
+    private ReviewsService reviewsService;
 
     private UserDTO convertToUserDTO(User user) {
         UserDTO userDTO = new UserDTO();
@@ -137,6 +141,7 @@ public class UserImpl implements UserService {
         wishlistRepository.deleteByUserId(userId);
         ordersService.deleteOrderByUserId(userId);
         userRepository.deleteById(userId);
+        reviewsService.deleteAllReviewsByUserId(userId);
     }
 
     @Override

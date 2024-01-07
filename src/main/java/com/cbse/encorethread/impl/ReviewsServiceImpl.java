@@ -69,16 +69,13 @@ public class ReviewsServiceImpl implements ReviewsService{
     }
 
     @Override
-    public boolean deleteAllReviewsByUserId(int userId) {
-        try {
+    public void deleteAllReviewsByUserId(int userId) {
+
             List<Reviews> reviewsList = reviewsRepository.findByUserId(userId);
             for (Reviews review : reviewsList) {
                 reviewsRepository.deleteById(review.getId());
             }
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+
     }
 
 }
