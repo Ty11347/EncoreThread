@@ -86,11 +86,13 @@ const Navbar = () => {
                 </li>
             )}
 
-            <li>
-              <Link to={`/cart`} className="buttonStyle">
-                Cart
-              </Link>
-            </li>
+            {!isAdmin && (
+                <li>
+                  <Link to={`/cart`} className="buttonStyle">
+                    Cart
+                  </Link>
+                </li>
+            )}
 
             <li>
               <Link to={`/user/${userId}`} className="buttonStyle">

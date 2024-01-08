@@ -36,14 +36,12 @@ public class AdminServiceImpl implements AdminService {
     @Override
     @Transactional
     public int updateProductQuantity(Integer id, Integer quantityChange) throws Exception {
-        System.out.println(productsRepository.existsById(id));
         // Check if product exists
         if (!productsRepository.existsById(id)) {
             throw new RuntimeException("Product not found");
         }
 
         int rowsAffected = productsRepository.updateProductQuantityWithSql(id, quantityChange);
-        System.out.println(rowsAffected);
         if (rowsAffected == 0) {
             throw new IllegalStateException("Update failed, product not found or other issue");
         }
